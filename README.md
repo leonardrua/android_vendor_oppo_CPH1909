@@ -101,18 +101,3 @@ grep 'NOTICE\.xml\.gz' CPH1909-vendor.mk                    # should be empty
   carried over as-is.
 * `setup-makefiles.sh` in the device tree must be executable (mode 100755), as
   `extract-files.sh` invokes it directly.
-* `build/core/config.mk` re-asserts `TARGET_KERNEL_SOURCE` after LineageOS's
-  `BoardConfigKernel.mk` clears it (that file unconditionally empties
-  `TARGET_KERNEL_SOURCE` whenever `TARGET_PREBUILT_KERNEL` is set, even for a
-  prebuilt kernel image). This matters because LineageOS's
-  `generated_kernel_includes` Soong module runs
-  `make -C $(TARGET_KERNEL_SOURCE) ... headers_install` for modules that
-  depend on `generated_kernel_headers`; an empty `TARGET_KERNEL_SOURCE` makes
-  that `make -C` fail with "No such file or directory". The kernel image
-  itself stays prebuilt; a separate kernel source tree
-  (`leonardrua/A5S-8.1-kernel-source`, synced into `kernel/oppo/CPH1909` by
-  the CI build workflow) is used **only** to satisfy that header-install call.
-  This hook is pulled in via `-include vendor/*/build/core/config.mk`, which
-  runs after all board config has been processed, so the re-asserted value is
-  what LineageOS's `BoardConfigSoong.mk` actually exports to the Soong
-  `lineageVarsPlugin`.
