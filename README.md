@@ -16,7 +16,7 @@ $(call inherit-product-if-exists, vendor/oppo/CPH1909/CPH1909-vendor.mk)
 
 | Path                 | Description                                              |
 | -------------------- | -------------------------------------------------------- |
-| `proprietary/`       | 1468 blobs copied verbatim from the stock vendor image   |
+| `proprietary/`       | 1464 blobs copied verbatim from the stock vendor image   |
 | `CPH1909-vendor.mk`  | generated `PRODUCT_COPY_FILES` list (installs the blobs) |
 | `Android.mk`         | generated, currently empty (no `-`-packaged modules)     |
 | `Android.bp`         | generated Soong namespace                                |

@@ -103,7 +103,6 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/bin/hw/vendor.oppo.hardware.biometrics.fingerprint@2.1-service:$(TARGET_COPY_OUT_VENDOR)/bin/hw/vendor.oppo.hardware.biometrics.fingerprint@2.1-service \
     vendor/oppo/CPH1909/proprietary/vendor/bin/hw/vendor.oppo.hardware.biometrics.fingerprintpay@1.0-service:$(TARGET_COPY_OUT_VENDOR)/bin/hw/vendor.oppo.hardware.biometrics.fingerprintpay@1.0-service \
     vendor/oppo/CPH1909/proprietary/vendor/bin/hw/vendor.oppo.hardware.cryptoeng@1.0-service:$(TARGET_COPY_OUT_VENDOR)/bin/hw/vendor.oppo.hardware.cryptoeng@1.0-service \
-    vendor/oppo/CPH1909/proprietary/vendor/bin/hw/vendor.oppo.hardware.ktv@1.0-service:$(TARGET_COPY_OUT_VENDOR)/bin/hw/vendor.oppo.hardware.ktv@1.0-service \
     vendor/oppo/CPH1909/proprietary/vendor/bin/hw/vendor.silead.hardware.fingerprintext@1.0-service:$(TARGET_COPY_OUT_VENDOR)/bin/hw/vendor.silead.hardware.fingerprintext@1.0-service \
     vendor/oppo/CPH1909/proprietary/vendor/bin/hw/vendor.trustonic.soter@1.0-service:$(TARGET_COPY_OUT_VENDOR)/bin/hw/vendor.trustonic.soter@1.0-service \
     vendor/oppo/CPH1909/proprietary/vendor/bin/hw/vtservice_hidl:$(TARGET_COPY_OUT_VENDOR)/bin/hw/vtservice_hidl \
@@ -395,7 +394,6 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/etc/init/vendor.oppo.hardware.biometrics.fingerprint@2.1-service.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/vendor.oppo.hardware.biometrics.fingerprint@2.1-service.rc \
     vendor/oppo/CPH1909/proprietary/vendor/etc/init/vendor.oppo.hardware.biometrics.fingerprintpay@1.0-service.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/vendor.oppo.hardware.biometrics.fingerprintpay@1.0-service.rc \
     vendor/oppo/CPH1909/proprietary/vendor/etc/init/vendor.oppo.hardware.cryptoeng@1.0-service.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/vendor.oppo.hardware.cryptoeng@1.0-service.rc \
-    vendor/oppo/CPH1909/proprietary/vendor/etc/init/vendor.oppo.hardware.ktv@1.0-service.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/vendor.oppo.hardware.ktv@1.0-service.rc \
     vendor/oppo/CPH1909/proprietary/vendor/etc/init/vendor.silead.hardware.fingerprintext@1.0-service.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/vendor.silead.hardware.fingerprintext@1.0-service.rc \
     vendor/oppo/CPH1909/proprietary/vendor/etc/init/vendor.trustonic.soter@1.0-service.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/vendor.trustonic.soter@1.0-service.rc \
     vendor/oppo/CPH1909/proprietary/vendor/etc/init/vndservicemanager.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/vndservicemanager.rc \
@@ -647,7 +645,6 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/lib/hw/vendor.mediatek.hardware.power@1.1-impl.so:$(TARGET_COPY_OUT_VENDOR)/lib/hw/vendor.mediatek.hardware.power@1.1-impl.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/hw/vendor.mediatek.hardware.pq@2.0-impl.so:$(TARGET_COPY_OUT_VENDOR)/lib/hw/vendor.mediatek.hardware.pq@2.0-impl.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/hw/vendor.mediatek.hardware.videotelephony@1.0-impl.so:$(TARGET_COPY_OUT_VENDOR)/lib/hw/vendor.mediatek.hardware.videotelephony@1.0-impl.so \
-    vendor/oppo/CPH1909/proprietary/vendor/lib/hw/vendor.oppo.hardware.ktv@1.0-impl.so:$(TARGET_COPY_OUT_VENDOR)/lib/hw/vendor.oppo.hardware.ktv@1.0-impl.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/hw/vibrator.default.so:$(TARGET_COPY_OUT_VENDOR)/lib/hw/vibrator.default.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/lbs_hidl_service-impl.so:$(TARGET_COPY_OUT_VENDOR)/lib/lbs_hidl_service-impl.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/lib3DSlender.so:$(TARGET_COPY_OUT_VENDOR)/lib/lib3DSlender.so \
@@ -1108,7 +1105,6 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/hw/vendor.mediatek.hardware.power@1.1-impl.so:$(TARGET_COPY_OUT_VENDOR)/lib64/hw/vendor.mediatek.hardware.power@1.1-impl.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/hw/vendor.mediatek.hardware.pq@2.0-impl.so:$(TARGET_COPY_OUT_VENDOR)/lib64/hw/vendor.mediatek.hardware.pq@2.0-impl.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/hw/vendor.mediatek.hardware.videotelephony@1.0-impl.so:$(TARGET_COPY_OUT_VENDOR)/lib64/hw/vendor.mediatek.hardware.videotelephony@1.0-impl.so \
-    vendor/oppo/CPH1909/proprietary/vendor/lib64/hw/vendor.oppo.hardware.ktv@1.0-impl.so:$(TARGET_COPY_OUT_VENDOR)/lib64/hw/vendor.oppo.hardware.ktv@1.0-impl.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/hw/vibrator.default.so:$(TARGET_COPY_OUT_VENDOR)/lib64/hw/vibrator.default.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/interfaces.factoryAta@1.0_vendor.so:$(TARGET_COPY_OUT_VENDOR)/lib64/interfaces.factoryAta@1.0_vendor.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/interfaces.factoryInterface@1.0_vendor.so:$(TARGET_COPY_OUT_VENDOR)/lib64/interfaces.factoryInterface@1.0_vendor.so \
