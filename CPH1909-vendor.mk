@@ -5,17 +5,23 @@
 PRODUCT_SOONG_NAMESPACES += \
     vendor/oppo/CPH1909
 
+
+# Prebuilt vendor APKs (moved from PRODUCT_COPY_FILES; AOSP forbids APKs there)
+PRODUCT_PACKAGES += \
+    EmCamera \
+    LPPeService \
+    LocationEM2 \
+    MMIGroup \
+    MTKLoggerProxy \
+    NlpService \
+    RootPA \
+    WapiCertManager \
+    sileadManager \
+    SysuiDarkThemeOverlay
+
 PRODUCT_COPY_FILES += \
-    vendor/oppo/CPH1909/proprietary/vendor/app/EmCamera/EmCamera.apk:$(TARGET_COPY_OUT_VENDOR)/app/EmCamera/EmCamera.apk \
     vendor/oppo/CPH1909/proprietary/vendor/app/EmCamera/oat/arm64/EmCamera.odex:$(TARGET_COPY_OUT_VENDOR)/app/EmCamera/oat/arm64/EmCamera.odex \
     vendor/oppo/CPH1909/proprietary/vendor/app/EmCamera/oat/arm64/EmCamera.vdex:$(TARGET_COPY_OUT_VENDOR)/app/EmCamera/oat/arm64/EmCamera.vdex \
-    vendor/oppo/CPH1909/proprietary/vendor/app/LPPeService/LPPeService.apk:$(TARGET_COPY_OUT_VENDOR)/app/LPPeService/LPPeService.apk \
-    vendor/oppo/CPH1909/proprietary/vendor/app/LocationEM2/LocationEM2.apk:$(TARGET_COPY_OUT_VENDOR)/app/LocationEM2/LocationEM2.apk \
-    vendor/oppo/CPH1909/proprietary/vendor/app/MMIGroup/MMIGroup.apk:$(TARGET_COPY_OUT_VENDOR)/app/MMIGroup/MMIGroup.apk \
-    vendor/oppo/CPH1909/proprietary/vendor/app/MTKLoggerProxy/MTKLoggerProxy.apk:$(TARGET_COPY_OUT_VENDOR)/app/MTKLoggerProxy/MTKLoggerProxy.apk \
-    vendor/oppo/CPH1909/proprietary/vendor/app/NlpService/NlpService.apk:$(TARGET_COPY_OUT_VENDOR)/app/NlpService/NlpService.apk \
-    vendor/oppo/CPH1909/proprietary/vendor/app/RootPA/RootPA.apk:$(TARGET_COPY_OUT_VENDOR)/app/RootPA/RootPA.apk \
-    vendor/oppo/CPH1909/proprietary/vendor/app/WapiCertManager/WapiCertManager.apk:$(TARGET_COPY_OUT_VENDOR)/app/WapiCertManager/WapiCertManager.apk \
     vendor/oppo/CPH1909/proprietary/vendor/app/mcRegistry/020f0000000000000000000000000000.drbin:$(TARGET_COPY_OUT_VENDOR)/app/mcRegistry/020f0000000000000000000000000000.drbin \
     vendor/oppo/CPH1909/proprietary/vendor/app/mcRegistry/020f0000000000000000000000000000.tlbin:$(TARGET_COPY_OUT_VENDOR)/app/mcRegistry/020f0000000000000000000000000000.tlbin \
     vendor/oppo/CPH1909/proprietary/vendor/app/mcRegistry/030b0000000000000000000000000000.drbin:$(TARGET_COPY_OUT_VENDOR)/app/mcRegistry/030b0000000000000000000000000000.drbin \
@@ -46,7 +52,6 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/app/mcRegistry/09080000000000000000000000000001.tlbin:$(TARGET_COPY_OUT_VENDOR)/app/mcRegistry/09080000000000000000000000000001.tlbin \
     vendor/oppo/CPH1909/proprietary/vendor/app/mcRegistry/09190000000000000000000000000000.tlbin:$(TARGET_COPY_OUT_VENDOR)/app/mcRegistry/09190000000000000000000000000000.tlbin \
     vendor/oppo/CPH1909/proprietary/vendor/app/mcRegistry/511ead0a000000000000000000000000.tabin:$(TARGET_COPY_OUT_VENDOR)/app/mcRegistry/511ead0a000000000000000000000000.tabin \
-    vendor/oppo/CPH1909/proprietary/vendor/app/sileadManager/sileadManager.apk:$(TARGET_COPY_OUT_VENDOR)/app/sileadManager/sileadManager.apk \
     vendor/oppo/CPH1909/proprietary/vendor/bin/OppoKeybox:$(TARGET_COPY_OUT_VENDOR)/bin/OppoKeybox \
     vendor/oppo/CPH1909/proprietary/vendor/bin/TBaseDeviceBinding:$(TARGET_COPY_OUT_VENDOR)/bin/TBaseDeviceBinding \
     vendor/oppo/CPH1909/proprietary/vendor/bin/aee_aedv:$(TARGET_COPY_OUT_VENDOR)/bin/aee_aedv \
@@ -1461,7 +1466,6 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/vendor.silead.hardware.fingerprintext@1.0_vendor.so:$(TARGET_COPY_OUT_VENDOR)/lib64/vendor.silead.hardware.fingerprintext@1.0_vendor.so \
     vendor/oppo/CPH1909/proprietary/vendor/media/LMspeed_508.emd:$(TARGET_COPY_OUT_VENDOR)/media/LMspeed_508.emd \
     vendor/oppo/CPH1909/proprietary/vendor/media/PFFprec_600.emd:$(TARGET_COPY_OUT_VENDOR)/media/PFFprec_600.emd \
-    vendor/oppo/CPH1909/proprietary/vendor/overlay/SysuiDarkTheme/SysuiDarkThemeOverlay.apk:$(TARGET_COPY_OUT_VENDOR)/overlay/SysuiDarkTheme/SysuiDarkThemeOverlay.apk \
     vendor/oppo/CPH1909/proprietary/vendor/res/images/lcd_test_00.png:$(TARGET_COPY_OUT_VENDOR)/res/images/lcd_test_00.png \
     vendor/oppo/CPH1909/proprietary/vendor/res/images/lcd_test_01.png:$(TARGET_COPY_OUT_VENDOR)/res/images/lcd_test_01.png \
     vendor/oppo/CPH1909/proprietary/vendor/res/images/lcd_test_02.png:$(TARGET_COPY_OUT_VENDOR)/res/images/lcd_test_02.png \
