@@ -8,10 +8,13 @@
 #
 # The kernel image itself remains the prebuilt one; this tree (cloned
 # separately into the build tree by the CI workflow) is used only for
-# header installation. This hook runs later than BoardConfigKernel.mk
-# because it is pulled in via -include vendor/*/build/core/config.mk,
-# which fires after all board config has been processed.
+# header installation.
 ifneq ($(TARGET_PREBUILT_KERNEL),)
-_kdir := $(shell echo $(TARGET_DEVICE_DIR) | sed -e 's/^device/kernel/g')
-TARGET_KERNEL_SOURCE := $(_kdir)
+    _kdir := $(shell echo $(TARGET_DEVICE_DIR) | sed -e 's/^device/kernel/g')
+    ifeq ($(TARGET_KERNEL_SOURCE),)
+        TARGET_KERNEL_SOURCE := $(_kdir)
+    endif
+    ifneq ($(TARGET_KERNEL_SOURCE),)
+        SOONG_CONFIG_lineageVarsPlugin_TARGET_KERNEL_SOURCE := $(TARGET_KERNEL_SOURCE)
+    endif
 endif
