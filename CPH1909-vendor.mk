@@ -183,7 +183,6 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/etc/DSM.xml:$(TARGET_COPY_OUT_VENDOR)/etc/DSM.xml \
     vendor/oppo/CPH1909/proprietary/vendor/etc/DSM_config.xml:$(TARGET_COPY_OUT_VENDOR)/etc/DSM_config.xml \
     vendor/oppo/CPH1909/proprietary/vendor/etc/MMIGroupIQC.json:$(TARGET_COPY_OUT_VENDOR)/etc/MMIGroupIQC.json \
-    vendor/oppo/CPH1909/proprietary/vendor/etc/NOTICE.xml.gz:$(TARGET_COPY_OUT_VENDOR)/etc/NOTICE.xml.gz \
     vendor/oppo/CPH1909/proprietary/vendor/etc/ST_Liveness.model:$(TARGET_COPY_OUT_VENDOR)/etc/ST_Liveness.model \
     vendor/oppo/CPH1909/proprietary/vendor/etc/ST_Verify.model:$(TARGET_COPY_OUT_VENDOR)/etc/ST_Verify.model \
     vendor/oppo/CPH1909/proprietary/vendor/etc/VfbTuningInterface.xml:$(TARGET_COPY_OUT_VENDOR)/etc/VfbTuningInterface.xml \
