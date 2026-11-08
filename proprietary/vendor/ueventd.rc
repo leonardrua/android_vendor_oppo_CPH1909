@@ -47,6 +47,11 @@
 /dev/fm                   0666   media     media
 #endif
 
+# Kernel-created media/devinfo nodes (the legacy init mknod commands are
+# unsupported on Android 10; the drivers create these via device_create).
+/dev/Vcodec               0660   media     system
+/dev/devmap               0440   root      system
+
 # NFC
 /dev/msr3110              0666   root       root
 /dev/mt6605               0660   nfc        radio
