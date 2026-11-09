@@ -81,10 +81,21 @@ re-running `setup-makefiles.sh` no longer emits the broken rules.
    (`EmCamera`, `LPPeService`, `LocationEM2`, `MMIGroup`, `MTKLoggerProxy`,
    `NlpService`, `RootPA`, `WapiCertManager`, `sileadManager`) and
    `SysuiDarkThemeOverlay` are `BUILD_PREBUILT` modules in `Android.mk` and
-   are added to `PRODUCT_PACKAGES` in `CPH1909-vendor.mk`. All are
-   `PRESIGNED`, `LOCAL_VENDOR_MODULE=true`, installed under `/vendor/app`;
-   the overlay installs under `/vendor/overlay`. `EmCamera`'s precompiled
-   `oat/arm64/EmCamera.odex`/`.vdex` remain plain `PRODUCT_COPY_FILES`.
+   are added to `PRODUCT_PACKAGES` in `CPH1909-vendor.mk`. All use
+   `LOCAL_CERTIFICATE := platform` (not `PRESIGNED`), `LOCAL_VENDOR_MODULE=true`
+   and are installed under `/vendor/app`; the overlay installs under
+   `/vendor/overlay`. `EmCamera`'s precompiled `oat/arm64/EmCamera.odex`/`.vdex`
+   remain plain `PRODUCT_COPY_FILES`.
+
+   The APKs are re-signed with the build's platform key rather than kept
+   `PRESIGNED`: the stock files carry OPPO's platform certificate, which does
+   not match an unofficial LineageOS build. Six of them join a platform
+   shared user — `LPPeService`, `MMIGroup`, `NlpService`, `WapiCertManager`
+   and `sileadManager` declare `sharedUserId=android.uid.system`, `EmCamera`
+   declares `android.uid.phone` — so without re-signing the package manager
+   would reject them at boot for a shared-user signature mismatch.
+   `SysuiDarkThemeOverlay` likewise needs the build platform signature to
+   match SystemUI.
 
    **SysuiDarkThemeOverlay.apk** is kept as a module, not a copy, for the
    same reason; the extract-utils helper does not generate vendor/overlay
@@ -143,7 +154,8 @@ device/oppo/CPH1909/setup-makefiles.sh
 should now re-emit:
 
 * APKs as prebuilt modules from `proprietary-files.txt` (each vendor APK entry
-  is prefixed with `-` and marked `;PRESIGNED`), **except**
+  is prefixed with `-` and carries no `;PRESIGNED` suffix, so the generator
+  emits `LOCAL_CERTIFICATE := platform`), **except**
   `SysuiDarkThemeOverlay.apk`, which is still ignored by the generator and
   needs keeping the `PRODUCT_PACKAGES += SysuiDarkThemeOverlay` and the
   overlay `BUILD_PREBUILT` stanza in this repository.
@@ -164,6 +176,7 @@ grep '\.apk.*TARGET_COPY_OUT_VENDOR' CPH1909-vendor.mk      # should be empty
 grep 'NOTICE\.xml\.gz' CPH1909-vendor.mk                    # should be empty
 unzip -l proprietary/system/app/SoterService/SoterService.apk   # must list classes.dex
 grep -A12 'LOCAL_MODULE := SoterService' Android.mk         # must say platform
+grep 'LOCAL_CERTIFICATE := PRESIGNED' Android.mk            # should be empty
 ```
 
 ## Notes
