@@ -127,17 +127,24 @@ re-running `setup-makefiles.sh` no longer emits the broken rules.
      `device/oppo/CPH1909/configs/permissions/privapp-permissions-ims.xml`
      (copied into `/system/etc/permissions/` by the device tree).
 
-1b. **The stock fingerprint framework stubs are imported (system-side).**
-   The three 8.1 framework stub jars copied verbatim —
+1b. **The stock fingerprint and face framework stubs are imported (system-side).**
+   The 8.1 framework stub jars copied verbatim —
    `system/framework/android.frameworks.fingerprintservice-V1.0-java.jar`,
-   `system/framework/vendor.oppo.hardware.biometrics.fingerprint-V2.1-java.jar`
-   and `system/framework/ifaamanager.jar` — are 309-byte empty jars (empty
-   manifest only). No AOSP/LineageOS build module emits these paths, and
-   nothing in this ROM loads them: `frameworks/base` builds the real
-   fingerprint API into `framework.jar`. They are stock-layout parity.
-   `ifaamanager.jar` (OPPO's IFAA framework) is declared a public library by
+   `system/framework/vendor.oppo.hardware.biometrics.fingerprint-V2.1-java.jar`,
+   `system/framework/ifaamanager.jar`,
+   `system/framework/android.frameworks.faceservice-V1.0-java.jar` and
+   `system/framework/vendor.oppo.hardware.biometrics.face-V1.0-java.jar` —
+   are 309-byte empty jars (empty manifest only). No AOSP/LineageOS build
+   module emits these paths, and nothing in this ROM loads them:
+   `frameworks/base` builds the real fingerprint API into `framework.jar`.
+   They are stock-layout parity. `ifaamanager.jar` (OPPO's IFAA framework) is
+   declared a public library by
    `system/etc/permissions/org.ifaa.android.manager.permissions.xml`, same
-   as in stock, and that file is imported with it.
+   as in stock, and that file is imported with it. The face stub pair is the
+   same stub for the OPPO face stack; the stock `face_hal` cannot load in
+   this build (its `DT_NEEDED` system-side libs are deliberately not
+   imported) and its service is disabled by an override rc in the device
+   tree.
 
 1c. **The stock fingerprint HAL chain.** The stock system-side interface
    libraries (`android.frameworks.fingerprintservice@1.0.so`,

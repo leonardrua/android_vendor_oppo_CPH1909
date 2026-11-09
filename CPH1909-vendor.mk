@@ -90,10 +90,18 @@ PRODUCT_COPY_FILES += \
 # public library by org.ifaa.android.manager.permissions.xml, same as in stock.
 # (android.frameworks.fingerprintservice-V1.0-java.jar is the same stub the
 # stock image carries; the real framework API lives in framework.jar.)
+#
+# The face stub jars are the identical 309-byte stub, the stock system-side
+# parity for the OPPO face stack. Nothing in this ROM references them (the
+# stock face_hal is disabled and cannot load: its DT_NEEDED system-side libs
+# are deliberately not imported). Imported only to keep the stock
+# /system/framework layout complete.
 PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/system/framework/android.frameworks.fingerprintservice-V1.0-java.jar:$(TARGET_COPY_OUT_SYSTEM)/framework/android.frameworks.fingerprintservice-V1.0-java.jar \
     vendor/oppo/CPH1909/proprietary/system/framework/vendor.oppo.hardware.biometrics.fingerprint-V2.1-java.jar:$(TARGET_COPY_OUT_SYSTEM)/framework/vendor.oppo.hardware.biometrics.fingerprint-V2.1-java.jar \
     vendor/oppo/CPH1909/proprietary/system/framework/ifaamanager.jar:$(TARGET_COPY_OUT_SYSTEM)/framework/ifaamanager.jar \
+    vendor/oppo/CPH1909/proprietary/system/framework/android.frameworks.faceservice-V1.0-java.jar:$(TARGET_COPY_OUT_SYSTEM)/framework/android.frameworks.faceservice-V1.0-java.jar \
+    vendor/oppo/CPH1909/proprietary/system/framework/vendor.oppo.hardware.biometrics.face-V1.0-java.jar:$(TARGET_COPY_OUT_SYSTEM)/framework/vendor.oppo.hardware.biometrics.face-V1.0-java.jar \
     vendor/oppo/CPH1909/proprietary/system/etc/permissions/org.ifaa.android.manager.permissions.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/org.ifaa.android.manager.permissions.xml \
 
 PRODUCT_COPY_FILES += \
