@@ -97,7 +97,19 @@ re-running `setup-makefiles.sh` no longer emits the broken rules.
      (`LOCAL_PRIVILEGED_MODULE := true`, `LOCAL_DEX_PREOPT := false`).
    * `system/lib/libimsma*.so` (32-bit only — MTK's IMS stack is 32-bit):
      the native libraries `libmtk_vt_service.so` links against. Inert while
-     that JNI library is not shipped; kept for layout parity.
+     that JNI library is not shipped; kept for layout
+     parity.
+   * `system/bin/vtservice` (32-bit only) with its dependency closure
+     installed at the stock `/system` locations: `libmtk_vt_service.so` plus
+     `libsource.so`, `libcomutils.so`, `libdpframework_mtk.so`, `libged_sys.so`,
+     `libgralloc_extra_sys.so`, `libion_mtk_sys.so`, `libion_ulit_sys.so`,
+     `libpq_prot_mtk.so`, `libsignal.so` and `libvt_avsync.so`, plus the
+     `/system` copies of the `vendor.mediatek.hardware.videotelephony@1.0`,
+     `vendor.mediatek.hardware.pq@2.0` and
+     `vendor.mediatek.hardware.power@1.1` HIDL interface libraries. This is
+     what makes the `service vtservice /system/bin/vtservice` line in
+     `init.vtservice.rc` startable. (Stock labels the binary `vtservice_exec`;
+     this port labels it `mtk_vtservice_exec` and runs it permissive.)
    * `system/framework/ims-common.jar`, `mediatek-ims-common.jar`,
      `com.coloros.statistics.jar`, `coloros.support.jar`,
      `com.nearme.romupdate.bugly.jar`: 309-byte stub jars (empty manifest

@@ -56,6 +56,32 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/system/framework/com.nearme.romupdate.bugly.jar:$(TARGET_COPY_OUT_SYSTEM)/framework/com.nearme.romupdate.bugly.jar \
     vendor/oppo/CPH1909/proprietary/system/etc/permissions/com.coloros.libraries.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/com.coloros.libraries.xml \
 
+# Stock videotelephony system-side blobs. /system/bin/vtservice is the
+# VoLTE video-telephony service (started by init.vtservice.rc, class main);
+# it links libmtk_vt_service.so, which in turn needs libsource.so and the
+# MTK display/graphics chain (libdpframework_mtk, libged_sys,
+# libgralloc_extra_sys, libion_mtk_sys, libion_ulit_sys, libpq_prot_mtk,
+# libsignal, libcomutils, libvt_avsync) plus the /system copies of the
+# MTK HIDL interface libraries the HAL stack uses. All 32-bit only; the
+# stock image has no 64-bit copies. The IMS/VT service itself is fed over
+# the /dev/socket/volte_vt socket by vtservice_hidl and the volte IMS stack.
+PRODUCT_COPY_FILES += \
+    vendor/oppo/CPH1909/proprietary/system/bin/vtservice:$(TARGET_COPY_OUT_SYSTEM)/bin/vtservice \
+    vendor/oppo/CPH1909/proprietary/system/lib/libmtk_vt_service.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libmtk_vt_service.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libsource.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libsource.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libcomutils.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libcomutils.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libdpframework_mtk.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libdpframework_mtk.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libged_sys.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libged_sys.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libgralloc_extra_sys.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libgralloc_extra_sys.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libion_mtk_sys.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libion_mtk_sys.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libion_ulit_sys.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libion_ulit_sys.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libpq_prot_mtk.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libpq_prot_mtk.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libsignal.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libsignal.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libvt_avsync.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libvt_avsync.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/vendor.mediatek.hardware.videotelephony@1.0.so:$(TARGET_COPY_OUT_SYSTEM)/lib/vendor.mediatek.hardware.videotelephony@1.0.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/vendor.mediatek.hardware.pq@2.0.so:$(TARGET_COPY_OUT_SYSTEM)/lib/vendor.mediatek.hardware.pq@2.0.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/vendor.mediatek.hardware.power@1.1.so:$(TARGET_COPY_OUT_SYSTEM)/lib/vendor.mediatek.hardware.power@1.1.so \
+
 PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/app/EmCamera/oat/arm64/EmCamera.odex:$(TARGET_COPY_OUT_VENDOR)/app/EmCamera/oat/arm64/EmCamera.odex \
     vendor/oppo/CPH1909/proprietary/vendor/app/EmCamera/oat/arm64/EmCamera.vdex:$(TARGET_COPY_OUT_VENDOR)/app/EmCamera/oat/arm64/EmCamera.vdex \
