@@ -155,6 +155,11 @@ re-running `setup-makefiles.sh` no longer emits the broken rules.
    `fingerprint@2.1-service` through `sileadManager.apk` + the
    `fingerprint.mt6765` shim). Similarly the stock `oat/arm(64)` versions of
    the stub jars are dropped — LineageOS builds its own boot artifacts.
+   The stock legacy power HALs (`vendor/lib[64]/hw/power.mt6765.so` and
+   `power.default.so`) are likewise NOT imported/installed: the device tree
+   builds its own `power.mt6765` shim (DT2W writer for
+   `/proc/touchpanel/double_tap_enable`), and the stock modules would install
+   to the exact same path while being unable to do DT2W at all.
      `device/oppo/CPH1909/configs/permissions/privapp-permissions-ims.xml`
      (copied into `/system/etc/permissions/` by the device tree).
 

@@ -718,8 +718,6 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/lib/hw/lights.mt6765.so:$(TARGET_COPY_OUT_VENDOR)/lib/hw/lights.mt6765.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/hw/local_time.default.so:$(TARGET_COPY_OUT_VENDOR)/lib/hw/local_time.default.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/hw/memtrack.mt6765.so:$(TARGET_COPY_OUT_VENDOR)/lib/hw/memtrack.mt6765.so \
-    vendor/oppo/CPH1909/proprietary/vendor/lib/hw/power.default.so:$(TARGET_COPY_OUT_VENDOR)/lib/hw/power.default.so \
-    vendor/oppo/CPH1909/proprietary/vendor/lib/hw/power.mt6765.so:$(TARGET_COPY_OUT_VENDOR)/lib/hw/power.mt6765.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/hw/sensors.mt6765.so:$(TARGET_COPY_OUT_VENDOR)/lib/hw/sensors.mt6765.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/hw/sound_trigger.primary.mt6765.so:$(TARGET_COPY_OUT_VENDOR)/lib/hw/sound_trigger.primary.mt6765.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/hw/thermal.mt6765.so:$(TARGET_COPY_OUT_VENDOR)/lib/hw/thermal.mt6765.so \
@@ -1178,8 +1176,6 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/hw/lights.mt6765.so:$(TARGET_COPY_OUT_VENDOR)/lib64/hw/lights.mt6765.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/hw/local_time.default.so:$(TARGET_COPY_OUT_VENDOR)/lib64/hw/local_time.default.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/hw/memtrack.mt6765.so:$(TARGET_COPY_OUT_VENDOR)/lib64/hw/memtrack.mt6765.so \
-    vendor/oppo/CPH1909/proprietary/vendor/lib64/hw/power.default.so:$(TARGET_COPY_OUT_VENDOR)/lib64/hw/power.default.so \
-    vendor/oppo/CPH1909/proprietary/vendor/lib64/hw/power.mt6765.so:$(TARGET_COPY_OUT_VENDOR)/lib64/hw/power.mt6765.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/hw/sensors.mt6765.so:$(TARGET_COPY_OUT_VENDOR)/lib64/hw/sensors.mt6765.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/hw/sound_trigger.primary.mt6765.so:$(TARGET_COPY_OUT_VENDOR)/lib64/hw/sound_trigger.primary.mt6765.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/hw/thermal.mt6765.so:$(TARGET_COPY_OUT_VENDOR)/lib64/hw/thermal.mt6765.so \
