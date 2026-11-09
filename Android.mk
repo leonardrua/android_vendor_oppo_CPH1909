@@ -153,6 +153,42 @@ LOCAL_MODULE_SUFFIX := .apk
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
+# com.mediatek.ims: the MTK IMS service application (ImsService.apk),
+# sharedUserId=android.uid.phone. Imports the same way SoterService does: the
+# stock APK is dex-stripped (its dex lives in the stock
+# oat/arm64/ImsService.vdex, an Android 8.1 quickened artifact the Android 10
+# runtime cannot use), so the committed APK carries the unquickened
+# classes.dex extracted from that vdex (see the vendor README). Privileged
+# module: it lives in /system/priv-app. Platform signature, not PRESIGNED,
+# for the same reason as SoterService.
+LOCAL_MODULE := ImsService
+LOCAL_MODULE_OWNER := oppo
+LOCAL_SRC_FILES := proprietary/system/priv-app/ImsService/ImsService.apk
+LOCAL_CERTIFICATE := platform
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_CLASS := APPS
+LOCAL_DEX_PREOPT := false
+LOCAL_MODULE_SUFFIX := .apk
+LOCAL_PRIVILEGED_MODULE := true
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+# com.coloros.simsettings: the OPPO SIM settings/VoLTE switch application
+# (OppoSimSettings.apk), sharedUserId=android.uid.system. Same treatment as
+# ImsService: unquickened classes.dex from the stock vdex, platform
+# signature, privileged module in /system/priv-app.
+LOCAL_MODULE := OppoSimSettings
+LOCAL_MODULE_OWNER := oppo
+LOCAL_SRC_FILES := proprietary/system/priv-app/OppoSimSettings/OppoSimSettings.apk
+LOCAL_CERTIFICATE := platform
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_CLASS := APPS
+LOCAL_DEX_PREOPT := false
+LOCAL_MODULE_SUFFIX := .apk
+LOCAL_PRIVILEGED_MODULE := true
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
 LOCAL_MODULE := SysuiDarkThemeOverlay
 LOCAL_MODULE_OWNER := oppo
 LOCAL_SRC_FILES := proprietary/vendor/overlay/SysuiDarkTheme/SysuiDarkThemeOverlay.apk

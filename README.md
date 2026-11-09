@@ -16,7 +16,7 @@ $(call inherit-product-if-exists, vendor/oppo/CPH1909/CPH1909-vendor.mk)
 
 | Path                 | Description                                              |
 | -------------------- | -------------------------------------------------------- |
-| `proprietary/`       | 1466 files: the stock vendor dump plus 3 Soter `/system` files (1 repacked APK + 2 interface libraries) |
+| `proprietary/`       | the stock vendor dump plus the `/system` blobs described below (2 repacked IMS APKs + 4 `libimsma*.so` + 5 framework/permission files) |
 | `CPH1909-vendor.mk`  | `PRODUCT_COPY_FILES` list + `PRODUCT_PACKAGES` override  |
 | `Android.mk`         | prebuilt APK modules (`BUILD_PREBUILT`)                  |
 | `Android.bp`         | generated Soong namespace                                 |
@@ -75,6 +75,46 @@ re-running `setup-makefiles.sh` no longer emits the broken rules.
    links against, is kept at its stock `/system/lib[64]` location (not
    `/vendor/lib[64]`) and copied there by `CPH1909-vendor.mk`.
 
+1a. **The stock IMS (VoLTE) system blobs are imported.** This mirrors how
+   MTK reference device trees wire IMS (e.g. `Xiaomi/dandelion`,
+   `Redmi/begonia`): they add `PRODUCT_BOOT_JARS`/`PRODUCT_PACKAGES` entries
+   for MTK's IMS framework source (`mediatek-ims-base`, `mediatek-ims-common`,
+   `ImsServiceBase`, ...) and `configs/permissions/*.xml` permission
+   allowlists, and deliberately do NOT ship the dex-stripped
+   `priv-app/ImsService` APK from the factory dump. A dump-based port has no
+   access to that source, so the stock APKs are imported and repacked exactly
+   like SoterService:
+
+   * **ImsService** (`system/priv-app/ImsService/ImsService.apk`,
+     `com.mediatek.ims`, `sharedUserId=android.uid.phone`) and
+     **OppoSimSettings** (`system/priv-app/OppoSimSettings/OppoSimSettings.apk`,
+     `com.coloros.simsettings`, `sharedUserId=android.uid.system`). The stock
+     APKs are dex-stripped and their `oat/arm64/*.vdex` files hold Android 8.1
+     quickened bytecode that the Android 10 runtime cannot execute, so the
+     committed APKs carry unquickened `classes.dex` extracted from those
+     vdex files (see the repack recipe below) and are re-signed with the
+     build's platform key. They are privileged modules in `/system/priv-app`
+     (`LOCAL_PRIVILEGED_MODULE := true`, `LOCAL_DEX_PREOPT := false`).
+   * `system/lib/libimsma*.so` (32-bit only — MTK's IMS stack is 32-bit):
+     the native libraries `libmtk_vt_service.so` links against. Inert while
+     that JNI library is not shipped; kept for layout parity.
+   * `system/framework/ims-common.jar`, `mediatek-ims-common.jar`,
+     `com.coloros.statistics.jar`, `coloros.support.jar`,
+     `com.nearme.romupdate.bugly.jar`: 309-byte stub jars (empty manifest
+     only) kept at their stock locations. Nothing in this build's boot
+     classpath references them.
+   * `system/etc/permissions/com.coloros.libraries.xml`: registers
+     `com.coloros.statistics`, the library the OppoSimSettings
+     `<uses-library>` declaration names. Both IMS APKs' `<uses-library>`
+     entries are `required="false"` (verified from the binary manifests), so
+     both applications install regardless; `com.mediatek.op.ims.common`
+     (ImsService's `<uses-library>`) is not shipped because stock never
+     shipped it either.
+   * `com.mediatek.ims` and `com.coloros.simsettings` additionally need their
+     signature|privileged permissions allowlisted; see
+     `device/oppo/CPH1909/configs/permissions/privapp-permissions-ims.xml`
+     (copied into `/system/etc/permissions/` by the device tree).
+
 2. **Prebuilt APKs are no longer copied via `PRODUCT_COPY_FILES`**
    (LineageOS 17.1 rejects `%.apk` entries there with
    `Prebuilt apk found in PRODUCT_COPY_FILES ...`): the 9 vendor apps
@@ -108,8 +148,45 @@ re-running `setup-makefiles.sh` no longer emits the broken rules.
    (`vendor/etc/NOTICE.xml.gz -> obj/NOTICE_VENDOR.xml.gz -> ...`) and fails
    the build. It is removed from both the blob list and the copy rules.
 
-4. The SoterService import and the prebuilt-APK modules/`NOTICE.xml.gz` removal are the only
+4. The SoterService import, the IMS imports and the prebuilt-APK modules/`NOTICE.xml.gz` removal are the only
    functional deviations; the rest of the tree is the verbatim stock dump.
+
+### Repacking the IMS APKs
+
+`ImsService.apk` and `OppoSimSettings.apk` are repacked the same way as
+SoterService, with the roles of the paths swapped:
+
+```sh
+# 1. Unquicken the stock vdex files (vdexExtractor, see below).
+mkdir -p /tmp/ims
+vdexExtractor -i /path/to/dump/system/priv-app/ImsService/oat/arm64/ImsService.vdex -o /tmp/ims -f
+vdexExtractor -i /path/to/dump/system/priv-app/OppoSimSettings/oat/arm64/OppoSimSettings.vdex -o /tmp/ims -f
+# /tmp/ims/{ImsService_classes.dex,OppoSimSettings_classes.dex}
+
+# 2. Rebuild each APK: every stock entry except META-INF/*, plus the
+#    unquickened classes.dex (STORED). resources.arsc and classes.dex
+#    stay uncompressed, everything else may follow the stock compression.
+python3 - <<'PY'
+import zipfile
+
+for name in ('ImsService', 'OppoSimSettings'):
+    src = f'/path/to/dump/system/priv-app/{name}/{name}.apk'
+    dst = f'/home/asus/android_vendor_oppo_CPH1909/proprietary/system/priv-app/{name}/{name}.apk'
+    dex = f'/tmp/ims/{name}_classes.dex'
+    with zipfile.ZipFile(src) as zin:
+        entries = [(i, zin.read(i.filename)) for i in zin.infolist()
+                   if not i.filename.startswith('META-INF/')]
+    with zipfile.ZipFile(dst, 'w') as zout:
+        for info, data in entries:
+            comp = zipfile.ZIP_STORED if info.filename in ('resources.arsc',) else zipfile.ZIP_DEFLATED
+            zout.writestr(info.filename, data, comp)
+        zout.writestr('classes.dex', open(dex, 'rb').read(), zipfile.ZIP_STORED)
+PY
+```
+
+Both APKs' `<uses-library>` entries are `required="false"` (verified from the
+binary manifests), so neither library needs to exist for the applications to
+install.
 
 ### Repacking SoterService
 
@@ -162,12 +239,15 @@ should now re-emit:
 * The Soter `/system` entries: the interface-library copy rules and the
   `SoterService` module, including `LOCAL_CERTIFICATE := platform` (the
   generator signs APK entries without `;PRESIGNED` with the platform key).
+* The IMS `/system` entries: the `libimsma*.so`, stub-jar and permissions
+  copy rules, plus the `ImsService`/`OppoSimSettings` privileged modules.
 * No `NOTICE.xml.gz` copy rule.
 
 Re-running `extract-files.sh` also overwrites
-`proprietary/system/app/SoterService/SoterService.apk` with the stock
-dex-stripped APK. Re-apply the repack above whenever the tree is extracted
-again.
+`proprietary/system/app/SoterService/SoterService.apk` and
+`proprietary/system/priv-app/{ImsService,OppoSimSettings}/.*\.apk` with the
+stock dex-stripped APKs. Re-apply the repack above whenever the tree is
+extracted again.
 
 Before trusting a regenerated tree, check:
 
@@ -176,6 +256,8 @@ grep '\.apk.*TARGET_COPY_OUT_VENDOR' CPH1909-vendor.mk      # should be empty
 grep 'NOTICE\.xml\.gz' CPH1909-vendor.mk                    # should be empty
 unzip -l proprietary/system/app/SoterService/SoterService.apk   # must list classes.dex
 grep -A12 'LOCAL_MODULE := SoterService' Android.mk         # must say platform
+grep -A13 'LOCAL_MODULE := ImsService' Android.mk           # must say platform, private
+grep -A13 'LOCAL_MODULE := OppoSimSettings' Android.mk      # must say platform, private
 grep 'LOCAL_CERTIFICATE := PRESIGNED' Android.mk            # should be empty
 ```
 
