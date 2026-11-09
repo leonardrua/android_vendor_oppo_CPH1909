@@ -127,6 +127,30 @@ re-running `setup-makefiles.sh` no longer emits the broken rules.
      `device/oppo/CPH1909/configs/permissions/privapp-permissions-ims.xml`
      (copied into `/system/etc/permissions/` by the device tree).
 
+1b. **The stock fingerprint framework stubs are imported (system-side).**
+   The three 8.1 framework stub jars copied verbatim —
+   `system/framework/android.frameworks.fingerprintservice-V1.0-java.jar`,
+   `system/framework/vendor.oppo.hardware.biometrics.fingerprint-V2.1-java.jar`
+   and `system/framework/ifaamanager.jar` — are 309-byte empty jars (empty
+   manifest only). No AOSP/LineageOS build module emits these paths, and
+   nothing in this ROM loads them: `frameworks/base` builds the real
+   fingerprint API into `framework.jar`. They are stock-layout parity.
+   `ifaamanager.jar` (OPPO's IFAA framework) is declared a public library by
+   `system/etc/permissions/org.ifaa.android.manager.permissions.xml`, same
+   as in stock, and that file is imported with it.
+
+1c. **The stock fingerprint HAL chain.** The stock system-side interface
+   libraries (`android.frameworks.fingerprintservice@1.0.so`,
+   `vendor.oppo.hardware.biometrics.fingerprint@2.1.so`/`fingerprintpay@1.0.so`,
+   `libfpspolicy_fw.so`) are deliberately NOT imported: their only consumers
+   are the two stock OPPO fingerprint services, which the device tree
+   disables via stub rc files (the Silead sensor is behind the AOSP
+   `fingerprint@2.1-service` through `sileadManager.apk` + the
+   `fingerprint.mt6765` shim). Similarly the stock `oat/arm(64)` versions of
+   the stub jars are dropped — LineageOS builds its own boot artifacts.
+     `device/oppo/CPH1909/configs/permissions/privapp-permissions-ims.xml`
+     (copied into `/system/etc/permissions/` by the device tree).
+
 2. **Prebuilt APKs are no longer copied via `PRODUCT_COPY_FILES`**
    (LineageOS 17.1 rejects `%.apk` entries there with
    `Prebuilt apk found in PRODUCT_COPY_FILES ...`): the 9 vendor apps
@@ -160,7 +184,7 @@ re-running `setup-makefiles.sh` no longer emits the broken rules.
    (`vendor/etc/NOTICE.xml.gz -> obj/NOTICE_VENDOR.xml.gz -> ...`) and fails
    the build. It is removed from both the blob list and the copy rules.
 
-4. The SoterService import, the IMS imports and the prebuilt-APK modules/`NOTICE.xml.gz` removal are the only
+4. The SoterService import, the IMS imports, the fingerprint framework stubs and the prebuilt-APK modules/`NOTICE.xml.gz` removal are the only
    functional deviations; the rest of the tree is the verbatim stock dump.
 
 ### Repacking the IMS APKs
@@ -253,6 +277,7 @@ should now re-emit:
   generator signs APK entries without `;PRESIGNED` with the platform key).
 * The IMS `/system` entries: the `libimsma*.so`, stub-jar and permissions
   copy rules, plus the `ImsService`/`OppoSimSettings` privileged modules.
+* The fingerprint framework stubs and their permissions XML copy rules.
 * No `NOTICE.xml.gz` copy rule.
 
 Re-running `extract-files.sh` also overwrites

@@ -82,6 +82,20 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/system/lib/vendor.mediatek.hardware.pq@2.0.so:$(TARGET_COPY_OUT_SYSTEM)/lib/vendor.mediatek.hardware.pq@2.0.so \
     vendor/oppo/CPH1909/proprietary/system/lib/vendor.mediatek.hardware.power@1.1.so:$(TARGET_COPY_OUT_SYSTEM)/lib/vendor.mediatek.hardware.power@1.1.so \
 
+# Stock fingerprint system-side framework stubs. All three are 309-byte empty
+# stub jars: the stock 8.1 framework shipped them only to keep the boot
+# classpath/permission library declarations satisfiable. No AOSP/LineageOS
+# build module emits these paths, so they cannot shadow real builds. They
+# provide no classes to anything; the OPPO IFAA manager stub is declared a
+# public library by org.ifaa.android.manager.permissions.xml, same as in stock.
+# (android.frameworks.fingerprintservice-V1.0-java.jar is the same stub the
+# stock image carries; the real framework API lives in framework.jar.)
+PRODUCT_COPY_FILES += \
+    vendor/oppo/CPH1909/proprietary/system/framework/android.frameworks.fingerprintservice-V1.0-java.jar:$(TARGET_COPY_OUT_SYSTEM)/framework/android.frameworks.fingerprintservice-V1.0-java.jar \
+    vendor/oppo/CPH1909/proprietary/system/framework/vendor.oppo.hardware.biometrics.fingerprint-V2.1-java.jar:$(TARGET_COPY_OUT_SYSTEM)/framework/vendor.oppo.hardware.biometrics.fingerprint-V2.1-java.jar \
+    vendor/oppo/CPH1909/proprietary/system/framework/ifaamanager.jar:$(TARGET_COPY_OUT_SYSTEM)/framework/ifaamanager.jar \
+    vendor/oppo/CPH1909/proprietary/system/etc/permissions/org.ifaa.android.manager.permissions.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/org.ifaa.android.manager.permissions.xml \
+
 PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/app/EmCamera/oat/arm64/EmCamera.odex:$(TARGET_COPY_OUT_VENDOR)/app/EmCamera/oat/arm64/EmCamera.odex \
     vendor/oppo/CPH1909/proprietary/vendor/app/EmCamera/oat/arm64/EmCamera.vdex:$(TARGET_COPY_OUT_VENDOR)/app/EmCamera/oat/arm64/EmCamera.vdex \
