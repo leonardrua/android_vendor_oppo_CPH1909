@@ -117,6 +117,33 @@ LOCAL_VENDOR_MODULE := true
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
+# com.tencent.soter.soterserver: the Tencent Soter server app. Runs with
+# sharedUserId=android.uid.system in /system/app and is the app-side
+# counterpart of vendor.trustonic.soter@1.0-service (which implements
+# vendor.qti.hardware.soter@1.0::ISoter). It exposes the
+# com.tencent.soter.soterserver.ISoterService binder service that apps use for
+# Soter biometric authentication (WeChat fingerprint payment, etc.).
+#
+# This is a system app, not a vendor app: sharedUserId=android.uid.system
+# requires /system/app plus the platform signature. The stock APK is
+# dex-stripped (the dex lives in the stock oat/arm64 vdex, an Android 8.1
+# quickened artifact that the Android 10 runtime cannot use), so the committed
+# APK carries the unquickened classes.dex extracted from that vdex.
+# LOCAL_CERTIFICATE := platform re-signs it with the build's platform key;
+# PRESIGNED would keep OPPO's signature, which does not match the platform
+# key of an unofficial LineageOS build, and the package manager would reject
+# the shared system uid.
+LOCAL_MODULE := SoterService
+LOCAL_MODULE_OWNER := oppo
+LOCAL_SRC_FILES := proprietary/system/app/SoterService/SoterService.apk
+LOCAL_CERTIFICATE := platform
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_CLASS := APPS
+LOCAL_DEX_PREOPT := false
+LOCAL_MODULE_SUFFIX := .apk
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
 LOCAL_MODULE := SysuiDarkThemeOverlay
 LOCAL_MODULE_OWNER := oppo
 LOCAL_SRC_FILES := proprietary/vendor/overlay/SysuiDarkTheme/SysuiDarkThemeOverlay.apk

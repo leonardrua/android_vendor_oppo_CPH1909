@@ -16,8 +16,20 @@ PRODUCT_PACKAGES += \
     NlpService \
     RootPA \
     WapiCertManager \
+    SoterService \
     sileadManager \
     SysuiDarkThemeOverlay
+
+# vendor.qti.hardware.soter@1.0.so is the HIDL interface library used by
+# vendor.trustonic.soter@1.0-service. The stock image places it in
+# /system/lib[64] (not /vendor/lib[64]); keep that placement. The VNDK-lite
+# vendor linker namespace includes /system/${LIB} itself (see
+# BoardConfig.mk), and system_lib_file is readable and executable by every
+# domain (public/domain.te), so the 8.1 HAL can load the library from the
+# Android 10 system partition.
+PRODUCT_COPY_FILES += \
+    vendor/oppo/CPH1909/proprietary/system/lib/vendor.qti.hardware.soter@1.0.so:$(TARGET_COPY_OUT_SYSTEM)/lib/vendor.qti.hardware.soter@1.0.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/vendor.qti.hardware.soter@1.0.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/vendor.qti.hardware.soter@1.0.so \
 
 PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/app/EmCamera/oat/arm64/EmCamera.odex:$(TARGET_COPY_OUT_VENDOR)/app/EmCamera/oat/arm64/EmCamera.odex \
