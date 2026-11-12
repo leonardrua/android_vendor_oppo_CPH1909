@@ -104,7 +104,9 @@ on charger
     write /sys/devices/system/cpu/cpu5/online 0
     write /sys/devices/system/cpu/cpu4/online 0
 
-    mount ext4 /dev/block/platform/bootdevice/by-name/system /system ro wait
+    # Android 10 mounts /system (and /vendor) from the device-tree fstab in
+    # first-stage init before second-stage init runs, including in charger
+    # mode, so the 8.1 ext4 mount here always failed and was removed.
     exec /system/bin/e2fsck -f -p /dev/block/platform/bootdevice/by-name/cache
     mount ext4 /dev/block/platform/bootdevice/by-name/cache /cache rw wait
     chmod 0666 /dev/kmsg
