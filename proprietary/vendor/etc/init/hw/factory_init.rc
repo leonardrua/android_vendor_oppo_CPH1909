@@ -192,6 +192,10 @@ on firmware_mounts_complete
     trigger fs
     trigger post-fs
 
+    # With /system mounted and properties form /system + /factory available,
+    # some services can be started.
+    trigger late-fs
+
     # Load properties from /system/ + /factory after fs mount. Place
     # this in another action so that the load will be scheduled after the prior
     # issued fs triggers have completed.
@@ -208,6 +212,14 @@ on firmware_mounts_complete
     trigger boot
 
 # mount different fs start
+on late-fs
+    # Ensure that tracefs has the correct permissions.
+    # This does not work correctly if it is called in post-fs.
+    chmod 0755 /sys/kernel/debug/tracing
+
+    # HALs required before storage encryption can get unlocked (FBE/FDE)
+    class_start early_hal
+
 on fs
 #INTERNAL_START
     write /proc/bootprof "INIT:Mount_START"
@@ -223,12 +235,12 @@ on post-fs
     start keymaster-3-0
     start keymaster_attestation-1-1
     start nfc_hal_service
-    # once everything is setup, no need to modify /
-    mount rootfs rootfs / ro remount
-    # Mount shared so changes propagate into child namespaces
-    mount rootfs rootfs / shared rec
+    # Once everything is setup, no need to modify /.
+    # The bind+remount combination allows this to work in containers.
+    mount rootfs rootfs / remount bind ro nodev
     # Mount default storage into root namespace
-    mount none /mnt/runtime/default /storage slave bind rec
+    mount none /mnt/runtime/default /storage bind rec
+    mount none none /storage slave rec
 
     # Make sure /sys/kernel/debug (if present) is labeled properly
     restorecon_recursive /sys/kernel/debug
@@ -639,7 +651,7 @@ on property:ro.crypto.fake_encrypt=1 && property:vold.post_fs_data_done=1
     setprop ro.crypto.state unencrypted
     setprop vold.decrypt trigger_restart_framework
 
-service ueventd /sbin/ueventd
+service ueventd /system/bin/ueventd
     class core
     critical
     seclabel u:r:ueventd:s0
@@ -651,9 +663,6 @@ service console /system/bin/sh
     user shell
     group shell log readproc
     seclabel u:r:shell:s0
-
-on property:sys.powerctl=*
-    powerctl ${sys.powerctl}
 
 on property:ro.debuggable=1
     # Give writes to anyone for the trace folder on debug builds.

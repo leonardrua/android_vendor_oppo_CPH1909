@@ -267,6 +267,14 @@ on late-init
     trigger early-boot
     trigger boot
 
+on late-fs
+    # Ensure that tracefs has the correct permissions.
+    # This does not work correctly if it is called in post-fs.
+    chmod 0755 /sys/kernel/debug/tracing
+
+    # HALs required before storage encryption can get unlocked (FBE/FDE)
+    class_start early_hal
+
 on fs
      ## USB configfs
     mkdir /dev/usb-ffs 0770 shell shell
@@ -313,10 +321,9 @@ on post-fs
     start keyinstall-1-0
     start keymaster_attestation-1-1
     start nfc_hal_service
-    # once everything is setup, no need to modify /
-    mount rootfs rootfs / ro remount
-    # Mount shared so changes propagate into child namespaces
-    mount rootfs rootfs / shared rec
+    # Once everything is setup, no need to modify /.
+    # The bind+remount combination allows this to work in containers.
+    mount rootfs rootfs / remount bind ro nodev
     # Mount default storage into root namespace
     mount none /mnt/runtime/default /storage bind rec
     mount none none /storage slave rec
@@ -324,7 +331,6 @@ on post-fs
     # Make sure /sys/kernel/debug (if present) is labeled properly
     # Note that tracefs may be mounted under debug, so we need to cross filesystems
     restorecon --recursive --cross-filesystems /sys/kernel/debug
-    chmod 0755 /sys/kernel/debug/tracing
 
     # Support legacy paths
     symlink /sdcard /storage/sdcard0
@@ -476,7 +482,7 @@ on post-fs-data
     restorecon --recursive --skip-ce /data
 
     # Check any timezone data in /data is newer than the copy in /system, delete if not.
-    exec - system system -- /system/bin/tzdatacheck /system/usr/share/zoneinfo /data/misc/zoneinfo
+    exec - system system -- /system/bin/tzdatacheck /apex/com.android.runtime/etc/tz /data/misc/zoneinfo
 
     # If there is no post-fs-data action in the init.<device>.rc file, you
     # must uncomment this line, otherwise encrypted filesystems
@@ -587,11 +593,9 @@ on property:ro.crypto.fake_encrypt=1 && property:vold.post_fs_data_done=1
     setprop ro.crypto.state unencrypted
     setprop vold.decrypt trigger_restart_framework
 
-on property:sys.powerctl=*
-    powerctl ${sys.powerctl}
 ## Daemon processes to be run by init.
 ##
-service ueventd /sbin/ueventd
+service ueventd /system/bin/ueventd
     class core
     critical
     seclabel u:r:ueventd:s0
