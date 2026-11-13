@@ -16,7 +16,7 @@ $(call inherit-product-if-exists, vendor/oppo/CPH1909/CPH1909-vendor.mk)
 
 | Path                 | Description                                              |
 | -------------------- | -------------------------------------------------------- |
-| `proprietary/`       | the stock vendor dump plus the `/system` blobs described below (2 repacked IMS APKs + 4 `libimsma*.so` + 5 framework/permission files) |
+| `proprietary/`       | the stock vendor dump plus the selected `/system` blobs described below (including MediaTek native libraries) |
 | `CPH1909-vendor.mk`  | `PRODUCT_COPY_FILES` list + `PRODUCT_PACKAGES` override  |
 | `Android.mk`         | prebuilt APK modules (`BUILD_PREBUILT`)                  |
 | `Android.bp`         | generated Soong namespace                                 |
@@ -162,6 +162,21 @@ re-running `setup-makefiles.sh` no longer emits the broken rules.
    to the exact same path while being unable to do DT2W at all.
      `device/oppo/CPH1909/configs/permissions/privapp-permissions-ims.xml`
      (copied into `/system/etc/permissions/` by the device tree).
+
+1d. **MediaTek native libraries from `/system` are imported at their stock
+    locations.** The `/system/lib` and `/system/lib64` libraries are kept in
+    `proprietary/system/` and copied to the system partition, not relocated to
+    `/vendor`. This includes the stock HIDL interface library
+    `vendor.mediatek.hardware.camera.device@1.1.so`, a direct dependency of
+    the MTK camera stack, as well as the other MediaTek audio, Bluetooth, DRM,
+    NVRAM, display, radio, GNSS, and related native libraries, plus the stock
+    64-bit UBSan runtime directly required by MTK media/DRM libraries. The API-27
+    MediaTek framework implementation JARs and precompiled ART/OAT/VDEX
+    artifacts are intentionally excluded: they are tied to the stock
+    framework/runtime and are not compatible drop-ins for the Android 10
+    system image. The separately documented empty framework-layout stub jars
+    remain imported. Stock system apps, binaries, and init scripts are not
+    enabled by this library-only import.
 
 2. **Prebuilt APKs are no longer copied via `PRODUCT_COPY_FILES`**
    (LineageOS 17.1 rejects `%.apk` entries there with

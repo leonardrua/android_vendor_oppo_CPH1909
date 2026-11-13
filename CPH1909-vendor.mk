@@ -82,6 +82,80 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/system/lib/vendor.mediatek.hardware.pq@2.0.so:$(TARGET_COPY_OUT_SYSTEM)/lib/vendor.mediatek.hardware.pq@2.0.so \
     vendor/oppo/CPH1909/proprietary/system/lib/vendor.mediatek.hardware.power@1.1.so:$(TARGET_COPY_OUT_SYSTEM)/lib/vendor.mediatek.hardware.power@1.1.so \
 
+# Additional stock MediaTek native libraries from /system and their direct
+# 64-bit gralloc/ION/UBSan support libraries. Keep these at their system
+# locations; API-27 framework implementation jars and ART/OAT files are not
+# Android 10 drop-ins.
+PRODUCT_COPY_FILES += \
+    vendor/oppo/CPH1909/proprietary/system/lib/libbessound_hd_mtk.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libbessound_hd_mtk.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libbluetooth_mtk_pure_system.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libbluetooth_mtk_pure_system.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libbluetoothem_mtk_system.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libbluetoothem_mtk_system.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libcustom_nvram_mtk.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libcustom_nvram_mtk.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libdrmmtkutil.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libdrmmtkutil.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libdrmmtkwhitelist.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libdrmmtkwhitelist.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libfile_op_mtk.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libfile_op_mtk.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libged_kpi.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libged_kpi.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libhwm_mtk.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libhwm_mtk.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libmediatek_exceptionlog.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libmediatek_exceptionlog.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libmtk_vt_wrapper.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libmtk_vt_wrapper.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libmtkaudio_utils.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libmtkaudio_utils.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libmtkavenhancements.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libmtkavenhancements.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libmtklimiter.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libmtklimiter.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libmtkshifter.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libmtkshifter.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libnvram_mtk.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libnvram_mtk.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libnvram_platform_mtk.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libnvram_platform_mtk.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libnvram_sec_mtk.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libnvram_sec_mtk.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libstagefright_wfd_mtk.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libstagefright_wfd_mtk.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/mtkdrm/libdrmmtkplugin.so:$(TARGET_COPY_OUT_SYSTEM)/lib/mtkdrm/libdrmmtkplugin.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/vendor.mediatek.hardware.audio@2.1.so:$(TARGET_COPY_OUT_SYSTEM)/lib/vendor.mediatek.hardware.audio@2.1.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/vendor.mediatek.hardware.camera.callbackclient@1.0.so:$(TARGET_COPY_OUT_SYSTEM)/lib/vendor.mediatek.hardware.camera.callbackclient@1.0.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/vendor.mediatek.hardware.camera.ccap@1.0.so:$(TARGET_COPY_OUT_SYSTEM)/lib/vendor.mediatek.hardware.camera.ccap@1.0.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/vendor.mediatek.hardware.camera.device@1.1.so:$(TARGET_COPY_OUT_SYSTEM)/lib/vendor.mediatek.hardware.camera.device@1.1.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/vendor.mediatek.hardware.dfps@1.0.so:$(TARGET_COPY_OUT_SYSTEM)/lib/vendor.mediatek.hardware.dfps@1.0.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/vendor.mediatek.hardware.gnss@1.1.so:$(TARGET_COPY_OUT_SYSTEM)/lib/vendor.mediatek.hardware.gnss@1.1.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/vendor.mediatek.hardware.nvram@1.0.so:$(TARGET_COPY_OUT_SYSTEM)/lib/vendor.mediatek.hardware.nvram@1.0.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libbessound_hd_mtk.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libbessound_hd_mtk.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libbluetooth_mtk_pure_system.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libbluetooth_mtk_pure_system.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libbluetoothem_mtk_system.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libbluetoothem_mtk_system.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libccci_util_sys.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libccci_util_sys.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libcustom_nvram_mtk.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libcustom_nvram_mtk.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libdpframework_mtk.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libdpframework_mtk.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libdrmmtkutil.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libdrmmtkutil.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libdrmmtkwhitelist.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libdrmmtkwhitelist.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libfile_op_mtk.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libfile_op_mtk.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libged_kpi.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libged_kpi.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libged_sys.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libged_sys.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libgralloc_extra_sys.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libgralloc_extra_sys.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libhwm_mtk.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libhwm_mtk.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libion_mtk_sys.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libion_mtk_sys.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libion_ulit_sys.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libion_ulit_sys.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libmediatek_exceptionlog.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libmediatek_exceptionlog.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libmtk_vt_wrapper.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libmtk_vt_wrapper.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libmtkaudio_utils.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libmtkaudio_utils.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libmtkavenhancements.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libmtkavenhancements.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libmtkbluetooth_jni.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libmtkbluetooth_jni.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libmtklimiter.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libmtklimiter.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libmtkshifter.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libmtkshifter.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libnvram_mtk.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libnvram_mtk.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libnvram_platform_mtk.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libnvram_platform_mtk.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libnvram_sec_mtk.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libnvram_sec_mtk.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libpq_prot_mtk.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libpq_prot_mtk.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libstagefright_wfd_mtk.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libstagefright_wfd_mtk.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libwifitest_mtk.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libwifitest_mtk.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libclang_rt.ubsan_standalone-aarch64-android.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libclang_rt.ubsan_standalone-aarch64-android.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/mtkdrm/libdrmmtkplugin.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/mtkdrm/libdrmmtkplugin.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/vendor.mediatek.hardware.audio@2.1.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/vendor.mediatek.hardware.audio@2.1.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/vendor.mediatek.hardware.camera.device@1.1.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/vendor.mediatek.hardware.camera.device@1.1.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/vendor.mediatek.hardware.dfps@1.0.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/vendor.mediatek.hardware.dfps@1.0.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/vendor.mediatek.hardware.gnss@1.1.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/vendor.mediatek.hardware.gnss@1.1.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/vendor.mediatek.hardware.keymaster_attestation@1.0.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/vendor.mediatek.hardware.keymaster_attestation@1.0.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/vendor.mediatek.hardware.keymaster_attestation@1.1.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/vendor.mediatek.hardware.keymaster_attestation@1.1.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/vendor.mediatek.hardware.nvram@1.0.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/vendor.mediatek.hardware.nvram@1.0.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/vendor.mediatek.hardware.power@1.1.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/vendor.mediatek.hardware.power@1.1.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/vendor.mediatek.hardware.pq@2.0.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/vendor.mediatek.hardware.pq@2.0.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/vendor.mediatek.hardware.radio@2.0.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/vendor.mediatek.hardware.radio@2.0.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/vendor.mediatek.hardware.videotelephony@1.0.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/vendor.mediatek.hardware.videotelephony@1.0.so \
+
 # Stock fingerprint system-side framework stubs. All three are 309-byte empty
 # stub jars: the stock 8.1 framework shipped them only to keep the boot
 # classpath/permission library declarations satisfiable. No AOSP/LineageOS
