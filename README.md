@@ -144,7 +144,8 @@ re-running `setup-makefiles.sh` no longer emits the broken rules.
    same stub for the OPPO face stack; the stock `face_hal` cannot load in
    this build (its `DT_NEEDED` system-side libs are deliberately not
    imported) and its service is disabled by an override rc in the device
-   tree.
+   tree. The face HIDL interface itself is built from source in the device
+   tree (`interfaces/vendor/hardware/biometrics/face/1.0/`), not imported.
 
 1c. **The stock fingerprint HAL chain.** The stock system-side interface
    libraries (`android.frameworks.fingerprintservice@1.0.so`,
