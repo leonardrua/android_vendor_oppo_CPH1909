@@ -82,6 +82,27 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/system/lib/vendor.mediatek.hardware.pq@2.0.so:$(TARGET_COPY_OUT_SYSTEM)/lib/vendor.mediatek.hardware.pq@2.0.so \
     vendor/oppo/CPH1909/proprietary/system/lib/vendor.mediatek.hardware.power@1.1.so:$(TARGET_COPY_OUT_SYSTEM)/lib/vendor.mediatek.hardware.power@1.1.so \
 
+# Additional stock MediaTek/OPPO system/bin helpers referenced by the vendor
+# init scripts and their direct dependency closure. Keep these at their stock
+# system paths. The binaries are factory/meta/modem/logging helpers rather than
+# replacements for AOSP-built system services.
+PRODUCT_COPY_FILES += \
+    vendor/oppo/CPH1909/proprietary/system/bin/autochmod.sh:$(TARGET_COPY_OUT_SYSTEM)/bin/autochmod.sh \
+    vendor/oppo/CPH1909/proprietary/system/bin/emdlogger1:$(TARGET_COPY_OUT_SYSTEM)/bin/emdlogger1 \
+    vendor/oppo/CPH1909/proprietary/system/bin/emdlogger2:$(TARGET_COPY_OUT_SYSTEM)/bin/emdlogger2 \
+    vendor/oppo/CPH1909/proprietary/system/bin/emdlogger5:$(TARGET_COPY_OUT_SYSTEM)/bin/emdlogger5 \
+    vendor/oppo/CPH1909/proprietary/system/bin/factory:$(TARGET_COPY_OUT_SYSTEM)/bin/factory \
+    vendor/oppo/CPH1909/proprietary/system/bin/iwpriv:$(TARGET_COPY_OUT_SYSTEM)/bin/iwpriv \
+    vendor/oppo/CPH1909/proprietary/system/bin/mdlogger:$(TARGET_COPY_OUT_SYSTEM)/bin/mdlogger \
+    vendor/oppo/CPH1909/proprietary/system/bin/meta_tst:$(TARGET_COPY_OUT_SYSTEM)/bin/meta_tst \
+    vendor/oppo/CPH1909/proprietary/system/lib/libmdloggerrecycle.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libmdloggerrecycle.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libmemoryDumpEncoder.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libmemoryDumpEncoder.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libaudiocustparam.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libaudiocustparam.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libkmsetkey.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libkmsetkey.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libmdloggerrecycle.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libmdloggerrecycle.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libminiui.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libminiui.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libsysenv_system.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libsysenv_system.so \
+
 # Additional stock MediaTek native libraries from /system and their direct
 # 64-bit gralloc/ION/UBSan support libraries. Keep these at their system
 # locations; API-27 framework implementation jars and ART/OAT files are not
