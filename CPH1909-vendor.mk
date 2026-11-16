@@ -51,6 +51,10 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/system/lib64/libkeymaster_staging.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libkeymaster_staging.so \
     vendor/oppo/CPH1909/proprietary/system/lib/libstdc++.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libstdc++.so \
     vendor/oppo/CPH1909/proprietary/system/lib64/libstdc++.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libstdc++.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libaed.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libaed.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libaed.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libaed.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libmrdump.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libmrdump.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libmrdump.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libmrdump.so \
 
 # Stock IMS (VoLTE) system-side blobs. ImsService and OppoSimSettings are
 # APKs, so they are BUILD_PREBUILT modules declared in Android.mk (APKs cannot
@@ -549,6 +553,8 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/etc/init/hw/init.oppo.seccommon.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.oppo.seccommon.rc \
     vendor/oppo/CPH1909/proprietary/vendor/etc/init/hw/init.project.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.project.rc \
     vendor/oppo/CPH1909/proprietary/vendor/etc/init/hw/init.sensor_1_0.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.sensor_1_0.rc \
+    vendor/oppo/CPH1909/proprietary/vendor/etc/init/hw/init.volte.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.volte.rc \
+    vendor/oppo/CPH1909/proprietary/vendor/etc/init/hw/init.mal.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.mal.rc \
     vendor/oppo/CPH1909/proprietary/vendor/etc/init/hw/meta_init.connectivity.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/meta_init.connectivity.rc \
     vendor/oppo/CPH1909/proprietary/vendor/etc/init/hw/meta_init.modem.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/meta_init.modem.rc \
     vendor/oppo/CPH1909/proprietary/vendor/etc/init/hw/meta_init.project.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/meta_init.project.rc \

@@ -1,0 +1,14 @@
+# Stub for the stock MTK init.mal.rc.
+#
+# The stock 8.1 vendor image ships this file in /vendor/etc/init/hw/ and
+# init.mt6765.rc imports it unconditionally:
+#
+#     import ${ro.mtkrc.path}init.mal.rc
+#
+# The CPH1909 A.46 dump does not contain it, so without this stub init
+# logs a parse error for every import attempt. MAL (MediaTek Application
+# Layer) is a vendor framework component; none of its binaries or rc
+# services are part of this tree, so the stub is intentionally empty.
+#
+# Keep the file empty (comments only): init accepts an empty rc file and
+# this silences the "cannot open" error without changing boot behaviour.

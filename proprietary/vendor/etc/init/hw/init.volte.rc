@@ -1,0 +1,16 @@
+# Stub for the stock MTK init.volte.rc.
+#
+# The stock 8.1 vendor image ships this file in /vendor/etc/init/hw/ and
+# init.mt6765.rc imports it unconditionally:
+#
+#     import ${ro.mtkrc.path}init.volte.rc
+#
+# The CPH1909 A.46 dump does not contain it (the stock image has no
+# init.volte.rc either), so without this stub init logs a parse error for
+# every import attempt. The VoLTE stack that would use it
+# (vendor/bin/volte_*, libvolte_*.so) is imported into this tree, but the
+# services are started directly by the vendor rc files that ship them, not
+# by this stub.
+#
+# Keep the file empty (comments only): init accepts an empty rc file and
+# this silences the "cannot open" error without changing boot behaviour.
