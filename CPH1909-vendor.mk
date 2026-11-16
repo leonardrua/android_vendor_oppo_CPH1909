@@ -55,6 +55,9 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/system/lib64/libaed.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libaed.so \
     vendor/oppo/CPH1909/proprietary/system/lib/libmrdump.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libmrdump.so \
     vendor/oppo/CPH1909/proprietary/system/lib64/libmrdump.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libmrdump.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libprogrambinary.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libprogrambinary.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libprogrambinary.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libprogrambinary.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libsink.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libsink.so \
 
 # Stock IMS (VoLTE) system-side blobs. ImsService and OppoSimSettings are
 # APKs, so they are BUILD_PREBUILT modules declared in Android.mk (APKs cannot
