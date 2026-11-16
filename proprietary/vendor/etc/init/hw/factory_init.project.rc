@@ -24,13 +24,20 @@ service spm_script /vendor/bin/spm_loader
     oneshot
 
 on property:sys.usb.config=gs1gs3
-      write /sys/class/android_usb/android0/enable 0
-      write /sys/class/android_usb/android0/idVendor ${sys.usb.vid}
-      write /sys/class/android_usb/android0/idProduct 2029
-      write /sys/class/android_usb/android0/f_acm/port_index 2,4
+      # Android 10 / this kernel: /sys/class/android_usb does not exist.
+      # a46_defconfig has CONFIG_USB_CONFIGFS=y and CONFIG_USB_G_ANDROID is not
+      # set, so drivers/usb/gadget/android.c (g_android.o) is never built and
+      # nothing calls class_create("android_usb"). Every write here would
+      # return ENOENT. The real gadget setup is configfs
+      # (/config/usb_gadget/g1) in init.mt6765.usb.rc; this factory-mode
+      # gs1gs3 combo is 8.1-era legacy gadget ABI. Commented to document intent.
+      #write /sys/class/android_usb/android0/enable 0
+      #write /sys/class/android_usb/android0/idVendor ${sys.usb.vid}
+      #write /sys/class/android_usb/android0/idProduct 2029
+      #write /sys/class/android_usb/android0/f_acm/port_index 2,4
       write /sys/devices/platform/mt_usb/saving 1
-      write /sys/class/android_usb/android0/functions mass_storage,adb,acm
-      write /sys/class/android_usb/android0/enable 1
+      #write /sys/class/android_usb/android0/functions mass_storage,adb,acm
+      #write /sys/class/android_usb/android0/enable 1
       start adbd
       setprop sys.usb.state ${sys.usb.config}
       setprop sys.usb.acm_idx 2,4

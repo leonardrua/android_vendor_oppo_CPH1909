@@ -19,7 +19,10 @@ on early-init
     write /proc/sys/kernel/sysrq 0
 
     # Set the security context of /adb_keys if present.
-    restorecon /adb_keys
+    # Android 10: adbd keeps its keys in /data/misc/adb/adb_keys; the
+    # root-level /adb_keys this line targets is not created on 10, so the
+    # restorecon has nothing to act on. Dropped.
+    #restorecon /adb_keys
 
     # Shouldn't be necessary, but sdcard won't start without it. http://b/22568628.
     mkdir /mnt 0775 root system
@@ -40,13 +43,19 @@ sysclktz 0
 
     # Mix device-specific information into the entropy pool
     copy /proc/cmdline /dev/urandom
-    copy /default.prop /dev/urandom
+    # Android 10: /default.prop no longer exists (it is /build.prop plus
+    # /vendor/default.prop, and both are already loaded by property_service
+    # before any rc runs). Copying it seeded urandom on 8.1; drop it.
+    #copy /default.prop /dev/urandom
 loglevel 5
     write /proc/bootprof "INIT: on init start"
 
-    # Backward compatibility.
-    symlink /system/etc /etc
-    symlink /sys/kernel/debug /d
+    # Backward compatibility. Both of these are already provided by Android 10's
+    # rootdir (system/core/rootdir/Android.mk: /etc -> /system/etc and
+    # /d -> /sys/kernel/debug), so re-creating them here can only fail with
+    # EEXIST. Removed.
+    #symlink /system/etc /etc
+    #symlink /sys/kernel/debug /d
 
 # Temp Backward compatibility
     symlink /dev/block/platform/bootdevice/by-name/boot /dev/bootimg
@@ -61,8 +70,11 @@ loglevel 5
     symlink /dev/block/platform/bootdevice/by-name/logo /dev/logo
 
 
-# Link /vendor to /system/vendor for devices without a vendor partition.
-    symlink /system/vendor /vendor
+# Android 10: this device has a real vendor partition
+# (BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4), so rootdir creates /vendor as a
+# directory and mounts it. The 8.1-era "no vendor partition" fallback below
+# would try to symlink over a mounted directory and can only fail with EEXIST.
+#symlink /system/vendor /vendor
 
     # Mount cgroup mount point for cpu accounting
     mount cgroup none /acct cpuacct
@@ -336,7 +348,10 @@ on post-fs-data
     # Start bootcharting as soon as possible after the data partition is
     # mounted to collect more data.
     mkdir /data/bootchart 0755 shell shell
-    bootchart_init
+    # Android 10: `bootchart_init` was the 8.1 keyword. AOSP 10's builtin is
+    # `bootchart <cmd>` (init/bootchart.cpp: "start" begins collection, any
+    # other argument stops it), so the 8.1 form is not a valid command here.
+    bootchart start
 
     # Avoid predictable entropy pool. Carry over entropy from previous boot.
     copy /data/system/entropy.dat /dev/urandom
@@ -602,8 +617,14 @@ on property:vold.decrypt=trigger_encryption
 on property:sys.init_log_level=*
     loglevel ${sys.init_log_level}
 
-on property:vold.decrypt=trigger_reset_main
-    class_reset main
+# Android 10: AOSP's vold (system_vold/cryptfs.cpp) never sets
+# vold.decrypt=trigger_reset_main. The triggers it emits are
+# trigger_load_persist_props, trigger_post_fs_data,
+# trigger_restart_min_framework, trigger_restart_framework and
+# trigger_shutdown_framework. On 8.1 vold fired reset_main here so the
+# class was torn down before /data was touched; the 10 flow does not need it.
+#on property:vold.decrypt=trigger_reset_main
+#    class_reset main
 
 on property:vold.decrypt=trigger_load_persist_props
     load_persist_props

@@ -44,7 +44,9 @@ on early-init
     write /proc/sys/kernel/sysrq 0
 
     # Set the security context of /adb_keys if present.
-    restorecon /adb_keys
+    # Android 10: adbd keeps its keys in /data/misc/adb/adb_keys; the
+    # root-level /adb_keys this line targets is not created on 10. Dropped.
+    #restorecon /adb_keys
 
     # Shouldn't be necessary, but sdcard won't start without it. http://b/22568628.
     mkdir /mnt 0775 root system
@@ -66,16 +68,22 @@ on init
 
     # Mix device-specific information into the entropy pool
     copy /proc/cmdline /dev/urandom
-    copy /default.prop /dev/urandom
+    # Android 10: /default.prop no longer exists (it is /build.prop plus
+    # /vendor/default.prop, both loaded before any rc runs). Drop it.
+    #copy /default.prop /dev/urandom
 loglevel 5
     write /proc/bootprof "INIT: on init start"
 
-    # Backward compatibility.
-    symlink /system/etc /etc
-    symlink /sys/kernel/debug /d
+    # Backward compatibility. Android 10's rootdir already provides
+    # /etc -> /system/etc and /d -> /sys/kernel/debug, so re-creating them
+    # here can only fail with EEXIST.
+    #symlink /system/etc /etc
+    #symlink /sys/kernel/debug /d
 
-    # Link /vendor to /system/vendor for devices without a vendor partition.
-    symlink /system/vendor /vendor
+    # Android 10: this device has a real vendor partition
+# (BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4), so /vendor is a mounted
+# directory. The 8.1 "no vendor partition" fallback can only fail with EEXIST.
+#symlink /system/vendor /vendor
 
 # Temp Backward compatibility
     symlink /dev/block/platform/bootdevice/by-name/boot /dev/bootimg
@@ -540,8 +548,13 @@ on nonencrypted
 on property:sys.init_log_level=*
     loglevel ${sys.init_log_level}
 
-on property:vold.decrypt=trigger_reset_main
-    class_reset main
+# Android 10: AOSP's vold never sets vold.decrypt=trigger_reset_main (it emits
+# only trigger_load_persist_props, trigger_post_fs_data,
+# trigger_restart_min_framework, trigger_restart_framework and
+# trigger_shutdown_framework), so this handler is dead. Commented rather than
+# deleted so the intent survives a re-extraction.
+#on property:vold.decrypt=trigger_reset_main
+#    class_reset main
 
 on property:vold.decrypt=trigger_load_persist_props
     load_persist_props
