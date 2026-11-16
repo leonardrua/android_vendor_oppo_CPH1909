@@ -42,7 +42,13 @@ on init
     chmod 0664 /dev/stune/io/tasks
 
     # Support legacy paths
-    symlink /sdcard /mnt/sdcard
+    #
+    # Android 8.1 pointed /sdcard at /mnt/sdcard and kept a /storage/sdcard0
+    # alias. Android 10's rootdir/Android.mk already creates
+    # /sdcard -> /storage/self/primary, and the sdcard daemon / vold manage
+    # /storage/*; re-pointing /sdcard here would race that and break FUSE.
+    # Both runtime symlinks are therefore removed.
+    #symlink /sdcard /mnt/sdcard
 
     # if primary storage is physical, set ro.vold.primary_physical to 1
     # setprop ro.vold.primary_physical 1
@@ -79,7 +85,11 @@ on init
     write /dev/cpuset/top-app/cpus 0-7
 #ifdef ODM_WT_EDIT
 #Jinfan.Hu@ODM_WT.BSP.Kernel.Boot, 2018/10/27 symlink persist to /vendor/persist
-    symlink /vendor/persist /persist
+#    Android 10 note: the /persist alias is now created at build time by
+#    BOARD_ROOT_EXTRA_SYMLINKS := /vendor/persist:persist in BoardConfig.mk.
+#    The system image root is read-only, so the runtime symlink below can no
+#    longer succeed; the `chmod`/`chown` further down act on the same target
+#    through that build-time link.
 #endif
 
 # update bg rt_runtime 100ms
@@ -170,7 +180,7 @@ on post-fs
     write /proc/perfmgr/boost_ctrl/eas_ctrl/boot_boost "4 1100"
 
     # Support legacy paths
-    symlink /sdcard /storage/sdcard0
+    #symlink /sdcard /storage/sdcard0
 
     #change permissions for mediaserver
     chown root media /proc/clkmgr/mipi_test
@@ -621,30 +631,38 @@ on post-fs-data
     chown system graphics /dev/mtk_dfrc
 
    #change partition permission
+   #
+   # Android 8.1 named the bootloader partitions /mtd@<name> and the ramdisk
+   # could chmod/chown those MTD character nodes. Android 10 uses GPT block
+   # devices under /dev/block/platform/bootdevice/by-name/, there are no /mtd@*
+   # nodes at all, and /dev is a devtmpfs mount that init does not write to
+   # from here. The lines below therefore failed with ENOENT on 8.1 hardware
+   # already and are kept only as documentation of the intent (partition
+   # permissions are enforced by the bootloader). Do not re-enable.
 
-    chmod 0640 /mtd@sec_ro
-    chown root system /mtd@sec_ro
+   #chmod 0640 /mtd@sec_ro
+   #chown root system /mtd@sec_ro
 
-    chmod 0640 /mtd@preloader
-    chown root system /mtd@preloader
+   #chmod 0640 /mtd@preloader
+   #chown root system /mtd@preloader
 
-    chmod 0660 /mtd@pro_info
-    chown root system /mtd@pro_info
+   #chmod 0660 /mtd@pro_info
+   #chown root system /mtd@pro_info
 
-    chmod 0640 /mtd@bootimg
-    chown root system /mtd@bootimg
+   #chmod 0640 /mtd@bootimg
+   #chown root system /mtd@bootimg
 
-    chmod 0640 /mtd@recovery
-    chown root system /mtd@recovery
+   #chmod 0640 /mtd@recovery
+   #chown root system /mtd@recovery
 
-    chmod 0660 /mtd@nvram
-    chown root system /mtd@nvram
+   #chmod 0660 /mtd@nvram
+   #chown root system /mtd@nvram
 
-    chmod 0660 /mtd@seccfg
-    chown root system /mtd@seccfg
+   #chmod 0660 /mtd@seccfg
+   #chown root system /mtd@seccfg
 
-    chmod 0660 /mtd@misc
-    chown root system /mtd@misc
+   #chmod 0660 /mtd@misc
+   #chown root system /mtd@misc
 
     chmod 0664 /sys/bus/platform/drivers/emi_ctrl/concurrency_scenario
     chown media media /sys/bus/platform/drivers/emi_ctrl/concurrency_scenario

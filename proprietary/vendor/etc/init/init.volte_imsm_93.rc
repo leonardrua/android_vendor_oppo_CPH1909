@@ -7,7 +7,6 @@ on property:mtk.md1.status=ready
     start volte_stack
     start volte_ua
     start volte_imcb
-    wait /only_for_timeout 1
 
 on property:mtk.md1.status=reset
     rm /dev/radio/pttyims

@@ -1,4 +1,10 @@
 on boot
+    # Android 10 note: /persist is a build-time symlink to /vendor/persist
+    # (BOARD_ROOT_EXTRA_SYMLINKS in BoardConfig.mk) because the system image
+    # root is read-only and the stock rc's runtime `symlink /vendor/persist
+    # /persist` can no longer succeed. Both spellings resolve to the same
+    # rw-mounted persist partition; the /persist form is kept because the
+    # OPPO blobs hard-code it (e.g. /persist/rpmb_status/.lii).
     mkdir /persist/rpmb_status
     chmod 0777 /persist/rpmb_status
     chown system system /proc/oppo_secure_common/secureType
