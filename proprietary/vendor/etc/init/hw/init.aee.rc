@@ -42,6 +42,11 @@ on property:persist.aee.core.dump=enable
 on init
     export LD_PRELOAD libdirect-coredump.so
     write /proc/self/coredump_filter 39
+    # The ro.aee.* sets below are NOT Android-8 leftovers. The properties exist
+    # in no .prop file, so property_service's PropertySet() finds nothing and
+    # takes the __system_property_add() branch, creating them write-once --
+    # which is what AEE wants. (Only an already-set ro.* is rejected with
+    # PROP_ERROR_READ_ONLY_PROPERTY, which is not the case here.)
     setprop ro.aee.enperf off
     setprop ro.aee.enforcing yes
     setprop persist.mtk.aee.filter 0

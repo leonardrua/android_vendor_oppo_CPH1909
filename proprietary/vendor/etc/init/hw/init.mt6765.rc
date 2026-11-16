@@ -700,8 +700,11 @@ on post-fs-data
     chown root system /proc/driver/otp
 
     #sn
-    chmod 0664 /sys/class/android_usb/android0/iSerial
-    chown root system /sys/class/android_usb/android0/iSerial
+    # /sys/class/android_usb is absent on this kernel (CONFIG_USB_G_ANDROID is
+    # not set, so g_android.o is never built). Serial number handling for USB
+    # now goes through configfs strings/0x409/serialnumber in init.mt6765.usb.rc.
+    #chmod 0664 /sys/class/android_usb/android0/iSerial
+    #chown root system /sys/class/android_usb/android0/iSerial
     chmod 0664 /sys/class/udc/musb-hdrc/device/cmode
     chown root system /sys/class/udc/musb-hdrc/device/cmode
 
@@ -964,11 +967,20 @@ on property:ro.board.platform=mt6753
     chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
     write /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 1300000
 
-on property:vold.decrypt=trigger_reset_main
-    write /proc/bootprof "INIT:vold.decrypt=trigger_reset_main"
-    setprop sys.boot_completed 0
-    setprop dev.bootcomplete 0
-    setprop service.nvram_init 0
+#on property:vold.decrypt=trigger_reset_main
+#    write /proc/bootprof "INIT:vold.decrypt=trigger_reset_main"
+#    setprop sys.boot_completed 0
+#    setprop dev.bootcomplete 0
+#    setprop service.nvram_init 0
+#
+# Android 10 note: AOSP's vold (system_vold/cryptfs.cpp) never sets
+# vold.decrypt=trigger_reset_main. The only triggers it emits are
+# trigger_load_persist_props, trigger_post_fs_data,
+# trigger_restart_min_framework, trigger_restart_framework and
+# trigger_shutdown_framework. On 8.1 vold used reset_main to make init
+# `class_reset main` and re-run the framework from a clean slate during FDE
+# decryption; the 10 flow does not need it. Left commented: the block would
+# never fire, and zeroing sys.boot_completed here would be wrong if it did.
 
 on property:vold.decrypt=trigger_post_fs_data
     write /proc/bootprof "INIT:vold.decrypt=trigger_post_fs_data"

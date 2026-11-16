@@ -1,5 +1,19 @@
-on property:vold.decrypt=trigger_reset_main
-    start stop_modem
+# Modem stop/start around the vold decrypt transitions.
+#
+# Android 10 note: the trigger_reset_main handler below is dead. AOSP's vold
+# (system_vold/cryptfs.cpp) never sets vold.decrypt=trigger_reset_main; the
+# triggers it does emit are trigger_load_persist_props, trigger_post_fs_data,
+# trigger_restart_min_framework, trigger_restart_framework and
+# trigger_shutdown_framework. On 8.1 vold fired reset_main before
+# post_fs_data so the modem was quiesced before /data was touched.
+#
+# The practical effect is small: the modem is started by the md1/ril triggers
+# in init.modem.rc / init.cccimdinit.rc, and stop_modem only mattered on the
+# decrypt path. The three live handlers below still cover the normal FDE flow.
+# Kept as a comment rather than deleted so the intent survives a re-extract.
+#
+#on property:vold.decrypt=trigger_reset_main
+#    start stop_modem
 
 on property:vold.decrypt=trigger_restart_min_framework
     start start_modem
