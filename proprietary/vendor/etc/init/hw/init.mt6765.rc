@@ -150,7 +150,11 @@ on fs
     write /proc/sys/vm/page-cluster 0
 #ifdef VENDOR_EDIT
 #huacai.zhou@bsp.drv modify for setting zram size according to totalram size
-    chmod +x /system/etc/swap_enable.sh
+    # Android 10 note: /system is a read-only ext4 image, so `chmod +x` here
+    # always fails with EROFS. It is also unnecessary: swap_enable_init below
+    # invokes the script as `sh /system/etc/swap_enable.sh`, which does not
+    # need the exec bit. Dropped rather than left as a no-op.
+    #chmod +x /system/etc/swap_enable.sh
     start swap_enable_init
 #else
     #swapon_all /fstab.enableswap
@@ -254,7 +258,10 @@ on post-fs-data
     mkdir /data/misc/gps 0770 gps system
     mkdir /data/mpe_mnl 0771 gps system
     chown gps system /data/mpe_mnl
-    chmod 0775 /vendor/xbin/MPED
+    # Android 10 note: /vendor/xbin/MPED is not shipped in this image, so this
+    # chmod fails with ENOENT. The file was never present on the stock vendor
+    # image either; dropped.
+    #chmod 0775 /vendor/xbin/MPED
     chmod 0666 /dev/gps_emi
 
     # NFC
@@ -271,8 +278,12 @@ on post-fs-data
     mkdir /data/vendor/silead 0770 system system
 
 #westalgo model dir
-    mkdir /vendor/etc/westalgo 0776 system camera
-    chown system camera /vendor/etc/westalgo/(*)
+    # Android 10 note: /vendor is read-only. This directory already exists in
+    # the image with the right ownership and mode (proprietary/vendor/etc/
+    # westalgo), so the mkdir can only fail with EROFS. The chown uses a glob
+    # that init never expands, so it was already a no-op.
+    #mkdir /vendor/etc/westalgo 0776 system camera
+    #chown system camera /vendor/etc/westalgo/(*)
     mkdir /data/cct/westalgo 0776 system camera
 #endif
 
@@ -482,8 +493,14 @@ on post-fs-data
     chown system graphics /dev/sw_sync
 
     # EM baseband file
-    chown root diag /vendor/bin/baseband_regdump
-    chmod 4750 /vendor/bin/baseband_regdump
+    #
+    # Android 10 note: /vendor is a read-only ext4 image and this binary is
+    # not shipped at all, so both lines failed with ENOENT. More importantly
+    # `chmod 4750` is a setuid attempt: on 8.1 it would have made a
+    # diagnostic tool setuid-root, and on 10 it would have needed a
+    # file_contexts entry and a SELinux domain to be safe. Dropped.
+    #chown root diag /vendor/bin/baseband_regdump
+    #chmod 4750 /vendor/bin/baseband_regdump
 
     #pmu
     chown root radio /sys/devices/platform/mt-pmic/pmic_access_bank0
@@ -964,8 +981,21 @@ on property:vold.decrypt=trigger_restart_min_framework
 #ifdef VENDOR_EDIT
 #Qiulei@PSW.CN.WiFi.Hardware, 2018/02/03
 #Add for  iwpriv for sar
-    chown system system /system/bin/iwpriv
-    chmod 0777  /system/bin/iwpriv
+#
+# Android 10 note: /system is a read-only ext4 image, so this chmod/chown
+# always failed with EROFS. They are removed rather than kept as no-ops.
+#
+# They were also a genuine hole: iwpriv is a raw 802.11 ioctl tool, and
+# `chmod 0777` on a binary that runs as system is a world-writable setuid
+# target -- any app could have replaced it before the SAR job ran it.
+#
+# The file is left exactly as the stock image ships it (mode 0644, owned by
+# root, labelled system_file by the /system(/.*)? catch-all in
+# system/sepolicy/private/file_contexts). Nothing in the tree executes it:
+# the only references are the diagnostic format strings inside
+# wlan_drv_gen4m.ko ("iwpriv wlanX set ..."), which the driver prints, not
+# runs. If a SAR tool ever needs to call it, give it a dedicated *_exec type
+# and domain rather than 0777.
 #endif /* VENDOR_EDIT */
 
 on property:vold.decrypt=trigger_restart_framework
