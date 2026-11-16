@@ -1231,8 +1231,13 @@ on property:ro.charging_time_limit=false
 #endif//VENDOR_EDIT
 
 # FPSGO FBT Game
+#
+# The stock file loaded /lib/modules/fpsgo.ko. Android 10's system image root
+# has no /lib, and device.mk installs the module to /system/lib/modules/, so
+# the path below is edited from the stock original. No /lib alias is created
+# for this; nothing else in the tree references /lib.
 on init
-    insmod /lib/modules/fpsgo.ko
+    insmod /system/lib/modules/fpsgo.ko
     symlink /dev/block/platform/bootdevice /dev/block/bootdevice
 
 #ifdef COLOROS_EDIT
