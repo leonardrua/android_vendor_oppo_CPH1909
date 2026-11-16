@@ -33,6 +33,25 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/system/lib/vendor.qti.hardware.soter@1.0.so:$(TARGET_COPY_OUT_SYSTEM)/lib/vendor.qti.hardware.soter@1.0.so \
     vendor/oppo/CPH1909/proprietary/system/lib64/vendor.qti.hardware.soter@1.0.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/vendor.qti.hardware.soter@1.0.so \
 
+# Android 8.1 platform libraries that Android 10 no longer ships, kept at
+# their stock /system/lib[64] paths so the VNDK-lite vendor namespace finds
+# them (it searches /system/${LIB} before /vendor/${LIB}):
+#
+#   libstdc++.so            removed from the platform in Android 9; still
+#                           DT_NEEDED by 126 8.1 vendor ELFs (camera stack,
+#                           IMS/modem daemons, libhwuiext, ...).
+#   libkeymaster_staging.so required by the 8.1 android.hardware.keymaster@3.0
+#                           passthrough implementation (32- and 64-bit);
+#                           Android 10 builds libkeymaster3device instead.
+#
+# These entries are reproduced by setup-makefiles.sh from the matching
+# proprietary-files.txt entries; re-add them after regenerating this file.
+PRODUCT_COPY_FILES += \
+    vendor/oppo/CPH1909/proprietary/system/lib/libkeymaster_staging.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libkeymaster_staging.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libkeymaster_staging.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libkeymaster_staging.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libstdc++.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libstdc++.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libstdc++.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libstdc++.so \
+
 # Stock IMS (VoLTE) system-side blobs. ImsService and OppoSimSettings are
 # APKs, so they are BUILD_PREBUILT modules declared in Android.mk (APKs cannot
 # go through PRODUCT_COPY_FILES). The rest install into the stock /system
