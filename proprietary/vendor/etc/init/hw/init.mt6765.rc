@@ -151,7 +151,8 @@ on fs
 #ifdef VENDOR_EDIT
 #huacai.zhou@bsp.drv modify for setting zram size according to totalram size
     # Android 10 note: /system is a read-only ext4 image, so `chmod +x` here
-    # always fails with EROFS. It is also unnecessary: swap_enable_init below
+    # always fails with EROFS (errno 30, read-only file system -- this image is
+    # ext4 mounted ro). It is also unnecessary: swap_enable_init below
     # invokes the script as `sh /system/etc/swap_enable.sh`, which does not
     # need the exec bit. Dropped rather than left as a no-op.
     #chmod +x /system/etc/swap_enable.sh
@@ -280,7 +281,7 @@ on post-fs-data
 #westalgo model dir
     # Android 10 note: /vendor is read-only. This directory already exists in
     # the image with the right ownership and mode (proprietary/vendor/etc/
-    # westalgo), so the mkdir can only fail with EROFS. The chown uses a glob
+    # westalgo), so the mkdir can only fail with EROFS (errno 30). The chown uses a glob
     # that init never expands, so it was already a no-op.
     #mkdir /vendor/etc/westalgo 0776 system camera
     #chown system camera /vendor/etc/westalgo/(*)
@@ -983,7 +984,8 @@ on property:vold.decrypt=trigger_restart_min_framework
 #Add for  iwpriv for sar
 #
 # Android 10 note: /system is a read-only ext4 image, so this chmod/chown
-# always failed with EROFS. They are removed rather than kept as no-ops.
+# always failed with EROFS (errno 30, read-only file system -- /system is
+# ext4 mounted ro). They are removed rather than kept as no-ops.
 #
 # They were also a genuine hole: iwpriv is a raw 802.11 ioctl tool, and
 # `chmod 0777` on a binary that runs as system is a world-writable setuid
