@@ -31,7 +31,7 @@ PRODUCT_PACKAGES += \
 # Android 10 system partition.
 PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/system/lib/vendor.qti.hardware.soter@1.0.so:$(TARGET_COPY_OUT_SYSTEM)/lib/vendor.qti.hardware.soter@1.0.so \
-    vendor/oppo/CPH1909/proprietary/system/lib64/vendor.qti.hardware.soter@1.0.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/vendor.qti.hardware.soter@1.0.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/vendor.qti.hardware.soter@1.0.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/vendor.qti.hardware.soter@1.0.so
 
 # Android 8.1 platform libraries that Android 10 no longer ships, kept at
 # their stock /system/lib[64] paths so the VNDK-lite vendor namespace finds
@@ -57,7 +57,7 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/system/lib64/libmrdump.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libmrdump.so \
     vendor/oppo/CPH1909/proprietary/system/lib/libprogrambinary.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libprogrambinary.so \
     vendor/oppo/CPH1909/proprietary/system/lib64/libprogrambinary.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libprogrambinary.so \
-    vendor/oppo/CPH1909/proprietary/system/lib/libsink.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libsink.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libsink.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libsink.so
 
 # Stock IMS (VoLTE) system-side blobs. ImsService and OppoSimSettings are
 # APKs, so they are BUILD_PREBUILT modules declared in Android.mk (APKs cannot
@@ -80,7 +80,7 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/system/framework/com.coloros.statistics.jar:$(TARGET_COPY_OUT_SYSTEM)/framework/com.coloros.statistics.jar \
     vendor/oppo/CPH1909/proprietary/system/framework/coloros.support.jar:$(TARGET_COPY_OUT_SYSTEM)/framework/coloros.support.jar \
     vendor/oppo/CPH1909/proprietary/system/framework/com.nearme.romupdate.bugly.jar:$(TARGET_COPY_OUT_SYSTEM)/framework/com.nearme.romupdate.bugly.jar \
-    vendor/oppo/CPH1909/proprietary/system/etc/permissions/com.coloros.libraries.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/com.coloros.libraries.xml \
+    vendor/oppo/CPH1909/proprietary/system/etc/permissions/com.coloros.libraries.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/com.coloros.libraries.xml
 
 # Stock videotelephony system-side blobs. /system/bin/vtservice is the
 # VoLTE video-telephony service (started by init.vtservice.rc, class main);
@@ -106,7 +106,7 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/system/lib/libvt_avsync.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libvt_avsync.so \
     vendor/oppo/CPH1909/proprietary/system/lib/vendor.mediatek.hardware.videotelephony@1.0.so:$(TARGET_COPY_OUT_SYSTEM)/lib/vendor.mediatek.hardware.videotelephony@1.0.so \
     vendor/oppo/CPH1909/proprietary/system/lib/vendor.mediatek.hardware.pq@2.0.so:$(TARGET_COPY_OUT_SYSTEM)/lib/vendor.mediatek.hardware.pq@2.0.so \
-    vendor/oppo/CPH1909/proprietary/system/lib/vendor.mediatek.hardware.power@1.1.so:$(TARGET_COPY_OUT_SYSTEM)/lib/vendor.mediatek.hardware.power@1.1.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/vendor.mediatek.hardware.power@1.1.so:$(TARGET_COPY_OUT_SYSTEM)/lib/vendor.mediatek.hardware.power@1.1.so
 
 # Additional stock MediaTek/OPPO system/bin helpers referenced by the vendor
 # init scripts and their direct dependency closure. Keep these at their stock
@@ -127,7 +127,7 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/system/lib64/libkmsetkey.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libkmsetkey.so \
     vendor/oppo/CPH1909/proprietary/system/lib64/libmdloggerrecycle.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libmdloggerrecycle.so \
     vendor/oppo/CPH1909/proprietary/system/lib64/libminiui.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libminiui.so \
-    vendor/oppo/CPH1909/proprietary/system/lib64/libsysenv_system.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libsysenv_system.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libsysenv_system.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libsysenv_system.so
 
 # Additional stock MediaTek native libraries from /system and their direct
 # 64-bit gralloc/ION/UBSan support libraries. Keep these at their system
@@ -201,7 +201,7 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/system/lib64/vendor.mediatek.hardware.power@1.1.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/vendor.mediatek.hardware.power@1.1.so \
     vendor/oppo/CPH1909/proprietary/system/lib64/vendor.mediatek.hardware.pq@2.0.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/vendor.mediatek.hardware.pq@2.0.so \
     vendor/oppo/CPH1909/proprietary/system/lib64/vendor.mediatek.hardware.radio@2.0.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/vendor.mediatek.hardware.radio@2.0.so \
-    vendor/oppo/CPH1909/proprietary/system/lib64/vendor.mediatek.hardware.videotelephony@1.0.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/vendor.mediatek.hardware.videotelephony@1.0.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/vendor.mediatek.hardware.videotelephony@1.0.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/vendor.mediatek.hardware.videotelephony@1.0.so
 
 # Stock fingerprint system-side framework stubs. All three are 309-byte empty
 # stub jars: the stock 8.1 framework shipped them only to keep the boot
@@ -223,7 +223,7 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/system/framework/ifaamanager.jar:$(TARGET_COPY_OUT_SYSTEM)/framework/ifaamanager.jar \
     vendor/oppo/CPH1909/proprietary/system/framework/android.frameworks.faceservice-V1.0-java.jar:$(TARGET_COPY_OUT_SYSTEM)/framework/android.frameworks.faceservice-V1.0-java.jar \
     vendor/oppo/CPH1909/proprietary/system/framework/vendor.oppo.hardware.biometrics.face-V1.0-java.jar:$(TARGET_COPY_OUT_SYSTEM)/framework/vendor.oppo.hardware.biometrics.face-V1.0-java.jar \
-    vendor/oppo/CPH1909/proprietary/system/etc/permissions/org.ifaa.android.manager.permissions.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/org.ifaa.android.manager.permissions.xml \
+    vendor/oppo/CPH1909/proprietary/system/etc/permissions/org.ifaa.android.manager.permissions.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/org.ifaa.android.manager.permissions.xml
 
 PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/app/EmCamera/oat/arm64/EmCamera.odex:$(TARGET_COPY_OUT_VENDOR)/app/EmCamera/oat/arm64/EmCamera.odex \
@@ -602,9 +602,6 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/etc/init/vendor.mediatek.hardware.mtkcodecservice@1.1-service.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/vendor.mediatek.hardware.mtkcodecservice@1.1-service.rc \
     vendor/oppo/CPH1909/proprietary/vendor/etc/init/vendor.mediatek.hardware.power@1.1-service.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/vendor.mediatek.hardware.power@1.1-service.rc \
     vendor/oppo/CPH1909/proprietary/vendor/etc/init/vendor.mediatek.hardware.pq@2.0-service.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/vendor.mediatek.hardware.pq@2.0-service.rc \
-    vendor/oppo/CPH1909/proprietary/vendor/etc/init/vendor.oppo.hardware.biometrics.face@1.0-service.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/vendor.oppo.hardware.biometrics.face@1.0-service.rc \
-    vendor/oppo/CPH1909/proprietary/vendor/etc/init/vendor.oppo.hardware.biometrics.fingerprint@2.1-service.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/vendor.oppo.hardware.biometrics.fingerprint@2.1-service.rc \
-    vendor/oppo/CPH1909/proprietary/vendor/etc/init/vendor.oppo.hardware.biometrics.fingerprintpay@1.0-service.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/vendor.oppo.hardware.biometrics.fingerprintpay@1.0-service.rc \
     vendor/oppo/CPH1909/proprietary/vendor/etc/init/vendor.oppo.hardware.cryptoeng@1.0-service.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/vendor.oppo.hardware.cryptoeng@1.0-service.rc \
     vendor/oppo/CPH1909/proprietary/vendor/etc/init/vendor.silead.hardware.fingerprintext@1.0-service.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/vendor.silead.hardware.fingerprintext@1.0-service.rc \
     vendor/oppo/CPH1909/proprietary/vendor/etc/init/vendor.trustonic.soter@1.0-service.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/vendor.trustonic.soter@1.0-service.rc \
@@ -631,8 +628,6 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/etc/mddb/mdm_layout_desc_1_ulwctg_n.dat:$(TARGET_COPY_OUT_VENDOR)/etc/mddb/mdm_layout_desc_1_ulwctg_n.dat \
     vendor/oppo/CPH1909/proprietary/vendor/etc/media_codecs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs.xml \
     vendor/oppo/CPH1909/proprietary/vendor/etc/media_codecs_ffmpeg.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_ffmpeg.xml \
-    vendor/oppo/CPH1909/proprietary/vendor/etc/media_codecs_google_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_audio.xml \
-    vendor/oppo/CPH1909/proprietary/vendor/etc/media_codecs_google_video_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video_le.xml \
     vendor/oppo/CPH1909/proprietary/vendor/etc/media_codecs_mediatek_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_mediatek_audio.xml \
     vendor/oppo/CPH1909/proprietary/vendor/etc/media_codecs_mediatek_video.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_mediatek_video.xml \
     vendor/oppo/CPH1909/proprietary/vendor/etc/media_codecs_performance.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_performance.xml \
@@ -665,29 +660,16 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/etc/partition_permission.sh:$(TARGET_COPY_OUT_VENDOR)/etc/partition_permission.sh \
     vendor/oppo/CPH1909/proprietary/vendor/etc/pdc.txt:$(TARGET_COPY_OUT_VENDOR)/etc/pdc.txt \
     vendor/oppo/CPH1909/proprietary/vendor/etc/permissions/android.hardware.audio.low_latency.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.audio.low_latency.xml \
-    vendor/oppo/CPH1909/proprietary/vendor/etc/permissions/android.hardware.bluetooth.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.bluetooth.xml \
-    vendor/oppo/CPH1909/proprietary/vendor/etc/permissions/android.hardware.bluetooth_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.bluetooth_le.xml \
     vendor/oppo/CPH1909/proprietary/vendor/etc/permissions/android.hardware.camera.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.xml \
-    vendor/oppo/CPH1909/proprietary/vendor/etc/permissions/android.hardware.location.gps.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.location.gps.xml \
-    vendor/oppo/CPH1909/proprietary/vendor/etc/permissions/android.hardware.opengles.aep.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.opengles.aep.xml \
-    vendor/oppo/CPH1909/proprietary/vendor/etc/permissions/android.hardware.sensor.accelerometer.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.accelerometer.xml \
-    vendor/oppo/CPH1909/proprietary/vendor/etc/permissions/android.hardware.sensor.compass.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.compass.xml \
     vendor/oppo/CPH1909/proprietary/vendor/etc/permissions/android.hardware.sensor.gyroscope.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.gyroscope.xml \
-    vendor/oppo/CPH1909/proprietary/vendor/etc/permissions/android.hardware.sensor.light.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.light.xml \
-    vendor/oppo/CPH1909/proprietary/vendor/etc/permissions/android.hardware.sensor.proximity.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.proximity.xml \
     vendor/oppo/CPH1909/proprietary/vendor/etc/permissions/android.hardware.sensor.stepcounter.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.stepcounter.xml \
     vendor/oppo/CPH1909/proprietary/vendor/etc/permissions/android.hardware.sensor.stepdetector.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.stepdetector.xml \
     vendor/oppo/CPH1909/proprietary/vendor/etc/permissions/android.hardware.touchscreen.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.touchscreen.xml \
-    vendor/oppo/CPH1909/proprietary/vendor/etc/permissions/android.hardware.usb.accessory.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.usb.accessory.xml \
-    vendor/oppo/CPH1909/proprietary/vendor/etc/permissions/android.hardware.wifi.direct.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.direct.xml \
-    vendor/oppo/CPH1909/proprietary/vendor/etc/permissions/android.hardware.wifi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.xml \
     vendor/oppo/CPH1909/proprietary/vendor/etc/permissions/android.software.device_admin.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.device_admin.xml \
     vendor/oppo/CPH1909/proprietary/vendor/etc/permissions/android.software.live_wallpaper.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.live_wallpaper.xml \
     vendor/oppo/CPH1909/proprietary/vendor/etc/permissions/android.software.managed_users.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.managed_users.xml \
-    vendor/oppo/CPH1909/proprietary/vendor/etc/permissions/android.software.midi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.midi.xml \
     vendor/oppo/CPH1909/proprietary/vendor/etc/permissions/com.fingerprints.fpmmi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/com.fingerprints.fpmmi.xml \
     vendor/oppo/CPH1909/proprietary/vendor/etc/permissions/factoryInterface.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/factoryInterface.xml \
-    vendor/oppo/CPH1909/proprietary/vendor/etc/permissions/handheld_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/handheld_core_hardware.xml \
     vendor/oppo/CPH1909/proprietary/vendor/etc/permissions/pms_sysapp_removable_vendor_list.txt:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/pms_sysapp_removable_vendor_list.txt \
     vendor/oppo/CPH1909/proprietary/vendor/etc/power_whitelist_cfg.xml:$(TARGET_COPY_OUT_VENDOR)/etc/power_whitelist_cfg.xml \
     vendor/oppo/CPH1909/proprietary/vendor/etc/powercontable.cfg:$(TARGET_COPY_OUT_VENDOR)/etc/powercontable.cfg \
