@@ -40,14 +40,8 @@ on init
     chown root system /dev/stune/io/tasks
     chmod 0664 /dev/stune/io/tasks
 
-    # Support legacy paths
-    #
-    # Android 8.1 pointed /sdcard at /mnt/sdcard and kept a /storage/sdcard0
-    # alias. Android 10's rootdir/Android.mk already creates
-    # /sdcard -> /storage/self/primary, and the sdcard daemon / vold manage
-    # /storage/*; re-pointing /sdcard here would race that and break FUSE.
-    # Both runtime symlinks are therefore removed.
-    #symlink /sdcard /mnt/sdcard
+    # Legacy /sdcard symlinks removed: Android 10 creates
+    # /sdcard -> /storage/self/primary and vold manages /storage/*.
 
     # if primary storage is physical, set ro.vold.primary_physical to 1
     # setprop ro.vold.primary_physical 1
@@ -65,8 +59,6 @@ on init
     mkdir /vendor/nvdata 0771 system system
 # Create CIP mount point
     mkdir /custom
-
-    mkdir /mnt/cd-rom 0000 system system
 
 # change lk_env permission
     chown root system /proc/lk_env
@@ -165,12 +157,8 @@ on fs
    chmod 0771 /persist
    chown system system /persist
 #endif
-   #ifndef VENDOR_EDIT
-   # Bin.Li@EXP.BSP.bootloader.bootflow, 2017/07/10, Modify DRIVER.ISO instead of iAmCdRom.iso
-   #mount iso9660 loop@/vendor/etc/iAmCdRom.iso /mnt/cd-rom ro
-   #else
-   mount iso9660 loop@/vendor/etc/DRIVER.ISO /mnt/cd-rom ro
-   #endif/*VENDOR_EDIT*/
+   # ColorOS driver CD (DRIVER.ISO) mount removed: /mnt/cd-rom is not used on
+   # Android 10 and the legacy iso9660 loop mount is not part of the boot path.
 
 on late-fs
     # Mount RW partitions which need run fsck
@@ -185,9 +173,6 @@ on post-fs
     write /proc/perfmgr/boost_ctrl/eas_ctrl/boot_boost "2 1100"
     write /proc/perfmgr/boost_ctrl/eas_ctrl/boot_boost "3 1100"
     write /proc/perfmgr/boost_ctrl/eas_ctrl/boot_boost "4 1100"
-
-    # Support legacy paths
-    #symlink /sdcard /storage/sdcard0
 
     #change permissions for mediaserver
     chown root media /proc/clkmgr/mipi_test
