@@ -1253,16 +1253,17 @@ service mbimd /vendor/bin/mbimd debug
     oneshot
 
 # add meta_tst for ATM
-service meta_tst /system/bin/meta_tst
-    class main
-    user root
-    group system
-    disabled
-    oneshot
-
+# (removed: /system/bin/meta_tst is not shipped; see proprietary-files.txt)
+# service meta_tst /system/bin/meta_tst
+#     class main
+#     user root
+#     group system
+#     disabled
+#     oneshot
+#
 # start meta_tst for ATM
-on property:sys.boot_completed=1 && property:ro.boot.atm=enable
-    start meta_tst
+# on property:sys.boot_completed=1 && property:ro.boot.atm=enable
+#     start meta_tst
 
 # reset mdmode when modem crash happens in ATM
 on property:mtk.md1.status=reset

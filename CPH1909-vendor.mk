@@ -114,10 +114,8 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/system/bin/emdlogger1:$(TARGET_COPY_OUT_SYSTEM)/bin/emdlogger1 \
     vendor/oppo/CPH1909/proprietary/system/bin/emdlogger2:$(TARGET_COPY_OUT_SYSTEM)/bin/emdlogger2 \
     vendor/oppo/CPH1909/proprietary/system/bin/emdlogger5:$(TARGET_COPY_OUT_SYSTEM)/bin/emdlogger5 \
-    vendor/oppo/CPH1909/proprietary/system/bin/factory:$(TARGET_COPY_OUT_SYSTEM)/bin/factory \
     vendor/oppo/CPH1909/proprietary/system/bin/iwpriv:$(TARGET_COPY_OUT_SYSTEM)/bin/iwpriv \
     vendor/oppo/CPH1909/proprietary/system/bin/mdlogger:$(TARGET_COPY_OUT_SYSTEM)/bin/mdlogger \
-    vendor/oppo/CPH1909/proprietary/system/bin/meta_tst:$(TARGET_COPY_OUT_SYSTEM)/bin/meta_tst \
     vendor/oppo/CPH1909/proprietary/system/lib/libmdloggerrecycle.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libmdloggerrecycle.so \
     vendor/oppo/CPH1909/proprietary/system/lib/libmemoryDumpEncoder.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libmemoryDumpEncoder.so \
     vendor/oppo/CPH1909/proprietary/system/lib64/libaudiocustparam.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libaudiocustparam.so \
@@ -530,9 +528,6 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/etc/init/fuelgauged_nvram_init.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/fuelgauged_nvram_init.rc \
     vendor/oppo/CPH1909/proprietary/vendor/etc/init/gsm0710muxd.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/gsm0710muxd.rc \
     vendor/oppo/CPH1909/proprietary/vendor/etc/init/hostapd.android.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hostapd.android.rc \
-    vendor/oppo/CPH1909/proprietary/vendor/etc/init/hw/factory_init.connectivity.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/factory_init.connectivity.rc \
-    vendor/oppo/CPH1909/proprietary/vendor/etc/init/hw/factory_init.project.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/factory_init.project.rc \
-    vendor/oppo/CPH1909/proprietary/vendor/etc/init/hw/factory_init.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/factory_init.rc \
     vendor/oppo/CPH1909/proprietary/vendor/etc/init/hw/init.aee.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.aee.rc \
     vendor/oppo/CPH1909/proprietary/vendor/etc/init/hw/init.connectivity.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.connectivity.rc \
     vendor/oppo/CPH1909/proprietary/vendor/etc/init/hw/init.modem.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.modem.rc \
@@ -544,11 +539,6 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/etc/init/hw/init.sensor_1_0.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.sensor_1_0.rc \
     vendor/oppo/CPH1909/proprietary/vendor/etc/init/hw/init.volte.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.volte.rc \
     vendor/oppo/CPH1909/proprietary/vendor/etc/init/hw/init.mal.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.mal.rc \
-    vendor/oppo/CPH1909/proprietary/vendor/etc/init/hw/meta_init.connectivity.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/meta_init.connectivity.rc \
-    vendor/oppo/CPH1909/proprietary/vendor/etc/init/hw/meta_init.modem.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/meta_init.modem.rc \
-    vendor/oppo/CPH1909/proprietary/vendor/etc/init/hw/meta_init.project.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/meta_init.project.rc \
-    vendor/oppo/CPH1909/proprietary/vendor/etc/init/hw/meta_init.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/meta_init.rc \
-    vendor/oppo/CPH1909/proprietary/vendor/etc/init/hw/multi_init.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/multi_init.rc \
     vendor/oppo/CPH1909/proprietary/vendor/etc/init/init.bip.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.bip.rc \
     vendor/oppo/CPH1909/proprietary/vendor/etc/init/init.bt_drv.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.bt_drv.rc \
     vendor/oppo/CPH1909/proprietary/vendor/etc/init/init.cccifsd.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.cccifsd.rc \
