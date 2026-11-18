@@ -377,7 +377,6 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/etc/.tp/thermal.conf:$(TARGET_COPY_OUT_VENDOR)/etc/.tp/thermal.conf \
     vendor/oppo/CPH1909/proprietary/vendor/etc/.tp/thermal.off.conf:$(TARGET_COPY_OUT_VENDOR)/etc/.tp/thermal.off.conf \
     vendor/oppo/CPH1909/proprietary/vendor/etc/Charming.cng:$(TARGET_COPY_OUT_VENDOR)/etc/Charming.cng \
-
     vendor/oppo/CPH1909/proprietary/vendor/etc/DSM.xml:$(TARGET_COPY_OUT_VENDOR)/etc/DSM.xml \
     vendor/oppo/CPH1909/proprietary/vendor/etc/DSM_config.xml:$(TARGET_COPY_OUT_VENDOR)/etc/DSM_config.xml \
     vendor/oppo/CPH1909/proprietary/vendor/etc/MMIGroupIQC.json:$(TARGET_COPY_OUT_VENDOR)/etc/MMIGroupIQC.json \
