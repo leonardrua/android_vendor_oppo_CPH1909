@@ -54,6 +54,8 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/system/lib64/libmrdump.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libmrdump.so \
     vendor/oppo/CPH1909/proprietary/system/lib/libprogrambinary.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libprogrambinary.so \
     vendor/oppo/CPH1909/proprietary/system/lib64/libprogrambinary.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libprogrambinary.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libskia.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libskia.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libskia.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libskia.so \
     vendor/oppo/CPH1909/proprietary/system/lib/libsink.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libsink.so
 
 # Stock IMS (VoLTE) system-side blobs. ImsService and OppoSimSettings are
