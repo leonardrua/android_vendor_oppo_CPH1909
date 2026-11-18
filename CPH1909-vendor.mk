@@ -1130,7 +1130,6 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/lib/librrc.so:$(TARGET_COPY_OUT_VENDOR)/lib/librrc.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libsec_mem.so:$(TARGET_COPY_OUT_VENDOR)/lib/libsec_mem.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libsensor_custom.so:$(TARGET_COPY_OUT_VENDOR)/lib/libsensor_custom.so \
-    vendor/oppo/CPH1909/proprietary/vendor/lib/libsensorndkbridge.so:$(TARGET_COPY_OUT_VENDOR)/lib/libsensorndkbridge.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libsimaka.so:$(TARGET_COPY_OUT_VENDOR)/lib/libsimaka.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libsl_fp_impl.so:$(TARGET_COPY_OUT_VENDOR)/lib/libsl_fp_impl.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libspeech_enh_lib.so:$(TARGET_COPY_OUT_VENDOR)/lib/libspeech_enh_lib.so \
@@ -1551,7 +1550,6 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libsec_mem.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libsec_mem.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libselinux_vendor.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libselinux_vendor.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libsensor_custom.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libsensor_custom.so \
-    vendor/oppo/CPH1909/proprietary/vendor/lib64/libsensorndkbridge.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libsensorndkbridge.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libsimaka.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libsimaka.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libsl_fp_impl.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libsl_fp_impl.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libspeech_enh_lib.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libspeech_enh_lib.so \
