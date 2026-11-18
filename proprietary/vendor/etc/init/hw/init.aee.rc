@@ -55,5 +55,3 @@ on init
 on property:sys.boot_completed=1
     start aee-reinit
     start aeev-reinit
-
-import /init.preload.rc
