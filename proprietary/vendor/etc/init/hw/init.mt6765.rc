@@ -941,16 +941,6 @@ on boot
 
     stop console
 
-on property:ro.mtk_emmc_support=1
-    # Support A/B feature for emmc boot region
-    symlink /dev/block/mmcblk0boot0 /dev/block/platform/bootdevice/by-name/preloader_a
-    symlink /dev/block/mmcblk0boot1 /dev/block/platform/bootdevice/by-name/preloader_b
-
-on property:ro.mtk_ufs_booting=1
-    # Support A/B feature for ufs boot region
-    symlink /dev/block/sda /dev/block/platform/bootdevice/by-name/preloader_a
-    symlink /dev/block/sdb /dev/block/platform/bootdevice/by-name/preloader_b
-
 on property:ro.board.platform=mt6753
     chown system system /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
     chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
@@ -1050,13 +1040,6 @@ on property:debug.wifi.prdebug=1
 on property:debug.wifi.prdebug=0
     write /sys/kernel/debug/dynamic_debug/control "module wlan_drv_gen4m -p"
 #endif /* VENDOR_EDIT */
-# bugreport is triggered by holding down volume down, volume up and power
-service bugreport /system/bin/dumpstate -d -p -B -z \
-        -o /data/user_de/0/com.android.shell/files/bugreports/bugreport
-    class late_start
-    disabled
-    oneshot
-    keycodes 114 115 116
 
 # end boot time fs tune
 on property:sys.boot_completed=1
