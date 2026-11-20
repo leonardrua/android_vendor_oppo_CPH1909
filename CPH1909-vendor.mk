@@ -54,6 +54,10 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/system/lib64/libprogrambinary.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libprogrambinary.so \
     vendor/oppo/CPH1909/proprietary/system/lib/libskia.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libskia.so \
     vendor/oppo/CPH1909/proprietary/system/lib64/libskia.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libskia.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libMMListParser.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libMMListParser.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libMMListParser.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libMMListParser.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libgraphics2d_ext.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libgraphics2d_ext.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libgraphics2d_ext.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libgraphics2d_ext.so \
     vendor/oppo/CPH1909/proprietary/system/lib/libsink.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libsink.so
 
 # Stock IMS (VoLTE) system-side blobs. ImsService and OppoSimSettings are
@@ -1270,7 +1274,6 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libSonyIMX519PdafLibraryWrapper.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libSonyIMX519PdafLibraryWrapper.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libSoterProvision.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libSoterProvision.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libSwJpgCodec.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libSwJpgCodec.so \
-    vendor/oppo/CPH1909/proprietary/vendor/lib64/libTBaseProvisioning.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libTBaseProvisioning.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libTEECommon.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libTEECommon.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libTeeClient.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libTeeClient.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/lib_iir.so:$(TARGET_COPY_OUT_VENDOR)/lib64/lib_iir.so \
@@ -1555,6 +1558,10 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/vendor.mediatek.hardware.wifi.supplicant@1.1_vendor.so:$(TARGET_COPY_OUT_VENDOR)/lib64/vendor.mediatek.hardware.wifi.supplicant@1.1_vendor.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/vendor.mediatek.hardware.wifi.supplicant@1.2_vendor.so:$(TARGET_COPY_OUT_VENDOR)/lib64/vendor.mediatek.hardware.wifi.supplicant@1.2_vendor.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/vendor.oppo.hardware.biometrics.fingerprintpay@1.0_vendor.so:$(TARGET_COPY_OUT_VENDOR)/lib64/vendor.oppo.hardware.biometrics.fingerprintpay@1.0_vendor.so \
+    vendor/oppo/CPH1909/proprietary/vendor/lib/android.frameworks.fingerprintservice@1.0.so:$(TARGET_COPY_OUT_VENDOR)/lib/android.frameworks.fingerprintservice@1.0.so \
+    vendor/oppo/CPH1909/proprietary/vendor/lib64/android.frameworks.fingerprintservice@1.0.so:$(TARGET_COPY_OUT_VENDOR)/lib64/android.frameworks.fingerprintservice@1.0.so \
+    vendor/oppo/CPH1909/proprietary/vendor/lib/vendor.oppo.hardware.biometrics.fingerprint@2.1.so:$(TARGET_COPY_OUT_VENDOR)/lib/vendor.oppo.hardware.biometrics.fingerprint@2.1.so \
+    vendor/oppo/CPH1909/proprietary/vendor/lib64/vendor.oppo.hardware.biometrics.fingerprint@2.1.so:$(TARGET_COPY_OUT_VENDOR)/lib64/vendor.oppo.hardware.biometrics.fingerprint@2.1.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/vendor.oppo.hardware.cryptoeng@1.0_vendor.so:$(TARGET_COPY_OUT_VENDOR)/lib64/vendor.oppo.hardware.cryptoeng@1.0_vendor.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/vendor.oppo.hardware.wifi.supplicant@1.0_vendor.so:$(TARGET_COPY_OUT_VENDOR)/lib64/vendor.oppo.hardware.wifi.supplicant@1.0_vendor.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/vendor.silead.hardware.fingerprintext@1.0_vendor.so:$(TARGET_COPY_OUT_VENDOR)/lib64/vendor.silead.hardware.fingerprintext@1.0_vendor.so \
