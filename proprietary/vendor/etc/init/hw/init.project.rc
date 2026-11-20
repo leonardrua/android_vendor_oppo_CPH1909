@@ -1,6 +1,10 @@
 # MTK project .rc configure
 
-import init.mt6765.usb.rc
+# Android 10: relative imports resolve against init's CWD, which is the
+# filesystem root after SwitchRoot(), so a relative name here only worked by
+# accident (the same file is already imported with its absolute path from
+# init.mt6765.rc). Make it explicit.
+import /vendor/etc/init/hw/init.mt6765.usb.rc
 
 on init
     mkdir /mnt/media_rw/usbotg 0700 media_rw media_rw

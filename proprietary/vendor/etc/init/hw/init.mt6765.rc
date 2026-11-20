@@ -8,6 +8,12 @@ import /vendor/etc/init/hw/init.volte.rc
 import /vendor/etc/init/hw/init.mal.rc
 import /vendor/etc/init/hw/init.sensor_1_0.rc
 
+# Android 10: /vendor/etc/init is parsed non-recursively (init.cpp
+# ParseConfigDir only accepts DT_REG), so hw/init.aee.rc is only reachable via
+# this import. Without it every AEE start/restart below is a silent no-op and
+# the MTK exception/debug daemons never run.
+import /vendor/etc/init/hw/init.aee.rc
+
 # init.modem.rc must be the LAST rc file because vold.post_fs_data_done is set in it
 import /vendor/etc/init/hw/init.modem.rc
 # *** DO NOT import the new rc file after this line ***
@@ -105,13 +111,12 @@ on charger
     write /sys/devices/system/cpu/cpu5/online 0
     write /sys/devices/system/cpu/cpu4/online 0
 
-    # Android 10 mounts /system (and /vendor) from the device-tree fstab in
-    # first-stage init before second-stage init runs, including in charger
-    # mode, so the 8.1 ext4 mount here always failed and was removed.
-    exec /system/bin/e2fsck -f -p /dev/block/platform/bootdevice/by-name/cache
-    mount ext4 /dev/block/platform/bootdevice/by-name/cache /cache rw wait
+    # Android 10 mounts /cache and /vendor/nvcfg from fstab (wait,check) in
+    # second-stage mount_all, and fs_mgr skips entries that are already
+    # mounted. A raw `mount` builtin does NOT honour that skip, so these two
+    # would fail EBUSY, and the e2fsck ran against an unmounted /cache.
+    # Left to mount_all instead.
     chmod 0666 /dev/kmsg
-    mount ext4 /dev/block/platform/bootdevice/by-name/nvcfg /vendor/nvcfg rw wait
     chown system system /vendor/nvcfg
     chmod 0771 /vendor/nvcfg
     restorecon_recursive /vendor/nvcfg
@@ -123,6 +128,7 @@ on charger
 #ifdef VENDOR_EDIT
 #huacai.zhou@bsp.drv modify for setting zram size according to totalram size
 service swap_enable_init /system/bin/sh /system/etc/swap_enable.sh
+    class core
     user root
     disabled
     oneshot
@@ -154,8 +160,14 @@ on fs
 on fs
 #ifdef ODM_WT_EDIT
 #Jinfan.Hu@ODM_WT.BSP.Kernel.Boot, 2018/10/27 symlink persist to /vendor/persist
-   chmod 0771 /persist
-   chown system system /persist
+# Android 10: /persist is a build-time symlink to /vendor/persist
+# (BOARD_ROOT_EXTRA_SYMLINKS in BoardConfig.mk). init's do_chmod uses
+# fchmodat(AT_SYMLINK_NOFOLLOW) and do_chown uses lchown, so operating on
+# "/persist" would touch the LINK, not the mounted filesystem -- and chmod on a
+# symlink fails ENOTSUP on Linux. Target the real path instead, which is what
+# trustonic.rc already does.
+   chmod 0771 /vendor/persist
+   chown system system /vendor/persist
 #endif
    # ColorOS driver CD (DRIVER.ISO) mount removed: /mnt/cd-rom is not used on
    # Android 10 and the legacy iso9660 loop mount is not part of the boot path.
@@ -1084,6 +1096,7 @@ on property:sys.boot_completed=1
     write /proc/bootprof 0
 
 service pppoe_wlan0 /vendor/bin/launchpppoe
+    class core
     user root
     group radio cache inet misc
     disabled
@@ -1232,6 +1245,7 @@ service pre_meta /system/bin/pre_meta
 
 # MBIMD Service
 service mbimd /vendor/bin/mbimd debug
+    class core
     disabled
     oneshot
 

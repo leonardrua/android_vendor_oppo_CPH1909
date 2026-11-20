@@ -9,23 +9,20 @@ on post-fs-data
     mkdir /data/vendor/tombstones 0775 system system
     mkdir /data/misc/aee_interim 0755 system system
 
+# Android 10: aee_aed / aee_aed64 do not exist in this vendor image (the only
+# AEE binaries are aee_aedv, aee_aedv64, aeev, aee_archivev, aee_dumpstatev and
+# aee_core_forwarder). Starting them was a silent no-op; dropped.
 on post-fs
-    start aee_aed
-    start aee_aed64
     start aee_aedv
     start aee_aedv64
 
 on property:vold.decrypt=trigger_load_persist_props
     restart aee_aedv
     restart aee_aedv64
-    restart aee_aed
-    restart aee_aed64
 
 on property:debug.mtk.aee.reinit=done
     restart aee_aedv
     restart aee_aedv64
-    restart aee_aed
-    restart aee_aed64
 
 on property:ro.build.type=eng
     write /proc/sys/fs/suid_dumpable 1

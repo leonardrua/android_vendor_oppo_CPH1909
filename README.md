@@ -188,16 +188,26 @@ re-running `setup-makefiles.sh` no longer emits the broken rules.
    are added to `PRODUCT_PACKAGES` in `CPH1909-vendor.mk`. All use
    `LOCAL_CERTIFICATE := platform` (not `PRESIGNED`), `LOCAL_VENDOR_MODULE=true`
    and are installed under `/vendor/app`; the overlay installs under
-   `/vendor/overlay`. `EmCamera`'s precompiled `oat/arm64/EmCamera.odex`/`.vdex`
-   remain plain `PRODUCT_COPY_FILES`.
+   `/vendor/overlay`.
+
+   `EmCamera` is dex-stripped in the stock image, exactly like `ImsService`,
+   `OppoSimSettings` and `SoterService`. Its APK here has been **repacked with
+   a `classes.dex` de-quickened out of the stock `oat/arm64/EmCamera.vdex`**
+   (vdexExtractor; the extracted dex is `dex\n037`, adler32 and SHA-1
+   self-consistent, 1459 classes), and the stock v1 signature was dropped so
+   the build's platform key applies. The stock `oat/arm64/EmCamera.odex`
+   (`oat` version 131) and `EmCamera.vdex` (vdex `010`, Android 8.1) are
+   **not** shipped: ART 10 cannot read them, and shipping a pre-existing
+   `oat/` directory stops `installd` from regenerating it.
 
    The APKs are re-signed with the build's platform key rather than kept
    `PRESIGNED`: the stock files carry OPPO's platform certificate, which does
-   not match an unofficial LineageOS build. Six of them join a platform
+   not match an unofficial LineageOS build. Seven of them join a platform
    shared user — `LPPeService`, `MMIGroup`, `NlpService`, `WapiCertManager`
-   and `sileadManager` declare `sharedUserId=android.uid.system`, `EmCamera`
-   declares `android.uid.phone` — so without re-signing the package manager
-   would reject them at boot for a shared-user signature mismatch.
+   and `sileadManager` declare `sharedUserId=android.uid.system`, while
+   `EmCamera` and `ImsService` declare `android.uid.phone` — so without
+   re-signing the package manager would reject them at boot for a shared-user
+   signature mismatch.
    `SysuiDarkThemeOverlay` likewise needs the build platform signature to
    match SystemUI.
 

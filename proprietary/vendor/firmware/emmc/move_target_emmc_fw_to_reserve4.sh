@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/system/bin/sh
 fw_path=$1
 echo fw_path=$fw_path
 cat /proc/devinfo/emmc

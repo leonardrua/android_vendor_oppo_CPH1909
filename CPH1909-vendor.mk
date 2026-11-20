@@ -220,8 +220,6 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/system/etc/permissions/org.ifaa.android.manager.permissions.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/org.ifaa.android.manager.permissions.xml
 
 PRODUCT_COPY_FILES += \
-    vendor/oppo/CPH1909/proprietary/vendor/app/EmCamera/oat/arm64/EmCamera.odex:$(TARGET_COPY_OUT_VENDOR)/app/EmCamera/oat/arm64/EmCamera.odex \
-    vendor/oppo/CPH1909/proprietary/vendor/app/EmCamera/oat/arm64/EmCamera.vdex:$(TARGET_COPY_OUT_VENDOR)/app/EmCamera/oat/arm64/EmCamera.vdex \
     vendor/oppo/CPH1909/proprietary/vendor/app/mcRegistry/020f0000000000000000000000000000.drbin:$(TARGET_COPY_OUT_VENDOR)/app/mcRegistry/020f0000000000000000000000000000.drbin \
     vendor/oppo/CPH1909/proprietary/vendor/app/mcRegistry/020f0000000000000000000000000000.tlbin:$(TARGET_COPY_OUT_VENDOR)/app/mcRegistry/020f0000000000000000000000000000.tlbin \
     vendor/oppo/CPH1909/proprietary/vendor/app/mcRegistry/030b0000000000000000000000000000.drbin:$(TARGET_COPY_OUT_VENDOR)/app/mcRegistry/030b0000000000000000000000000000.drbin \
@@ -351,18 +349,6 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/bin/wmt_loader:$(TARGET_COPY_OUT_VENDOR)/bin/wmt_loader \
     vendor/oppo/CPH1909/proprietary/vendor/bin/wmt_loopback:$(TARGET_COPY_OUT_VENDOR)/bin/wmt_loopback \
     vendor/oppo/CPH1909/proprietary/vendor/bin/wpa_cli:$(TARGET_COPY_OUT_VENDOR)/bin/wpa_cli \
-    vendor/oppo/CPH1909/proprietary/vendor/build_18508.prop:$(TARGET_COPY_OUT_VENDOR)/build_18508.prop \
-    vendor/oppo/CPH1909/proprietary/vendor/build_18509.prop:$(TARGET_COPY_OUT_VENDOR)/build_18509.prop \
-    vendor/oppo/CPH1909/proprietary/vendor/build_18511.prop:$(TARGET_COPY_OUT_VENDOR)/build_18511.prop \
-    vendor/oppo/CPH1909/proprietary/vendor/build_18512.prop:$(TARGET_COPY_OUT_VENDOR)/build_18512.prop \
-    vendor/oppo/CPH1909/proprietary/vendor/build_18513.prop:$(TARGET_COPY_OUT_VENDOR)/build_18513.prop \
-    vendor/oppo/CPH1909/proprietary/vendor/build_18514.prop:$(TARGET_COPY_OUT_VENDOR)/build_18514.prop \
-    vendor/oppo/CPH1909/proprietary/vendor/build_18515.prop:$(TARGET_COPY_OUT_VENDOR)/build_18515.prop \
-    vendor/oppo/CPH1909/proprietary/vendor/build_18516.prop:$(TARGET_COPY_OUT_VENDOR)/build_18516.prop \
-    vendor/oppo/CPH1909/proprietary/vendor/build_18517.prop:$(TARGET_COPY_OUT_VENDOR)/build_18517.prop \
-    vendor/oppo/CPH1909/proprietary/vendor/build_18518.prop:$(TARGET_COPY_OUT_VENDOR)/build_18518.prop \
-    vendor/oppo/CPH1909/proprietary/vendor/build_18519.prop:$(TARGET_COPY_OUT_VENDOR)/build_18519.prop \
-    vendor/oppo/CPH1909/proprietary/vendor/build_18520.prop:$(TARGET_COPY_OUT_VENDOR)/build_18520.prop \
     vendor/oppo/CPH1909/proprietary/vendor/data/misc/ProjectConfig.mk:$(TARGET_COPY_OUT_VENDOR)/data/misc/ProjectConfig.mk \
     vendor/oppo/CPH1909/proprietary/vendor/etc/.tp/.ht120.mtc:$(TARGET_COPY_OUT_VENDOR)/etc/.tp/.ht120.mtc \
     vendor/oppo/CPH1909/proprietary/vendor/etc/.tp/.thermal_policy_00:$(TARGET_COPY_OUT_VENDOR)/etc/.tp/.thermal_policy_00 \
@@ -472,6 +458,7 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/etc/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration.xml \
     vendor/oppo/CPH1909/proprietary/vendor/etc/audio_policy_volumes.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_volumes.xml \
     vendor/oppo/CPH1909/proprietary/vendor/etc/aurisys_config.xml:$(TARGET_COPY_OUT_VENDOR)/etc/aurisys_config.xml \
+    vendor/oppo/CPH1909/proprietary/vendor/etc/aurisys_config.xml:$(TARGET_COPY_OUT_SYSTEM)/vendor/etc/aurisys_config.xml \
     vendor/oppo/CPH1909/proprietary/vendor/etc/aurisys_param/FV-SAM-MTK2.dat:$(TARGET_COPY_OUT_VENDOR)/etc/aurisys_param/FV-SAM-MTK2.dat \
     vendor/oppo/CPH1909/proprietary/vendor/etc/aurisys_param/Speech_AudioParam.xml:$(TARGET_COPY_OUT_VENDOR)/etc/aurisys_param/Speech_AudioParam.xml \
     vendor/oppo/CPH1909/proprietary/vendor/etc/cdma_ecc_list.xml:$(TARGET_COPY_OUT_VENDOR)/etc/cdma_ecc_list.xml \
@@ -622,8 +609,11 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/etc/mmigroup/MMIGroupSensorAta.json:$(TARGET_COPY_OUT_VENDOR)/etc/mmigroup/MMIGroupSensorAta.json \
     vendor/oppo/CPH1909/proprietary/vendor/etc/mmigroup/MMIGroupSensorManual.json:$(TARGET_COPY_OUT_VENDOR)/etc/mmigroup/MMIGroupSensorManual.json \
     vendor/oppo/CPH1909/proprietary/vendor/etc/mmigroup/MainMenuConfig.json:$(TARGET_COPY_OUT_VENDOR)/etc/mmigroup/MainMenuConfig.json \
+    vendor/oppo/CPH1909/proprietary/vendor/etc/MMIGroupIQC.json:$(TARGET_COPY_OUT_VENDOR)/etc/mmigroup/MMIGroupIQC.json \
     vendor/oppo/CPH1909/proprietary/vendor/etc/mmigroup/customerAta.json:$(TARGET_COPY_OUT_VENDOR)/etc/mmigroup/customerAta.json \
     vendor/oppo/CPH1909/proprietary/vendor/etc/mmigroup/factoryInterfaceConfig.json:$(TARGET_COPY_OUT_VENDOR)/etc/mmigroup/factoryInterfaceConfig.json \
+    vendor/oppo/CPH1909/proprietary/vendor/lib/libopenshort.so:$(TARGET_COPY_OUT_VENDOR)/lib/libopenshort.so \
+    vendor/oppo/CPH1909/proprietary/vendor/lib64/libopenshort.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libopenshort.so \
     vendor/oppo/CPH1909/proprietary/vendor/etc/mmigroup/rec.wav:$(TARGET_COPY_OUT_VENDOR)/etc/mmigroup/rec.wav \
     vendor/oppo/CPH1909/proprietary/vendor/etc/mmigroup/spk.wav:$(TARGET_COPY_OUT_VENDOR)/etc/mmigroup/spk.wav \
     vendor/oppo/CPH1909/proprietary/vendor/etc/mtk_omx_core.cfg:$(TARGET_COPY_OUT_VENDOR)/etc/mtk_omx_core.cfg \
