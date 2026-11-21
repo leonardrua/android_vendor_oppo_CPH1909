@@ -58,7 +58,7 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/system/lib64/libMMListParser.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libMMListParser.so \
     vendor/oppo/CPH1909/proprietary/system/lib/libgraphics2d_ext.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libgraphics2d_ext.so \
     vendor/oppo/CPH1909/proprietary/system/lib64/libgraphics2d_ext.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libgraphics2d_ext.so \
-    vendor/oppo/CPH1909/proprietary/system/lib64/libLLVM.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libLLVM.so \
+    vendor/oppo/CPH1909/proprietary/vendor/lib64/libLLVM.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libLLVM.so \
     vendor/oppo/CPH1909/proprietary/system/lib/libsink.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libsink.so
 
 # Stock IMS (VoLTE) system-side blobs. ImsService and OppoSimSettings are
