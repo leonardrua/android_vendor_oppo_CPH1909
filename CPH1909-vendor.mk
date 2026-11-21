@@ -52,12 +52,12 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/system/lib64/libmrdump.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libmrdump.so \
     vendor/oppo/CPH1909/proprietary/system/lib/libprogrambinary.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libprogrambinary.so \
     vendor/oppo/CPH1909/proprietary/system/lib64/libprogrambinary.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libprogrambinary.so \
-    vendor/oppo/CPH1909/proprietary/system/lib/libskia.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libskia.so \
-    vendor/oppo/CPH1909/proprietary/system/lib64/libskia.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libskia.so \
-    vendor/oppo/CPH1909/proprietary/system/lib/libMMListParser.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libMMListParser.so \
-    vendor/oppo/CPH1909/proprietary/system/lib64/libMMListParser.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libMMListParser.so \
-    vendor/oppo/CPH1909/proprietary/system/lib/libgraphics2d_ext.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libgraphics2d_ext.so \
-    vendor/oppo/CPH1909/proprietary/system/lib64/libgraphics2d_ext.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libgraphics2d_ext.so \
+    vendor/oppo/CPH1909/proprietary/vendor/lib/libskia.so:$(TARGET_COPY_OUT_VENDOR)/lib/libskia.so \
+    vendor/oppo/CPH1909/proprietary/vendor/lib64/libskia.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libskia.so \
+    vendor/oppo/CPH1909/proprietary/vendor/lib/libMMListParser.so:$(TARGET_COPY_OUT_VENDOR)/lib/libMMListParser.so \
+    vendor/oppo/CPH1909/proprietary/vendor/lib64/libMMListParser.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libMMListParser.so \
+    vendor/oppo/CPH1909/proprietary/vendor/lib/libgraphics2d_ext.so:$(TARGET_COPY_OUT_VENDOR)/lib/libgraphics2d_ext.so \
+    vendor/oppo/CPH1909/proprietary/vendor/lib64/libgraphics2d_ext.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libgraphics2d_ext.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libLLVM.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libLLVM.so \
     vendor/oppo/CPH1909/proprietary/system/lib/libsink.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libsink.so
 
