@@ -1008,6 +1008,7 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libjpeg-alpha.so:$(TARGET_COPY_OUT_VENDOR)/lib/libjpeg-alpha.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libjpeg.a:$(TARGET_COPY_OUT_VENDOR)/lib/libjpeg.a \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libksensor.so:$(TARGET_COPY_OUT_VENDOR)/lib/libksensor.so \
+    vendor/oppo/CPH1909/proprietary/vendor/lib/liblog-v28.so:$(TARGET_COPY_OUT_VENDOR)/lib/liblog-v28.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libmediacodecservice.so:$(TARGET_COPY_OUT_VENDOR)/lib/libmediacodecservice.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libmegface.so:$(TARGET_COPY_OUT_VENDOR)/lib/libmegface.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libmegsegment.so:$(TARGET_COPY_OUT_VENDOR)/lib/libmegsegment.so \
@@ -1413,6 +1414,7 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libipsec_ims_shr.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libipsec_ims_shr.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libjpeg-alpha.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libjpeg-alpha.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libksensor.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libksensor.so \
+    vendor/oppo/CPH1909/proprietary/vendor/lib64/liblog-v28.so:$(TARGET_COPY_OUT_VENDOR)/lib64/liblog-v28.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libmegface.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libmegface.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libmegsegment.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libmegsegment.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libmemtrack_GL.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libmemtrack_GL.so \
