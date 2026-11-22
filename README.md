@@ -82,6 +82,12 @@ same path):
   modules would install to the same path and cannot do DT2W.
 * **`vendor/data/misc/ProjectConfig.mk`.** An MTK *build-time* config fragment
   with no runtime purpose; removed.
+* **`SysuiDarkThemeOverlay`** (`vendor/overlay`). A ColorOS "Dark" theme RRO
+  (`com.android.systemui.theme.dark`, targetSdk 27). Its main override targets
+  `style/qs_base`, which LineageOS SystemUI does not define (it uses `qs_theme`
+  / `QSHeaderTheme` plus night mode), so the style override is inert; the lone
+  `qs_detail_progress_track` color override is redundant with the SystemUI
+  default. Dropped — LOS drives the SystemUI dark theme itself.
 * **`vendor/etc/NOTICE.xml.gz`** (build-generated; copying it creates a ninja
   dependency cycle), the stock **VINTF** data, the **8.1 SELinux policy**,
   `mkshrc`, and `fs_config*` — see the `proprietary-files.txt` header.
@@ -106,9 +112,6 @@ rejects `%.apk` entries there). They are `BUILD_PREBUILT` modules in
 * **Nine vendor apps** under `/vendor/app`: `EmCamera`, `LPPeService`,
   `LocationEM2`, `MMIGroup`, `MTKLoggerProxy`, `NlpService`, `RootPA`,
   `WapiCertManager`, `sileadManager` (`LOCAL_VENDOR_MODULE := true`).
-* **`SysuiDarkThemeOverlay`** under `/vendor/overlay`. The extract-utils helper
-  does not generate vendor/overlay modules, so this stanza is maintained by
-  hand and must be re-added if the tree is regenerated from scratch.
 * **System APKs:** `SoterService` (`/system/app`), `ImsService` and
   `OppoSimSettings` (`/system/priv-app`, `LOCAL_PRIVILEGED_MODULE := true`,
   `LOCAL_DEX_PREOPT := false`).
@@ -119,7 +122,6 @@ match an unofficial LineageOS build. Several apps join a platform shared user
 `SoterService`, `OppoSimSettings` → `android.uid.system`; `EmCamera`,
 `ImsService` → `android.uid.phone`); without re-signing the package manager
 rejects them at boot for a shared-user signature mismatch.
-`SysuiDarkThemeOverlay` must likewise match SystemUI's signature.
 
 **Why repack:** `SoterService`, `ImsService`, `OppoSimSettings` and `EmCamera`
 are dex-stripped in the stock image — their bytecode lives only in
@@ -281,10 +283,7 @@ device/oppo/CPH1909/setup-makefiles.sh
 should re-emit:
 
 * APKs as prebuilt modules from `proprietary-files.txt` (each APK entry omits
-  `;PRESIGNED`, so the generator emits `LOCAL_CERTIFICATE := platform`),
-  **except** `SysuiDarkThemeOverlay.apk`, which the generator ignores — keep the
-  `PRODUCT_PACKAGES += SysuiDarkThemeOverlay` and its `BUILD_PREBUILT` stanza by
-  hand.
+  `;PRESIGNED`, so the generator emits `LOCAL_CERTIFICATE := platform`).
 * The Soter / IMS `/system` entries (interface-library copy rules, stub jars,
   permissions, and the repacked privileged modules).
 * The fingerprint/face framework stubs and their permissions XML.

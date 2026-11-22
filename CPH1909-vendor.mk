@@ -19,8 +19,7 @@ PRODUCT_PACKAGES += \
     SoterService \
     ImsService \
     OppoSimSettings \
-    sileadManager \
-    SysuiDarkThemeOverlay
+    sileadManager
 
 # vendor.qti.hardware.soter@1.0.so is the HIDL interface library used by
 # vendor.trustonic.soter@1.0-service. The stock image places it in

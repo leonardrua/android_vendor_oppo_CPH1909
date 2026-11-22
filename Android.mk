@@ -8,8 +8,8 @@
 # stock APKs are signed with OPPO's platform certificate, which does not match
 # the platform key of an unofficial LineageOS build: apps declaring
 # android.uid.system / android.uid.phone are rejected when their signature
-# differs from the shared user's, and SysuiDarkThemeOverlay would no longer
-# match SystemUI. Re-signing with the build key restores those identities. The
+# differs from the shared user's. Re-signing with the build key restores those
+# identities. The
 # proprietary-files.txt APK entries therefore carry no ;PRESIGNED suffix, so
 # setup-makefiles.sh regenerates the same modules.
 
@@ -186,18 +186,6 @@ LOCAL_MODULE_CLASS := APPS
 LOCAL_DEX_PREOPT := false
 LOCAL_MODULE_SUFFIX := .apk
 LOCAL_PRIVILEGED_MODULE := true
-include $(BUILD_PREBUILT)
-
-include $(CLEAR_VARS)
-LOCAL_MODULE := SysuiDarkThemeOverlay
-LOCAL_MODULE_OWNER := oppo
-LOCAL_SRC_FILES := proprietary/vendor/overlay/SysuiDarkTheme/SysuiDarkThemeOverlay.apk
-LOCAL_CERTIFICATE := platform
-LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE_CLASS := APPS
-LOCAL_DEX_PREOPT := false
-LOCAL_MODULE_SUFFIX := .apk
-LOCAL_MODULE_PATH := $(TARGET_OUT_VENDOR)/overlay
 include $(BUILD_PREBUILT)
 
 endif
