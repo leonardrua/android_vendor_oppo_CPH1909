@@ -3,3 +3,4 @@ on charger
 
 service kpoc_charger /system/bin/kpoc_charger
     class charger
+    seclabel u:r:kpoc_charger:s0
