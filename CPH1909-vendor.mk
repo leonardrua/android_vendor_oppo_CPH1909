@@ -76,8 +76,6 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/system/lib/libimsma_adapt.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libimsma_adapt.so \
     vendor/oppo/CPH1909/proprietary/system/lib/libimsma_rtp.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libimsma_rtp.so \
     vendor/oppo/CPH1909/proprietary/system/lib/libimsma_socketwrapper.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libimsma_socketwrapper.so \
-    vendor/oppo/CPH1909/proprietary/system/framework/ims-common.jar:$(TARGET_COPY_OUT_SYSTEM)/framework/ims-common.jar \
-    vendor/oppo/CPH1909/proprietary/system/framework/mediatek-ims-common.jar:$(TARGET_COPY_OUT_SYSTEM)/framework/mediatek-ims-common.jar \
     vendor/oppo/CPH1909/proprietary/system/framework/com.coloros.statistics.jar:$(TARGET_COPY_OUT_SYSTEM)/framework/com.coloros.statistics.jar \
     vendor/oppo/CPH1909/proprietary/system/framework/coloros.support.jar:$(TARGET_COPY_OUT_SYSTEM)/framework/coloros.support.jar \
     vendor/oppo/CPH1909/proprietary/system/framework/com.nearme.romupdate.bugly.jar:$(TARGET_COPY_OUT_SYSTEM)/framework/com.nearme.romupdate.bugly.jar \

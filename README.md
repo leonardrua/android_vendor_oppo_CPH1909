@@ -151,7 +151,10 @@ v1 signature (`META-INF/`) is dropped so the build's platform key applies.
   copies of the `vendor.mediatek.hardware.{videotelephony@1.0,pq@2.0,power@1.1}`
   HIDL interface libraries; 309-byte stub jars (`ims-common.jar`,
   `mediatek-ims-common.jar`, `com.coloros.statistics.jar`, `coloros.support.jar`,
-  `com.nearme.romupdate.bugly.jar`); and
+  `com.nearme.romupdate.bugly.jar`); the `ims-common.jar` and
+  `mediatek-ims-common.jar` stubs were dropped because being installed in
+  `/system/framework` added them to the boot classpath and produced broken
+  `boot-ims-common.art/.oat`, which made ART fail to create an image space.
   `system/etc/permissions/com.coloros.libraries.xml`. Both IMS APKs'
   `<uses-library>` entries are `required="false"`. Their signature|privileged
   permissions are allowlisted by the device tree's
