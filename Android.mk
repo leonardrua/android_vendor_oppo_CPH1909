@@ -154,13 +154,15 @@ include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
 # com.mediatek.ims: the MTK IMS service application (ImsService.apk),
-# sharedUserId=android.uid.phone. Imports the same way SoterService does: the
-# stock APK is dex-stripped (its dex lives in the stock
-# oat/arm64/ImsService.vdex, an Android 8.1 quickened artifact the Android 10
-# runtime cannot use), so the committed APK carries the unquickened
-# classes.dex extracted from that vdex (see the vendor README). Privileged
-# module: it lives in /system/priv-app. Platform signature, not PRESIGNED,
-# for the same reason as SoterService.
+# sharedUserId=android.uid.phone. The committed APK is the Android 10 build
+# from the Realme C2 (RMX1941) QP1A donor stack, repacked: META-INF/ is
+# dropped and the zip rebuilt so the build's platform key applies (not
+# PRESIGNED; OPPO's signature cannot match the shared phone uid on this
+# build). The donor APK already contains its own classes.dex, so no vdex
+# extraction was needed. It extends android.telephony.ims.ImsService through
+# MtkDynamicImsService and targets API 29, matching this ROM's ims-common;
+# the 8.1 APK it replaces targeted com.android.ims.ImsCallProfile and could
+# not run here. Privileged module: it lives in /system/priv-app.
 LOCAL_MODULE := ImsService
 LOCAL_MODULE_OWNER := oppo
 LOCAL_SRC_FILES := proprietary/system/priv-app/ImsService/ImsService.apk
@@ -186,6 +188,48 @@ LOCAL_MODULE_CLASS := APPS
 LOCAL_DEX_PREOPT := false
 LOCAL_MODULE_SUFFIX := .apk
 LOCAL_PRIVILEGED_MODULE := true
+include $(BUILD_PREBUILT)
+
+# Android 10 MTK IMS boot jars, from the Realme C2 (RMX1941) QP1A dump that
+# this tree uses as its IMS donor. See README section C ("IMS (VoLTE)") for
+# provenance and the ABI checks that justify shipping these three jars
+# (and not the full seven-jar MTK set).
+#
+# mediatek-ims-base defines the IMtkImsService / IMtkImsCallSession /
+# IMtkImsUt AIDL stubs the donor ImsService.apk extends; mediatek-common
+# provides OperatorCustomizationFactoryLoader, which the APK's operator
+# customization utils load directly; mediatek-ims-common carries MtkImsManager
+# / MtkImsManagerEx for the legacy com.android.ims.ImsServiceBase path and
+# boot-classpath parity with the donor ROM. None of the three define any
+# android.* or com.android.* class, so they cannot shadow platform classes.
+include $(CLEAR_VARS)
+LOCAL_MODULE := mediatek-common
+LOCAL_MODULE_OWNER := oppo
+LOCAL_SRC_FILES := proprietary/system/framework/mediatek-common.jar
+LOCAL_CERTIFICATE := platform
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_CLASS := JAVA_LIBRARIES
+LOCAL_MODULE_SUFFIX := .jar
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := mediatek-ims-base
+LOCAL_MODULE_OWNER := oppo
+LOCAL_SRC_FILES := proprietary/system/framework/mediatek-ims-base.jar
+LOCAL_CERTIFICATE := platform
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_CLASS := JAVA_LIBRARIES
+LOCAL_MODULE_SUFFIX := .jar
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := mediatek-ims-common
+LOCAL_MODULE_OWNER := oppo
+LOCAL_SRC_FILES := proprietary/system/framework/mediatek-ims-common.jar
+LOCAL_CERTIFICATE := platform
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_CLASS := JAVA_LIBRARIES
+LOCAL_MODULE_SUFFIX := .jar
 include $(BUILD_PREBUILT)
 
 endif

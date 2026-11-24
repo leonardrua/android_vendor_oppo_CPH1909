@@ -123,13 +123,15 @@ match an unofficial LineageOS build. Several apps join a platform shared user
 `ImsService` → `android.uid.phone`); without re-signing the package manager
 rejects them at boot for a shared-user signature mismatch.
 
-**Why repack:** `SoterService`, `ImsService`, `OppoSimSettings` and `EmCamera`
-are dex-stripped in the stock image — their bytecode lives only in
-`oat/arm64/*.vdex`, paired with Android 8.1 quickened odex that ART 10 cannot
-read. The committed APKs carry an unquickened `classes.dex` extracted from those
-vdex files (recipes below); the stock `oat/` artifacts are not shipped (a
-pre-existing `oat/` directory also stops `installd` regenerating it). The stock
-v1 signature (`META-INF/`) is dropped so the build's platform key applies.
+**Why repack:** `SoterService`, `OppoSimSettings` and `EmCamera` are dex-stripped
+in the stock CPH1909 image — their bytecode lives only in `oat/arm64/*.vdex`,
+paired with Android 8.1 quickened odex that ART 10 cannot read. Their committed
+APKs carry an unquickened `classes.dex` extracted from those vdex files
+(recipe below); the stock `oat/` artifacts are not shipped (a pre-existing
+`oat/` directory also stops `installd` regenerating it). `ImsService` is
+different: it is the donor APK described above, which already contains its own
+`classes.dex`; only its `META-INF/` signature was dropped. In every case the
+build's platform key replaces the stock signature.
 
 ### C. System-side imports kept at stock locations
 
@@ -139,11 +141,37 @@ v1 signature (`META-INF/`) is dropped so the build's platform key applies.
   `vendor.qti.hardware.soter@1.0::ISoter`). The HIDL interface library
   `vendor.qti.hardware.soter@1.0.so` is kept at its stock `/system/lib[64]`
   location.
-* **IMS (VoLTE):** `ImsService` (`com.mediatek.ims`) and `OppoSimSettings`
-  (`com.coloros.simsettings`), repacked/re-signed like SoterService. This
-  mirrors how MTK reference trees wire IMS, but a dump-based port has no access
-  to the MTK IMS framework source, so the stock APKs are imported instead.
-  Alongside them: `system/lib/libimsma*.so` (32-bit), `system/bin/vtservice`
+* **IMS (VoLTE):** `ImsService` (`com.mediatek.ims`) is the Android 10 build
+  from the Realme C2 (RMX1941, MT6765, QP1A.190711.020) dump used as this
+  tree's IMS donor; it is repacked/re-signed like SoterService, except that it
+  already carries its own `classes.dex`, so no vdex extraction is needed. The
+  stock 8.1 CPH1909 APK cannot be reused: it overrides the 8.1
+  `com.android.ims.ImsCallProfile`/`ImsServiceBase` API, whereas Android 10's
+  `ims-common` (`frameworks/opt/net/ims`) uses
+  `android.telephony.ims.ImsCallProfile`. The donor targets API 29 and serves
+  the modern binder through `MtkDynamicImsService extends
+  android.telephony.ims.ImsService`, which matches LineageOS 17.1.
+  Three boot jars from the same dump are installed as `JAVA_LIBRARIES`
+  prebuilts (vendor `Android.mk`) and added to `PRODUCT_BOOT_JARS` (device
+  `device.mk`): `mediatek-ims-base.jar` defines the
+  `IMtkImsService`/`IMtkImsCallSession`/`IMtkImsUt` AIDL stubs the APK
+  extends; `mediatek-common.jar` provides `OperatorCustomizationFactoryLoader`,
+  loaded by the APK's operator-customization utils; `mediatek-ims-common.jar`
+  carries `MtkImsManager`/`MtkImsManagerEx` for the legacy
+  `com.android.ims.ImsServiceBase` binder path. All three were checked to
+  define no `android.*` or `com.android.*` class, so they cannot shadow
+  platform classes; the remaining MTK jars in the dump are not shipped because
+  the donor APK references none of their classes outside optional
+  `required="false"` `<uses-library>` entries. Donor provenance:
+  `Mediatek-leaks/realme_rmx1941_dump`, branch
+  `RMX1941EX_11.C.55_1550_202103222012`; SHA-256
+  `mediatek-common.jar 00d717c744129587543d5b17dd05d4aca374464c9f8554651d06adb92d11b4ac`,
+  `mediatek-ims-base.jar bd7984727b168ab6f24c61038966faa8806f175a286d9f80e17c41184a8d9878`,
+  `mediatek-ims-common.jar 0375391321ada522d9b73eaa6c04f349799843c72c285e416b966026ab175c18`,
+  repacked `ImsService.apk dcdb72621a3c80a0b7b9e50a9d66e321633b73dd7d9b384f9e3853be088c21a0`.
+  `OppoSimSettings` (`com.coloros.simsettings`) remains the stock 8.1 ColorOS
+  settings APK, repacked/re-signed like SoterService. Alongside the Java
+  stack: `system/lib/libimsma*.so` (32-bit), `system/bin/vtservice`
   (32-bit) with its dependency closure (`libmtk_vt_service.so`, `libsource.so`,
   `libcomutils.so`, `libdpframework_mtk.so`, `libged_sys.so`,
   `libgralloc_extra_sys.so`, `libion_mtk_sys.so`, `libion_ulit_sys.so`,
@@ -151,21 +179,12 @@ v1 signature (`META-INF/`) is dropped so the build's platform key applies.
   copies of the `vendor.mediatek.hardware.{videotelephony@1.0,pq@2.0,power@1.1}`
   HIDL interface libraries. The 309-byte ColorOS stub jars
   (`com.coloros.statistics.jar`, `coloros.support.jar`,
-  `com.nearme.romupdate.bugly.jar`) are kept at their stock locations; the
-  `ims-common.jar` and `mediatek-ims-common.jar` stubs were dropped.
-  `ims-common` is an AOSP boot jar, so the empty stub overwrote the real
-  Android 10 jar and produced the broken `boot-ims-common.art/.oat` that made
-  ART fail to create an image space. `mediatek-ims-common` is a separate MTK
-  boot jar (`PRODUCT_BOOT_JARS`, not a `<uses-library>`); MTK trees build it
-  from `vendor/mediatek/proprietary/frameworks/opt/net/ims`. The stock file is
-  an empty 309-byte stub whose classes exist only in the Android 8.1
-  `boot-mediatek-ims-common.vdex`, which Android 10 ART cannot consume.
-  The stock 8.1 `ImsService.apk` also overrides the 8.1
-  `com.android.ims.ImsCallProfile`/`ImsServiceBase` API, whereas Android 10's
-  `ims-common` (`frameworks/opt/net/ims`) uses
-  `android.telephony.ims.ImsCallProfile`; the two are not interchangeable.
-  IMS therefore needs an Android 10-native MTK IMS stack (APK plus a
-  `mediatek-ims-common.jar` built from the MTK IMS source), not the 8.1 blobs.
+  `com.nearme.romupdate.bugly.jar`) are kept at their stock locations. The
+  stock `ims-common.jar` stub is still dropped: it overwrote the real AOSP
+  Android 10 boot jar and produced the broken `boot-ims-common.art/.oat` that
+  made ART fail to create an image space. The empty stock
+  `mediatek-ims-common.jar` stub is likewise absent; the real Android 10 jar
+  from the donor dump is installed instead (see above).
   `system/etc/permissions/com.coloros.libraries.xml`. Both IMS APKs'
   `<uses-library>` entries are `required="false"`. Their signature|privileged
   permissions are allowlisted by the device tree's
@@ -252,9 +271,12 @@ the built image's dependency closure.
 
 ## Repacking the APKs
 
-`SoterService`, `ImsService`, `OppoSimSettings` and `EmCamera` are repacked the
-same way. `vdexExtractor` is a host tool built from
-<https://github.com/anestisb/vdexExtractor> (`./make.sh gcc`).
+`SoterService`, `OppoSimSettings` and `EmCamera` are repacked the same way.
+`ImsService` is instead replaced wholesale by the Android 10 donor APK (see
+section C): copy it from the donor dump, drop `META-INF/`, and rebuild the zip
+with `classes.dex`/`resources.arsc` stored (the recipe below applies verbatim
+if `src` points at the donor APK and `dex` is omitted). `vdexExtractor` is a
+host tool built from <https://github.com/anestisb/vdexExtractor> (`./make.sh gcc`).
 
 ```sh
 # 1. Unquicken the stock vdex (example: SoterService).
@@ -301,6 +323,11 @@ should re-emit:
 
 * APKs as prebuilt modules from `proprietary-files.txt` (each APK entry omits
   `;PRESIGNED`, so the generator emits `LOCAL_CERTIFICATE := platform`).
+* Nothing for the donor `mediatek-{common,ims-base,ims-common}.jar` files:
+  they are not part of the extraction manifest. Their `JAVA_LIBRARIES` modules
+  in this `Android.mk` are manual additions; if you regenerate `Android.mk`,
+  re-add that three-module block (paths under
+  `proprietary/system/framework/`) afterwards.
 * The Soter / IMS `/system` entries (interface-library copy rules, stub jars,
   permissions, and the repacked privileged modules).
 * The fingerprint/face framework stubs and their permissions XML.
@@ -310,6 +337,10 @@ should re-emit:
 
 Re-running `extract-files.sh` overwrites the repacked APKs with the stock
 dex-stripped ones — **re-apply the repack** whenever the tree is re-extracted.
+For `ImsService`, re-extraction installs the unusable 8.1 CPH1909 APK; replace
+it with the Android 10 donor APK again (provenance and hashes in section C).
+The three `mediatek-*.jar` donor files are not part of the extraction manifest
+and survive a re-extract.
 The `patchelf` `DT_NEEDED` edits and the added compatibility libraries
 (`libLLVM`, `libbacktrace`, `libunwind`, `liblog-v28`, the libskia
 trio) are committed blob changes; re-extraction restores the unpatched stock
