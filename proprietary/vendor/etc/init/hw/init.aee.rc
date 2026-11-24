@@ -37,7 +37,12 @@ on property:persist.aee.core.dump=enable
     write /proc/sys/kernel/core_pattern "|/vendor/bin/aee_core_forwarder /data/vendor/core/ %p %s UID=%u GID=%g"
 
 on init
-    export LD_PRELOAD libdirect-coredump.so
+    # libdirect-coredump.so lives only in /vendor/lib[64]. Android 10 linker
+    # namespaces hide that from /system binaries, so a global LD_PRELOAD made
+    # every system service started afterwards fail with "CANNOT LINK
+    # EXECUTABLE ... library libdirect-coredump.so not found" -- including
+    # /system/bin/e2fsck during fs_mgr checks in on late-fs. The AEE core
+    # forwarder is configured via core_pattern below and does not need this.
     write /proc/self/coredump_filter 39
     # The ro.aee.* sets below are NOT Android-8 leftovers. The properties exist
     # in no .prop file, so property_service's PropertySet() finds nothing and
