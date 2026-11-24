@@ -149,12 +149,23 @@ v1 signature (`META-INF/`) is dropped so the build's platform key applies.
   `libgralloc_extra_sys.so`, `libion_mtk_sys.so`, `libion_ulit_sys.so`,
   `libpq_prot_mtk.so`, `libsignal.so`, `libvt_avsync.so`) and the `/system`
   copies of the `vendor.mediatek.hardware.{videotelephony@1.0,pq@2.0,power@1.1}`
-  HIDL interface libraries; 309-byte stub jars (`ims-common.jar`,
-  `mediatek-ims-common.jar`, `com.coloros.statistics.jar`, `coloros.support.jar`,
-  `com.nearme.romupdate.bugly.jar`); the `ims-common.jar` and
-  `mediatek-ims-common.jar` stubs were dropped because being installed in
-  `/system/framework` added them to the boot classpath and produced broken
-  `boot-ims-common.art/.oat`, which made ART fail to create an image space.
+  HIDL interface libraries. The 309-byte ColorOS stub jars
+  (`com.coloros.statistics.jar`, `coloros.support.jar`,
+  `com.nearme.romupdate.bugly.jar`) are kept at their stock locations; the
+  `ims-common.jar` and `mediatek-ims-common.jar` stubs were dropped.
+  `ims-common` is an AOSP boot jar, so the empty stub overwrote the real
+  Android 10 jar and produced the broken `boot-ims-common.art/.oat` that made
+  ART fail to create an image space. `mediatek-ims-common` is a separate MTK
+  boot jar (`PRODUCT_BOOT_JARS`, not a `<uses-library>`); MTK trees build it
+  from `vendor/mediatek/proprietary/frameworks/opt/net/ims`. The stock file is
+  an empty 309-byte stub whose classes exist only in the Android 8.1
+  `boot-mediatek-ims-common.vdex`, which Android 10 ART cannot consume.
+  The stock 8.1 `ImsService.apk` also overrides the 8.1
+  `com.android.ims.ImsCallProfile`/`ImsServiceBase` API, whereas Android 10's
+  `ims-common` (`frameworks/opt/net/ims`) uses
+  `android.telephony.ims.ImsCallProfile`; the two are not interchangeable.
+  IMS therefore needs an Android 10-native MTK IMS stack (APK plus a
+  `mediatek-ims-common.jar` built from the MTK IMS source), not the 8.1 blobs.
   `system/etc/permissions/com.coloros.libraries.xml`. Both IMS APKs'
   `<uses-library>` entries are `required="false"`. Their signature|privileged
   permissions are allowlisted by the device tree's
