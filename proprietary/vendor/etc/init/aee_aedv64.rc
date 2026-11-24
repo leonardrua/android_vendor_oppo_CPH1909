@@ -1,4 +1,0 @@
-service aee_aedv64 /vendor/bin/aee_aedv64
-    class core
-    group root readproc
-    writepid /dev/cpuset/system-background/tasks
