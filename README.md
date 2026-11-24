@@ -206,8 +206,11 @@ the built image's dependency closure.
 * **`libLLVM.so`** (stock, `/vendor/lib64`) — `vendor/bin/rs2spir` needs it;
   AOSP 10 renamed its LLVM to `libLLVM_android.so`, so the legacy name is shipped
   vendor-local (the vendor namespace cannot reach a non-delegated system lib).
-* **`libsuspend.so`** (stock 32-bit, `/system/lib`) — `system/bin/kpoc_charger`
-  (the KPOC charger blob) needs it; AOSP 10 builds libsuspend statically.
+* **Platform `libsuspend`** — `system/bin/kpoc_charger` imports only
+  `autosuspend_enable()` / `autosuspend_disable()`, which the LineageOS 17.1
+  `system/core/libsuspend` shared library exports with the same C signatures.
+  The stock 8.1 copy was removed because it duplicated the platform's
+  `/system/lib/libsuspend.so` install rule.
 * **`libbacktrace.so` + `libunwind.so`** (stock, `/vendor/lib[64]`) —
   `aee_aedv`/`aee_aedv64`/`libudf` call `Backtrace::Create`, which AOSP 10's
   libbacktrace no longer exports compatibly; the stock pair is shipped
@@ -297,7 +300,7 @@ should re-emit:
 Re-running `extract-files.sh` overwrites the repacked APKs with the stock
 dex-stripped ones — **re-apply the repack** whenever the tree is re-extracted.
 The `patchelf` `DT_NEEDED` edits and the added compatibility libraries
-(`libLLVM`, `libsuspend`, `libbacktrace`, `libunwind`, `liblog-v28`, the libskia
+(`libLLVM`, `libbacktrace`, `libunwind`, `liblog-v28`, the libskia
 trio) are committed blob changes; re-extraction restores the unpatched stock
 files, so re-apply those edits too (they are recorded in the git history).
 
