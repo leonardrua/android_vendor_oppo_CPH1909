@@ -1,7 +1,13 @@
 # VTService .rc configure
 
+# /system/bin/vtservice is the stock 8.1 ViLTE service. It imports the 8.1
+# MetaData/IMediaSource/AudioTrack ABI that Android 10 removed (MetaData is
+# header-only now and has a different layout, AudioTrack gained a trailing
+# parameter), so it cannot link. Keep it shipped but disabled until a ViLTE
+# replacement exists; vtservice_hidl below is unaffected.
 service vtservice /system/bin/vtservice
     class main
+    disabled
     user system
     group system camera graphics inet net_admin net_raw media sdcard_rw radio sdcard_r media_rw
     ioprio rt 4
