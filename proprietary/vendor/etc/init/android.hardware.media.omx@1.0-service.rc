@@ -1,16 +1,10 @@
-# The stock 8.1 MTK OMX service cannot run on Android 10: it imports the
-# 8.1 OmxStore constructor (const char*, const char* const*, ...), while the
-# platform libstagefright_omx only provides the 10.x constructor
-# (const sp<IOmx>&, const char*, const vector<string>&, ...). The class layout
-# differs, so no symbol shim can bridge it. Keep the binary shipped but do not
-# start it; video decoding uses the platform Codec2/software codecs.
-#
-# If MTK OMX is needed, replace this binary with the AOSP module
-# android.hardware.media.omx@1.0-service (frameworks/av/services/mediacodec).
+# The binary is now the Android 10-native OMX service kanged from the A15
+# (CPH2185) MT6765 vendor tree. It imports the 10.x OmxStore constructor
+# (verified against /system/lib/vndk-29/libstagefright_omx.so), so the 8.1 ABI
+# mismatch that required disabling this service is gone.
 service mediacodec /vendor/bin/hw/android.hardware.media.omx@1.0-service
     class main
     user mediacodec
     group camera drmrpc mediadrm media_rw sdcard_rw media system audio inet net_bt net_bt_admin net_bw_acct sdcard_r
     ioprio rt 4
     writepid /dev/cpuset/foreground/tasks
-    disabled
