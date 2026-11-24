@@ -40,6 +40,11 @@ on early-init
     chmod 0755 /sys/kernel/debug
 
 on init
+    # Logger
+    start boot_log
+    start boot_log_crash
+    start boot_log_kernel
+
     # create io boost group
     mkdir /dev/stune/io
     chown root system /dev/stune/io
@@ -179,6 +184,11 @@ on late-fs
 on post-fs
     write /proc/bootprof "INIT:post-fs"
 
+    # Logger
+    start boot_log
+    start boot_log_crash
+    start boot_log_kernel
+
     # boot perf. tune
     write /proc/perfmgr/boost_ctrl/eas_ctrl/boot_boost "0 1100"
     write /proc/perfmgr/boost_ctrl/eas_ctrl/boot_boost "1 1100"
@@ -215,6 +225,11 @@ on post-fs
 
 on post-fs-data
     write /proc/bootprof "INIT:post-fs-data"
+
+    # Logger
+    start boot_log
+    start boot_log_crash
+    start boot_log_kernel
 
     # boot time fs tune
     write /sys/block/mmcblk0/queue/iostats 0
@@ -1342,4 +1357,39 @@ service oppoalgo_daemon /vendor/bin/oppoalgo_daemon
 	user media
 	group camera
 #endif
+
+# Logger -- keep a full logcat on /cache so bring-up failures can be pulled
+# in recovery even when adb is unavailable.
+service boot_log /system/bin/logcat -b all -D -f /cache/boot_log_full.txt
+    class main
+    user root
+    group root system
+    disabled
+    oneshot
+
+service boot_log_crash /system/bin/logcat -b crash -D -f /cache/boot_log_crash.txt
+    class main
+    user root
+    group root system
+    disabled
+    oneshot
+
+service boot_log_kernel /system/bin/logcat -b kernel -D -f /cache/boot_log_kernel.txt
+    class main
+    user root
+    group root system
+    disabled
+    oneshot
+
+# The services are disabled above and started from the early boot stages;
+# early-boot runs after /cache has been mounted.
+on early-boot
+    start boot_log
+    start boot_log_crash
+    start boot_log_kernel
+
+on property:sys.boot_completed=1
+    stop boot_log
+    stop boot_log_crash
+    stop boot_log_kernel
 
