@@ -8,8 +8,11 @@ import /vendor/etc/init/hw/init.volte.rc
 import /vendor/etc/init/hw/init.mal.rc
 import /vendor/etc/init/hw/init.sensor_1_0.rc
 
-# init.aee.rc and the AEE binaries were dropped: AEE is not useful on AOSP
-# and its global libdirect-coredump LD_PRELOAD broke /system binaries.
+# Android 10: /vendor/etc/init is parsed non-recursively (init.cpp
+# ParseConfigDir only accepts DT_REG), so hw/init.aee.rc is only reachable via
+# this import. Without it every AEE start/restart below is a silent no-op and
+# the MTK exception/debug daemons never run.
+import /vendor/etc/init/hw/init.aee.rc
 
 # init.modem.rc must be the LAST rc file because vold.post_fs_data_done is set in it
 import /vendor/etc/init/hw/init.modem.rc
