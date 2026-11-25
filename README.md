@@ -374,6 +374,51 @@ grep 'LOCAL_CERTIFICATE := PRESIGNED' Android.mk                # should be empt
 readelf -d proprietary/vendor/lib64/hw/android.hardware.sensors@1.0-impl-mediatek.so | grep base  # libbase-v28
 ```
 
+## Kanged PowerVR GLES support libraries
+
+The stock 8.1 GLES driver intermittently returns `GL_INVALID_ENUM` to
+Android 10's HWUI in `SkiaOpenGLPipeline::swapBuffers()`, aborting the
+SystemUI RenderThread (`GL errors! ... SkiaOpenGLPipeline.cpp:126`). Five
+support libraries were replaced with the newer versions from
+`SPEEDFIRE7/android_device_oppo_CPH2185` (`vendor-lineage-17.1`, same
+MT6765 / PowerVR GE8320 platform):
+
+```
+vendor/lib{,64}/libusc.so
+vendor/lib{,64}/libglslcompiler.so
+vendor/lib{,64}/libgpu_aux.so
+vendor/lib{,64}/libged.so
+vendor/lib{,64}/libgralloc_extra.so
+```
+
+Why only these five:
+
+* The CPH1909 kernel is PVR **1.9@4971894**
+  (`[drm] Initialized pvr 1.9.4971894`). `libsrv_um.so` carries the matching
+  version string; CPH2185's `libsrv_um.so` is **1.11@5425693** and its
+  `libIMGegl.so`/`libGLESv2_mtk.so` import 1.11-only `PVRSRV*` symbols
+  (`PVRSRVGetCurrentThreadID`, `PVRSRVSWFenceCreateI`, ...). Kanging the
+  core would need a different kernel module and is not done here.
+* The matching kernel source is
+  `https://github.com/eun0115/kernel_oppo_CPH2185`. It is 4.9.190 and its
+  `drivers/misc/mediatek/gpu/gpu_rgx/Makefile` selects `m1.11ED5425693/`
+  for `doma` (`pvrversion.h`: `1.11@5425693`), while this tree is 4.9.80 and
+  hardcodes `m1.9ED4971894/`. Porting the full 1.11 driver is not a blob
+  swap: CPH2185 also adds `gpu_bm/` and
+  `base/power/qos/mt6765/`, and the 1.11 sources include headers such as
+  `linux/sw_sync.h`, `drm/drm_gem_framebuffer_helper.h` and
+  `mach/mtk_hibernate_dpm.h` that are absent here. The GPU DT node
+  (`mfg_doma@13000000`, same registers/IRQ/clock) is identical, so the
+  hardware description itself would not need changing.
+* The five files above were checked with `nm -D`: all of their vendor-specific
+  undefined symbols are still exported by the stock 1.9 libraries, and they
+  do not require `libgpud.so`. They are a drop-in for the shader compiler,
+  GED and gralloc-extra paths implicated by the GL/gralloc warnings.
+
+The original files are saved in `kang/` in this repository. The device tree's
+`extract-files.sh` copies them back over the extracted stock blobs after
+every `extract` run, so re-extraction does not silently revert the fix.
+
 ## Notes
 
 * The blob list (`proprietary-files.txt`) is owned by the **device tree**, not
