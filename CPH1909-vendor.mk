@@ -994,7 +994,6 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libmemtrack_GL.so:$(TARGET_COPY_OUT_VENDOR)/lib/libmemtrack_GL.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libmfllcore.so:$(TARGET_COPY_OUT_VENDOR)/lib/libmfllcore.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libmhalImageCodec.so:$(TARGET_COPY_OUT_VENDOR)/lib/libmhalImageCodec.so \
-    vendor/oppo/CPH1909/proprietary/vendor/lib/libminijail_vendor.so:$(TARGET_COPY_OUT_VENDOR)/lib/libminijail_vendor.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libmmprofile.so:$(TARGET_COPY_OUT_VENDOR)/lib/libmmprofile.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libmnl.so:$(TARGET_COPY_OUT_VENDOR)/lib/libmnl.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libmp4enc_sa.ca7.so:$(TARGET_COPY_OUT_VENDOR)/lib/libmp4enc_sa.ca7.so \
@@ -1398,7 +1397,6 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libmemtrack_GL.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libmemtrack_GL.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libmfllcore.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libmfllcore.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libmhalImageCodec.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libmhalImageCodec.so \
-    vendor/oppo/CPH1909/proprietary/vendor/lib64/libminijail_vendor.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libminijail_vendor.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libmmprofile.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libmmprofile.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libmpbase.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libmpbase.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libmrdumpv.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libmrdumpv.so \
