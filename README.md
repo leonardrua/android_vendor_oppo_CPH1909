@@ -215,7 +215,11 @@ build's platform key replaces the stock signature.
   system partition, not relocated to `/vendor`. This includes
   `vendor.mediatek.hardware.camera.device@1.1.so` (a direct camera-stack
   dependency). The API-27 MediaTek framework JARs and precompiled ART/OAT/VDEX
-  artifacts are excluded (tied to the stock framework/runtime).
+  artifacts are excluded (tied to the stock framework/runtime). The 8.1
+  `vendor/lib/libmediacodecservice.so` is also excluded: no blob links to it,
+  it only carried the removed `IMediaCodecService`/`OMXStore`/`OMX` 8.1 ABI,
+  and the Android 10 OMX service uses the platform `libstagefright_omx.so`
+  and `libstagefright_xmlparser.so`.
 
 ### D. ELF dependency closure and VNDK fixes
 

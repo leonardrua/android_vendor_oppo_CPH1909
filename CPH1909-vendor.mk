@@ -983,7 +983,9 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libjpeg.a:$(TARGET_COPY_OUT_VENDOR)/lib/libjpeg.a \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libksensor.so:$(TARGET_COPY_OUT_VENDOR)/lib/libksensor.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/liblog-v28.so:$(TARGET_COPY_OUT_VENDOR)/lib/liblog-v28.so \
-    vendor/oppo/CPH1909/proprietary/vendor/lib/libmediacodecservice.so:$(TARGET_COPY_OUT_VENDOR)/lib/libmediacodecservice.so \
+# libmediacodecservice.so: dropped. Its 8.1 IMediaCodecService/OMXStore/OMX
+# ABI has no consumer (the A10 OMX service links platform
+# libstagefright_omx.so / libstagefright_xmlparser.so instead).
     vendor/oppo/CPH1909/proprietary/vendor/lib/libmegface.so:$(TARGET_COPY_OUT_VENDOR)/lib/libmegface.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libmegsegment.so:$(TARGET_COPY_OUT_VENDOR)/lib/libmegsegment.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libmemtrack_GL.so:$(TARGET_COPY_OUT_VENDOR)/lib/libmemtrack_GL.so \
