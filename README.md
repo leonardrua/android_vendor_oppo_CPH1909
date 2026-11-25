@@ -387,11 +387,13 @@ MT6765 / PowerVR GE8320 platform):
 vendor/lib{,64}/libusc.so
 vendor/lib{,64}/libglslcompiler.so
 vendor/lib{,64}/libgpu_aux.so
-vendor/lib{,64}/libged.so
 vendor/lib{,64}/libgralloc_extra.so
 ```
 
-Why only these five:
+`vendor/lib{,64}/libgpud.so` is also taken from CPH2185 to satisfy the
+`libgpu_aux` imports. `libged.so` was tried but reverted to stock — see below.
+
+Why only these:
 
 * The CPH1909 kernel is PVR **1.9@4971894**
   (`[drm] Initialized pvr 1.9.4971894`). `libsrv_um.so` carries the matching
@@ -410,7 +412,7 @@ Why only these five:
   `mach/mtk_hibernate_dpm.h` that are absent here. The GPU DT node
   (`mfg_doma@13000000`, same registers/IRQ/clock) is identical, so the
   hardware description itself would not need changing.
-* The five files above were checked with `nm -D`: all of their vendor-specific
+* The files above were checked with `nm -D`: all of their vendor-specific
   undefined symbols are exported by the stock 1.9 libraries or by system
   HIDL libraries. `libgpu_aux.so` did gain two load-time changes versus stock:
   it imports nine `gpud*` symbols from `libgpud.so` (not present in the stock
@@ -418,16 +420,21 @@ Why only these five:
   Both are fixed here: CPH2185's `vendor/lib{,64}/libgpud.so` is committed and
   installed, and `patchelf --replace-needed` rewrites the mms dependency to
   the `_vendor.so` variant already in this tree (which exports the single
-  `IMms::getService` symbol that `libgpu_aux` imports). `libged.so` also
-  gained a `vendor.mediatek.hardware.gpu@1.0.so` dependency but imports no
-  symbols from it; that library is still not shipped here.
+  `IMms::getService` symbol that `libgpu_aux` imports).
+* CPH2185's `libged.so` was reverted to the stock version. Its only extra
+  `DT_NEEDED` was `vendor.mediatek.hardware.gpu@1.0.so`, which is absent here
+  and from which it imported zero symbols. The stock `libged.so` exports all
+  four `ged_ge_*` symbols that the kanged `libgralloc_extra.so` imports, and
+  none of the installed blobs need the newer GED-only exports.
 
 No backup copy of these blobs is kept in this repository. Running
 `extract-files.sh` again will overwrite them with the stock 8.1 versions; to
 restore the fix, re-fetch the ten files from
 `https://github.com/SPEEDFIRE7/android_device_oppo_CPH2185/tree/vendor-lineage-17.1/proprietary`
-(`vendor/lib{,64}/{libusc,libglslcompiler,libgpu_aux,libged,libgralloc_extra}.so`)
-into `proprietary/vendor/lib{,64}/` after extraction.
+(`vendor/lib{,64}/{libusc,libglslcompiler,libgpu_aux,libgralloc_extra,libgpud}.so`)
+into `proprietary/vendor/lib{,64}/` after extraction, then re-apply the
+`patchelf --replace-needed` on `libgpu_aux.so` described above. `libged.so`
+must stay stock.
 
 ## Notes
 
