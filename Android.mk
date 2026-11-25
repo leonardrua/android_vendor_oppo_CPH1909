@@ -175,46 +175,10 @@ LOCAL_PRIVILEGED_MODULE := true
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
-# Android 10 MTK IMS boot jars, from the Realme C2 (RMX1941) QP1A dump that
-# this tree uses as its IMS donor. See README section C ("IMS (VoLTE)") for
-# provenance and the ABI checks that justify shipping these three jars
-# (and not the full seven-jar MTK set).
-#
-# mediatek-ims-base defines the IMtkImsService / IMtkImsCallSession /
-# IMtkImsUt AIDL stubs the donor ImsService.apk extends; mediatek-common
-# provides OperatorCustomizationFactoryLoader, which the APK's operator
-# customization utils load directly; mediatek-ims-common carries MtkImsManager
-# / MtkImsManagerEx for the legacy com.android.ims.ImsServiceBase path and
-# boot-classpath parity with the donor ROM. None of the three define any
-# android.* or com.android.* class, so they cannot shadow platform classes.
-include $(CLEAR_VARS)
-LOCAL_MODULE := mediatek-common
-LOCAL_MODULE_OWNER := oppo
-LOCAL_SRC_FILES := proprietary/system/framework/mediatek-common.jar
-LOCAL_CERTIFICATE := platform
-LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE_CLASS := JAVA_LIBRARIES
-LOCAL_MODULE_SUFFIX := .jar
-include $(BUILD_PREBUILT)
-
-include $(CLEAR_VARS)
-LOCAL_MODULE := mediatek-ims-base
-LOCAL_MODULE_OWNER := oppo
-LOCAL_SRC_FILES := proprietary/system/framework/mediatek-ims-base.jar
-LOCAL_CERTIFICATE := platform
-LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE_CLASS := JAVA_LIBRARIES
-LOCAL_MODULE_SUFFIX := .jar
-include $(BUILD_PREBUILT)
-
-include $(CLEAR_VARS)
-LOCAL_MODULE := mediatek-ims-common
-LOCAL_MODULE_OWNER := oppo
-LOCAL_SRC_FILES := proprietary/system/framework/mediatek-ims-common.jar
-LOCAL_CERTIFICATE := platform
-LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE_CLASS := JAVA_LIBRARIES
-LOCAL_MODULE_SUFFIX := .jar
-include $(BUILD_PREBUILT)
+# The three Android 10 MTK IMS boot jars (mediatek-common, mediatek-ims-base,
+# mediatek-ims-common) are Soong `dex_import` modules in ims/Android.bp. They
+# cannot be declared here: build/make/core/prebuilt_internal.mk rejects
+# Android.mk JAVA_LIBRARIES prebuilts listed in PRODUCT_BOOT_JARS. See the
+# README section C for donor provenance and the ABI checks.
 
 endif
