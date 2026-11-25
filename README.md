@@ -112,18 +112,20 @@ rejects `%.apk` entries there). They are `BUILD_PREBUILT` modules in
 * **Nine vendor apps** under `/vendor/app`: `EmCamera`, `LPPeService`,
   `LocationEM2`, `MMIGroup`, `MTKLoggerProxy`, `NlpService`, `RootPA`,
   `WapiCertManager`, `sileadManager` (`LOCAL_VENDOR_MODULE := true`).
-* **System APKs:** `SoterService` (`/system/app`), `ImsService` and
-  `OppoSimSettings` (`/system/priv-app`, `LOCAL_PRIVILEGED_MODULE := true`,
-  `LOCAL_DEX_PREOPT := false`).
+* **System APKs:** `SoterService` (`/system/app`) and `ImsService`
+  (`/system/priv-app`, `LOCAL_PRIVILEGED_MODULE := true`,
+  `LOCAL_DEX_PREOPT := false`). The ColorOS `OppoSimSettings` app was dropped:
+  no shipped app depended on it, and the AOSP Settings app covers SIM/mobile
+  network configuration.
 
 **Why re-sign:** the stock APKs carry OPPO's platform certificate, which cannot
 match an unofficial LineageOS build. Several apps join a platform shared user
 (`LPPeService`, `MMIGroup`, `NlpService`, `WapiCertManager`, `sileadManager`,
-`SoterService`, `OppoSimSettings` → `android.uid.system`; `EmCamera`,
+`SoterService` → `android.uid.system`; `EmCamera`,
 `ImsService` → `android.uid.phone`); without re-signing the package manager
 rejects them at boot for a shared-user signature mismatch.
 
-**Why repack:** `SoterService`, `OppoSimSettings` and `EmCamera` are dex-stripped
+**Why repack:** `SoterService` and `EmCamera` are dex-stripped
 in the stock CPH1909 image — their bytecode lives only in `oat/arm64/*.vdex`,
 paired with Android 8.1 quickened odex that ART 10 cannot read. Their committed
 APKs carry an unquickened `classes.dex` extracted from those vdex files
@@ -169,25 +171,27 @@ build's platform key replaces the stock signature.
   `mediatek-ims-base.jar bd7984727b168ab6f24c61038966faa8806f175a286d9f80e17c41184a8d9878`,
   `mediatek-ims-common.jar 0375391321ada522d9b73eaa6c04f349799843c72c285e416b966026ab175c18`,
   repacked `ImsService.apk dcdb72621a3c80a0b7b9e50a9d66e321633b73dd7d9b384f9e3853be088c21a0`.
-  `OppoSimSettings` (`com.coloros.simsettings`) remains the stock 8.1 ColorOS
-  settings APK, repacked/re-signed like SoterService. Alongside the Java
+  Alongside the Java
   stack: `system/lib/libimsma*.so` (32-bit), `system/bin/vtservice`
   (32-bit) with its dependency closure (`libmtk_vt_service.so`, `libsource.so`,
   `libcomutils.so`, `libdpframework_mtk.so`, `libged_sys.so`,
   `libgralloc_extra_sys.so`, `libion_mtk_sys.so`, `libion_ulit_sys.so`,
   `libpq_prot_mtk.so`, `libsignal.so`, `libvt_avsync.so`) and the `/system`
   copies of the `vendor.mediatek.hardware.{videotelephony@1.0,pq@2.0,power@1.1}`
-  HIDL interface libraries. The 309-byte ColorOS stub jars
+  HIDL interface libraries. The stock ColorOS stub jars
   (`com.coloros.statistics.jar`, `coloros.support.jar`,
-  `com.nearme.romupdate.bugly.jar`) are kept at their stock locations. The
-  stock `ims-common.jar` stub is still dropped: it overwrote the real AOSP
+  `com.nearme.romupdate.bugly.jar`) and
+  `system/etc/permissions/com.coloros.libraries.xml` were dropped: all three
+  jars are 309-byte manifest-only files with no classes, they are not boot
+  jars, and no shipped APK references them after removing `OppoSimSettings`
+  (its only reference was `com.coloros.statistics`, with `required="false"`).
+  The stock `ims-common.jar` stub is still dropped: it overwrote the real AOSP
   Android 10 boot jar and produced the broken `boot-ims-common.art/.oat` that
   made ART fail to create an image space. The empty stock
   `mediatek-ims-common.jar` stub is likewise absent; the real Android 10 jar
-  from the donor dump is installed instead (see above).
-  `system/etc/permissions/com.coloros.libraries.xml`. Both IMS APKs'
-  `<uses-library>` entries are `required="false"`. Their signature|privileged
-  permissions are allowlisted by the device tree's
+  from the donor dump is installed instead (see above). The donor APK's
+  `<uses-library>` entries are all `required="false"`. Its
+  signature|privileged permissions are allowlisted by the device tree's
   `configs/permissions/privapp-permissions-ims.xml`.
 * **Fingerprint/face framework stub jars** (309-byte empty jars):
   `android.frameworks.fingerprintservice-V1.0-java.jar`,
@@ -271,7 +275,7 @@ the built image's dependency closure.
 
 ## Repacking the APKs
 
-`SoterService`, `OppoSimSettings` and `EmCamera` are repacked the same way.
+`SoterService` and `EmCamera` are repacked the same way.
 `ImsService` is instead replaced wholesale by the Android 10 donor APK (see
 section C): copy it from the donor dump, drop `META-INF/`, and rebuild the zip
 with `classes.dex`/`resources.arsc` stored (the recipe below applies verbatim
@@ -306,12 +310,11 @@ with zipfile.ZipFile(dst, 'w') as zout:
 PY
 ```
 
-For the IMS APKs swap the paths to
-`system/priv-app/{ImsService,OppoSimSettings}/...` (both
-`LOCAL_PRIVILEGED_MODULE := true`); for `EmCamera` to
-`vendor/app/EmCamera/...`. Both IMS APKs' `<uses-library>` entries are
-`required="false"` (verified from the binary manifests), so neither library needs
-to exist for the applications to install.
+For `SoterService` use `system/app/SoterService/...`; for `EmCamera`,
+`vendor/app/EmCamera/...`. `ImsService` is the donor APK from section C, not a
+vdex extraction; its `<uses-library>` entries are all `required="false"`
+(verified from the binary manifest), so none of those libraries needs to exist
+for the application to install.
 
 ## Regenerating
 
@@ -328,7 +331,7 @@ should re-emit:
   in this `Android.mk` are manual additions; if you regenerate `Android.mk`,
   re-add that three-module block (paths under
   `proprietary/system/framework/`) afterwards.
-* The Soter / IMS `/system` entries (interface-library copy rules, stub jars,
+* The Soter / IMS `/system` entries (interface-library copy rules,
   permissions, and the repacked privileged modules).
 * The fingerprint/face framework stubs and their permissions XML.
 * The `src:dst` remaps for the libskia trio (extract from stock `/system`,

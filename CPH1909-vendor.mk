@@ -18,7 +18,6 @@ PRODUCT_PACKAGES += \
     WapiCertManager \
     SoterService \
     ImsService \
-    OppoSimSettings \
     sileadManager
 
 # vendor.qti.hardware.soter@1.0.so is the HIDL interface library used by
@@ -60,26 +59,21 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libLLVM.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libLLVM.so \
     vendor/oppo/CPH1909/proprietary/system/lib/libsink.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libsink.so
 
-# Stock IMS (VoLTE) system-side blobs. ImsService and OppoSimSettings are
-# APKs, so they are BUILD_PREBUILT modules declared in Android.mk (APKs cannot
-# go through PRODUCT_COPY_FILES). The rest install into the stock /system
-# locations:
+# Stock IMS (VoLTE) system-side blobs. ImsService is an APK, so it is a
+# BUILD_PREBUILT module declared in Android.mk (APKs cannot go through
+# PRODUCT_COPY_FILES). The rest install into the stock /system locations:
 #   - libimsma*.so: 32-bit native libs of the stock IMS stack, required only
 #     by system/lib/libmtk_vt_service.so (not shipped); kept for layout
 #     parity. The stock image has no 64-bit copies.
-#   - the stub jars (309 bytes, empty manifest): kept at their stock
-#     locations; nothing in this build's boot classpath references them.
-#   - com.coloros.libraries.xml: registers the com.coloros.statistics library
-#     that OppoSimSettings' <uses-library> declaration references.
+# The ColorOS stub jars and com.coloros.libraries.xml that used to be copied
+# here were dropped: no shipped app references them (the only consumer,
+# OppoSimSettings, is also removed). They were 309-byte manifest-only jars
+# with no classes and were not on the boot classpath.
 PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/system/lib/libimsma.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libimsma.so \
     vendor/oppo/CPH1909/proprietary/system/lib/libimsma_adapt.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libimsma_adapt.so \
     vendor/oppo/CPH1909/proprietary/system/lib/libimsma_rtp.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libimsma_rtp.so \
-    vendor/oppo/CPH1909/proprietary/system/lib/libimsma_socketwrapper.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libimsma_socketwrapper.so \
-    vendor/oppo/CPH1909/proprietary/system/framework/com.coloros.statistics.jar:$(TARGET_COPY_OUT_SYSTEM)/framework/com.coloros.statistics.jar \
-    vendor/oppo/CPH1909/proprietary/system/framework/coloros.support.jar:$(TARGET_COPY_OUT_SYSTEM)/framework/coloros.support.jar \
-    vendor/oppo/CPH1909/proprietary/system/framework/com.nearme.romupdate.bugly.jar:$(TARGET_COPY_OUT_SYSTEM)/framework/com.nearme.romupdate.bugly.jar \
-    vendor/oppo/CPH1909/proprietary/system/etc/permissions/com.coloros.libraries.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/com.coloros.libraries.xml
+    vendor/oppo/CPH1909/proprietary/system/lib/libimsma_socketwrapper.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libimsma_socketwrapper.so
 
 # Stock videotelephony system-side blobs. /system/bin/vtservice is the
 # VoLTE video-telephony service (started by init.vtservice.rc, class main);

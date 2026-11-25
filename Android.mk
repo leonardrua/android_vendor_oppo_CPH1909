@@ -175,21 +175,6 @@ LOCAL_PRIVILEGED_MODULE := true
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
-# com.coloros.simsettings: the OPPO SIM settings/VoLTE switch application
-# (OppoSimSettings.apk), sharedUserId=android.uid.system. Same treatment as
-# ImsService: unquickened classes.dex from the stock vdex, platform
-# signature, privileged module in /system/priv-app.
-LOCAL_MODULE := OppoSimSettings
-LOCAL_MODULE_OWNER := oppo
-LOCAL_SRC_FILES := proprietary/system/priv-app/OppoSimSettings/OppoSimSettings.apk
-LOCAL_CERTIFICATE := platform
-LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE_CLASS := APPS
-LOCAL_DEX_PREOPT := false
-LOCAL_MODULE_SUFFIX := .apk
-LOCAL_PRIVILEGED_MODULE := true
-include $(BUILD_PREBUILT)
-
 # Android 10 MTK IMS boot jars, from the Realme C2 (RMX1941) QP1A dump that
 # this tree uses as its IMS donor. See README section C ("IMS (VoLTE)") for
 # provenance and the ABI checks that justify shipping these three jars
