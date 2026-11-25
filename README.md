@@ -415,9 +415,12 @@ Why only these five:
   do not require `libgpud.so`. They are a drop-in for the shader compiler,
   GED and gralloc-extra paths implicated by the GL/gralloc warnings.
 
-The original files are saved in `kang/` in this repository. The device tree's
-`extract-files.sh` copies them back over the extracted stock blobs after
-every `extract` run, so re-extraction does not silently revert the fix.
+No backup copy of these blobs is kept in this repository. Running
+`extract-files.sh` again will overwrite them with the stock 8.1 versions; to
+restore the fix, re-fetch the ten files from
+`https://github.com/SPEEDFIRE7/android_device_oppo_CPH2185/tree/vendor-lineage-17.1/proprietary`
+(`vendor/lib{,64}/{libusc,libglslcompiler,libgpu_aux,libged,libgralloc_extra}.so`)
+into `proprietary/vendor/lib{,64}/` after extraction.
 
 ## Notes
 
