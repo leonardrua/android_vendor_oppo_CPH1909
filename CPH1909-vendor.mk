@@ -1558,6 +1558,10 @@ PRODUCT_COPY_FILES += \
 # using the CPH1909 stock 8.1 blobs instead of the RMX1941 ones.
 PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/system/bin/kpoc_charger:$(TARGET_COPY_OUT_SYSTEM)/bin/kpoc_charger \
+    vendor/oppo/CPH1909/proprietary/system/etc/init/emdlogger1.rc:$(TARGET_COPY_OUT_SYSTEM)/etc/init/emdlogger1.rc \
+    vendor/oppo/CPH1909/proprietary/system/etc/init/emdlogger2.rc:$(TARGET_COPY_OUT_SYSTEM)/etc/init/emdlogger2.rc \
+    vendor/oppo/CPH1909/proprietary/system/etc/init/emdlogger5.rc:$(TARGET_COPY_OUT_SYSTEM)/etc/init/emdlogger5.rc \
     vendor/oppo/CPH1909/proprietary/system/etc/init/kpoc_charger.rc:$(TARGET_COPY_OUT_SYSTEM)/etc/init/kpoc_charger.rc \
+    vendor/oppo/CPH1909/proprietary/system/etc/init/mdlogger.rc:$(TARGET_COPY_OUT_SYSTEM)/etc/init/mdlogger.rc \
     vendor/oppo/CPH1909/proprietary/system/lib/libshowlogo.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libshowlogo.so \
     vendor/oppo/CPH1909/proprietary/system/lib/libsysenv_system.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libsysenv_system.so
