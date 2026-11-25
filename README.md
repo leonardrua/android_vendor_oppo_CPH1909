@@ -411,9 +411,16 @@ Why only these five:
   (`mfg_doma@13000000`, same registers/IRQ/clock) is identical, so the
   hardware description itself would not need changing.
 * The five files above were checked with `nm -D`: all of their vendor-specific
-  undefined symbols are still exported by the stock 1.9 libraries, and they
-  do not require `libgpud.so`. They are a drop-in for the shader compiler,
-  GED and gralloc-extra paths implicated by the GL/gralloc warnings.
+  undefined symbols are exported by the stock 1.9 libraries or by system
+  HIDL libraries. `libgpu_aux.so` did gain two load-time changes versus stock:
+  it imports nine `gpud*` symbols from `libgpud.so` (not present in the stock
+  dump), and it needs the unsuffixed `vendor.mediatek.hardware.mms@1.5.so`.
+  Both are fixed here: CPH2185's `vendor/lib{,64}/libgpud.so` is committed and
+  installed, and `patchelf --replace-needed` rewrites the mms dependency to
+  the `_vendor.so` variant already in this tree (which exports the single
+  `IMms::getService` symbol that `libgpu_aux` imports). `libged.so` also
+  gained a `vendor.mediatek.hardware.gpu@1.0.so` dependency but imports no
+  symbols from it; that library is still not shipped here.
 
 No backup copy of these blobs is kept in this repository. Running
 `extract-files.sh` again will overwrite them with the stock 8.1 versions; to
