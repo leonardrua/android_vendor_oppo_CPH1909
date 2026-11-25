@@ -1,21 +1,26 @@
 #
 # MAL related services (Begin)
 #
+# Android 10 donor binaries (RMX1941) with the legacy mtk.md1.status
+# triggers used by this device's 8.1 modem/RIL. The donor daemon
+# volte_md_status (which sets vendor.volte_md_status) is deliberately
+# not shipped; the renamed vendor.volte_* services match the binary's
+# init.svc.vendor.volte_imcb check.
 
 on property:mtk.md1.status=ready
     start volte_imsm_93
-    start volte_stack
-    start volte_ua
-    start volte_imcb
+    start vendor.volte_stack
+    start vendor.volte_ua
+    start vendor.volte_imcb
 
 on property:mtk.md1.status=reset
     rm /dev/radio/pttyims
     rm /dev/radio/ptty2ims
     rm /dev/radio/ptty3ims
     rm /dev/radio/ptty4ims
-    stop volte_imcb
-    stop volte_ua
-    stop volte_stack
+    stop vendor.volte_imcb
+    stop vendor.volte_ua
+    stop vendor.volte_stack
     stop volte_imsm_93
 
 on property:mtk.md1.status=stop
@@ -23,9 +28,9 @@ on property:mtk.md1.status=stop
     rm /dev/radio/ptty2ims
     rm /dev/radio/ptty3ims
     rm /dev/radio/ptty4ims
-    stop volte_imcb
-    stop volte_ua
-    stop volte_stack
+    stop vendor.volte_imcb
+    stop vendor.volte_ua
+    stop vendor.volte_stack
     stop volte_imsm_93
 
 on property:mtk.md1.status=flightmode
@@ -33,9 +38,9 @@ on property:mtk.md1.status=flightmode
     rm /dev/radio/ptty2ims
     rm /dev/radio/ptty3ims
     rm /dev/radio/ptty4ims
-    stop volte_imcb
-    stop volte_ua
-    stop volte_stack
+    stop vendor.volte_imcb
+    stop vendor.volte_ua
+    stop vendor.volte_stack
     stop volte_imsm_93
 
 on property:mtk.md1.status=exception
@@ -43,9 +48,9 @@ on property:mtk.md1.status=exception
     rm /dev/radio/ptty2ims
     rm /dev/radio/ptty3ims
     rm /dev/radio/ptty4ims
-    stop volte_imcb
-    stop volte_ua
-    stop volte_stack
+    stop vendor.volte_imcb
+    stop vendor.volte_ua
+    stop vendor.volte_stack
     stop volte_imsm_93
 
 service volte_imsm_93 /vendor/bin/volte_imsm_93

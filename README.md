@@ -178,7 +178,13 @@ build's platform key replaces the stock signature.
   `libgralloc_extra_sys.so`, `libion_mtk_sys.so`, `libion_ulit_sys.so`,
   `libpq_prot_mtk.so`, `libsignal.so`, `libvt_avsync.so`) and the `/system`
   copies of the `vendor.mediatek.hardware.{videotelephony@1.0,pq@2.0,power@1.1}`
-  HIDL interface libraries. The stock ColorOS stub jars
+  HIDL interface libraries. The VoLTE daemon binaries
+  (`vendor/bin/volte_{imcb,imsm_93,stack,ua}`) and their
+  `vendor/lib/libvolte_{core,xdmc}_shr.so` / `libipsec_ims_shr.so` (32- and
+  64-bit) are likewise from the same Android 10 donor ROM, so the app Java
+  API and the native daemon protocol now match. The 8.1 `mtk.md1.status`
+  modem trigger is retained in the init rc; the donor `volte_md_status`
+  daemon is not installed. The stock ColorOS stub jars
   (`com.coloros.statistics.jar`, `coloros.support.jar`,
   `com.nearme.romupdate.bugly.jar`) and
   `system/etc/permissions/com.coloros.libraries.xml` were dropped: all three
