@@ -176,7 +176,8 @@ include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
 # The three Android 10 MTK IMS boot jars (mediatek-common, mediatek-ims-base,
-# mediatek-ims-common) are Soong `dex_import` modules in ims/Android.bp. They
+# mediatek-ims-common) are Soong `dex_import` modules in
+# proprietary/system/framework/Android.bp. They
 # cannot be declared here: build/make/core/prebuilt_internal.mk rejects
 # Android.mk JAVA_LIBRARIES prebuilts listed in PRODUCT_BOOT_JARS. See the
 # README section C for donor provenance and the ABI checks.

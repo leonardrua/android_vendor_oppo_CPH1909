@@ -154,7 +154,7 @@ build's platform key replaces the stock signature.
   the modern binder through `MtkDynamicImsService extends
   android.telephony.ims.ImsService`, which matches LineageOS 17.1.
   Three boot jars from the same dump are installed as Soong `dex_import`
-  modules (`vendor/oppo/CPH1909/ims/Android.bp`) and added to
+  modules (`vendor/oppo/CPH1909/proprietary/system/framework/Android.bp`) and added to
   `PRODUCT_BOOT_JARS` (device `device.mk`): `mediatek-ims-base.jar` defines the
   `IMtkImsService`/`IMtkImsCallSession`/`IMtkImsUt` AIDL stubs the APK
   extends; `mediatek-common.jar` provides `OperatorCustomizationFactoryLoader`,
@@ -328,8 +328,9 @@ should re-emit:
   `;PRESIGNED`, so the generator emits `LOCAL_CERTIFICATE := platform`).
 * Nothing for the donor `mediatek-{common,ims-base,ims-common}.jar` files:
   they are not part of the extraction manifest. Their Soong `dex_import`
-  modules live in the hand-maintained `ims/Android.bp` and survive
-  regeneration of the generated root `Android.bp` / `Android.mk`. They must
+  modules live in the hand-maintained
+  `proprietary/system/framework/Android.bp` and survive regeneration of the
+  generated root `Android.bp` / `Android.mk`. They must
   stay in `Android.bp`: `PRODUCT_BOOT_JARS` rejects Make `JAVA_LIBRARIES`
   prebuilts (`build/make/core/prebuilt_internal.mk`).
 * The Soter / IMS `/system` entries (interface-library copy rules,
