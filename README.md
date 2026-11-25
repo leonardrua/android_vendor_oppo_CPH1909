@@ -228,9 +228,10 @@ namespaces, so a number of 8.1 blobs needed `DT_NEEDED` repairs (via `patchelf`)
 and a few compatibility libraries had to be shipped. All were verified against
 the built image's dependency closure.
 
-* **`libbase-v28.so`** — the Android 8.1 `libbase` (from
-  `prebuilts/vndk/v28`, copied by the **device tree** into `/vendor/lib[64]` and
-  `/system/lib[64]`, not by this repo). Blobs that import the 5-argument
+* **`libbase-v28.so`** — the Android 8.1 `libbase` (from `prebuilts/vndk/v28`),
+  with SONAME patched to `libbase-v28.so` (so it does not shadow platform VNDK-SP
+  `libbase.so` in the dynamic linker), shipped into `/vendor/lib[64]` and
+  `/system/lib[64]`. Blobs that import the 5-argument
   `android::base::LogMessage` constructor removed in AOSP 10
   (`android.hardware.sensors@1.0-impl-mediatek`, `libnvram`, `libsysenv`,
   `android.hardware.drm@1.0-service.widevine`,

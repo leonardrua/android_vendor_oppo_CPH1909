@@ -45,7 +45,9 @@ PRODUCT_COPY_FILES += \
 # proprietary-files.txt entries; re-add them after regenerating this file.
 PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/system/lib/libaed.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libaed.so \
+    vendor/oppo/CPH1909/proprietary/system/lib/libbase-v28.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libbase-v28.so \
     vendor/oppo/CPH1909/proprietary/system/lib64/libaed.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libaed.so \
+    vendor/oppo/CPH1909/proprietary/system/lib64/libbase-v28.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libbase-v28.so \
     vendor/oppo/CPH1909/proprietary/system/lib/libmrdump.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libmrdump.so \
     vendor/oppo/CPH1909/proprietary/system/lib64/libmrdump.so:$(TARGET_COPY_OUT_SYSTEM)/lib64/libmrdump.so \
     vendor/oppo/CPH1909/proprietary/system/lib/libprogrambinary.so:$(TARGET_COPY_OUT_SYSTEM)/lib/libprogrambinary.so \
@@ -619,7 +621,7 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/etc/public.libraries.txt:$(TARGET_COPY_OUT_VENDOR)/etc/public.libraries.txt \
     vendor/oppo/CPH1909/proprietary/vendor/etc/r_submix_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/r_submix_audio_policy_configuration.xml \
     vendor/oppo/CPH1909/proprietary/vendor/etc/seccomp_policy/configstore@1.0.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/configstore@1.0.policy \
-    vendor/oppo/CPH1909/proprietary/vendor/etc/seccomp_policy/mediacodec.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediacodec.policy \
+    #vendor/oppo/CPH1909/proprietary/vendor/etc/seccomp_policy/mediacodec.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediacodec.policy \
     vendor/oppo/CPH1909/proprietary/vendor/etc/seccomp_policy/mediaextractor.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediaextractor.policy \
     vendor/oppo/CPH1909/proprietary/vendor/etc/security/cacerts_supl/594f1775.0:$(TARGET_COPY_OUT_VENDOR)/etc/security/cacerts_supl/594f1775.0 \
     vendor/oppo/CPH1909/proprietary/vendor/etc/security/cacerts_supl/7651b327.0:$(TARGET_COPY_OUT_VENDOR)/etc/security/cacerts_supl/7651b327.0 \
@@ -863,6 +865,7 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libaudiodcrflt_vendor.so:$(TARGET_COPY_OUT_VENDOR)/lib/libaudiodcrflt_vendor.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libaudioloudc.so:$(TARGET_COPY_OUT_VENDOR)/lib/libaudioloudc.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libaudioprimarydevicehalifclient.so:$(TARGET_COPY_OUT_VENDOR)/lib/libaudioprimarydevicehalifclient.so \
+    vendor/oppo/CPH1909/proprietary/vendor/lib/libbase-v28.so:$(TARGET_COPY_OUT_VENDOR)/lib/libbase-v28.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libaudiosetting.so:$(TARGET_COPY_OUT_VENDOR)/lib/libaudiosetting.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libaudiotoolkit_vendor.so:$(TARGET_COPY_OUT_VENDOR)/lib/libaudiotoolkit_vendor.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libavservices_minijail_vendor.so:$(TARGET_COPY_OUT_VENDOR)/lib/libavservices_minijail_vendor.so \
@@ -1274,6 +1277,7 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libaudiodcrflt_vendor.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libaudiodcrflt_vendor.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libaudioloudc.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libaudioloudc.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libaudioprimarydevicehalifclient.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libaudioprimarydevicehalifclient.so \
+    vendor/oppo/CPH1909/proprietary/vendor/lib64/libbase-v28.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libbase-v28.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libaudiosetting.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libaudiosetting.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libaudiotoolkit_vendor.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libaudiotoolkit_vendor.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libbacktrace.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libbacktrace.so \
