@@ -868,7 +868,6 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libbase-v28.so:$(TARGET_COPY_OUT_VENDOR)/lib/libbase-v28.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libaudiosetting.so:$(TARGET_COPY_OUT_VENDOR)/lib/libaudiosetting.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libaudiotoolkit_vendor.so:$(TARGET_COPY_OUT_VENDOR)/lib/libaudiotoolkit_vendor.so \
-    vendor/oppo/CPH1909/proprietary/vendor/lib/libavservices_minijail_vendor.so:$(TARGET_COPY_OUT_VENDOR)/lib/libavservices_minijail_vendor.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libbacktrace.so:$(TARGET_COPY_OUT_VENDOR)/lib/libbacktrace.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libbessound_hd_mtk_vendor.so:$(TARGET_COPY_OUT_VENDOR)/lib/libbessound_hd_mtk_vendor.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib/libblisrc32_vendor.so:$(TARGET_COPY_OUT_VENDOR)/lib/libblisrc32_vendor.so \
@@ -1379,7 +1378,6 @@ PRODUCT_COPY_FILES += \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libhevce_sb.ca7.android.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libhevce_sb.ca7.android.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libhwc2on1adapter.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libhwc2on1adapter.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libhwm.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libhwm.so \
-    vendor/oppo/CPH1909/proprietary/vendor/lib64/libhwminijail.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libhwminijail.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libhwuiext.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libhwuiext.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libhydra.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libhydra.so \
     vendor/oppo/CPH1909/proprietary/vendor/lib64/libifcutils_mtk.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libifcutils_mtk.so \
