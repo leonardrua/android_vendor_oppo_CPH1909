@@ -374,67 +374,28 @@ grep 'LOCAL_CERTIFICATE := PRESIGNED' Android.mk                # should be empt
 readelf -d proprietary/vendor/lib64/hw/android.hardware.sensors@1.0-impl-mediatek.so | grep base  # libbase-v28
 ```
 
-## Kanged PowerVR GLES support libraries
+## PowerVR GLES support libraries: stock
 
-The stock 8.1 GLES driver intermittently returns `GL_INVALID_ENUM` to
-Android 10's HWUI in `SkiaOpenGLPipeline::swapBuffers()`, aborting the
-SystemUI RenderThread (`GL errors! ... SkiaOpenGLPipeline.cpp:126`). Five
-support libraries were replaced with the newer versions from
-`SPEEDFIRE7/android_device_oppo_CPH2185` (`vendor-lineage-17.1`, same
-MT6765 / PowerVR GE8320 platform):
+The GPU support libraries in `vendor/lib{,64}/` are the **stock 8.1** blobs:
 
 ```
-vendor/lib{,64}/libusc.so
-vendor/lib{,64}/libglslcompiler.so
-vendor/lib{,64}/libgpu_aux.so
-vendor/lib{,64}/libgralloc_extra.so
+libusc.so  libglslcompiler.so  libgpu_aux.so  libgralloc_extra.so  libged.so
 ```
 
-`vendor/lib{,64}/libgpud.so` is also taken from CPH2185 to satisfy the
-`libgpu_aux` imports. `libged.so` was tried but reverted to stock — see below.
+A partial kang from CPH2185 was attempted and reverted. REA/Ghidra showed that
+the kanged `libGLESv2_mtk.so` is PVR **1.11@5425693** while this kernel and
+`libsrv_um.so` are **1.9@4971894**; the kanged GLES core imports 1.11-only
+`PVRSRV*` symbols that the stock server library does not export. REA also
+showed the kanged `glDrawArrays` retains the same `GL_INVALID_ENUM` (0x500)
+mode-validation path as stock, so the partial compiler/support kang did not
+address the confirmed crash mechanism. Porting the whole 1.11 stack would also
+require the 4.9.190 kernel BSP (`gpu_bm/`, QoS headers, etc.) from
+`https://github.com/eun0115/kernel_oppo_CPH2185`, which is not a drop-in for
+this 4.9.80 kernel.
 
-Why only these:
-
-* The CPH1909 kernel is PVR **1.9@4971894**
-  (`[drm] Initialized pvr 1.9.4971894`). `libsrv_um.so` carries the matching
-  version string; CPH2185's `libsrv_um.so` is **1.11@5425693** and its
-  `libIMGegl.so`/`libGLESv2_mtk.so` import 1.11-only `PVRSRV*` symbols
-  (`PVRSRVGetCurrentThreadID`, `PVRSRVSWFenceCreateI`, ...). Kanging the
-  core would need a different kernel module and is not done here.
-* The matching kernel source is
-  `https://github.com/eun0115/kernel_oppo_CPH2185`. It is 4.9.190 and its
-  `drivers/misc/mediatek/gpu/gpu_rgx/Makefile` selects `m1.11ED5425693/`
-  for `doma` (`pvrversion.h`: `1.11@5425693`), while this tree is 4.9.80 and
-  hardcodes `m1.9ED4971894/`. Porting the full 1.11 driver is not a blob
-  swap: CPH2185 also adds `gpu_bm/` and
-  `base/power/qos/mt6765/`, and the 1.11 sources include headers such as
-  `linux/sw_sync.h`, `drm/drm_gem_framebuffer_helper.h` and
-  `mach/mtk_hibernate_dpm.h` that are absent here. The GPU DT node
-  (`mfg_doma@13000000`, same registers/IRQ/clock) is identical, so the
-  hardware description itself would not need changing.
-* The files above were checked with `nm -D`: all of their vendor-specific
-  undefined symbols are exported by the stock 1.9 libraries or by system
-  HIDL libraries. `libgpu_aux.so` did gain two load-time changes versus stock:
-  it imports nine `gpud*` symbols from `libgpud.so` (not present in the stock
-  dump), and it needs the unsuffixed `vendor.mediatek.hardware.mms@1.5.so`.
-  Both are fixed here: CPH2185's `vendor/lib{,64}/libgpud.so` is committed and
-  installed, and `patchelf --replace-needed` rewrites the mms dependency to
-  the `_vendor.so` variant already in this tree (which exports the single
-  `IMms::getService` symbol that `libgpu_aux` imports).
-* CPH2185's `libged.so` was reverted to the stock version. Its only extra
-  `DT_NEEDED` was `vendor.mediatek.hardware.gpu@1.0.so`, which is absent here
-  and from which it imported zero symbols. The stock `libged.so` exports all
-  four `ged_ge_*` symbols that the kanged `libgralloc_extra.so` imports, and
-  none of the installed blobs need the newer GED-only exports.
-
-No backup copy of these blobs is kept in this repository. Running
-`extract-files.sh` again will overwrite them with the stock 8.1 versions; to
-restore the fix, re-fetch the ten files from
-`https://github.com/SPEEDFIRE7/android_device_oppo_CPH2185/tree/vendor-lineage-17.1/proprietary`
-(`vendor/lib{,64}/{libusc,libglslcompiler,libgpu_aux,libgralloc_extra,libgpud}.so`)
-into `proprietary/vendor/lib{,64}/` after extraction, then re-apply the
-`patchelf --replace-needed` on `libgpu_aux.so` described above. `libged.so`
-must stay stock.
+`libgpud.so` (added only for the kanged `libgpu_aux`) was removed along with
+its install rules. The stock `libgpu_aux.so` needs only the stock
+`vendor.mediatek.hardware.mms@1.5_vendor.so`, which is present.
 
 ## Notes
 
