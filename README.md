@@ -397,6 +397,13 @@ this 4.9.80 kernel.
 its install rules. The stock `libgpu_aux.so` needs only the stock
 `vendor.mediatek.hardware.mms@1.5_vendor.so`, which is present.
 
+The SystemUI `GL_INVALID_ENUM` abort is not addressed by replacing these
+blobs. It is the PowerVR texture-swizzle path: the device tree patches
+`external/skia` and sets `ro.skia.ignore_swizzle=true` so Skia swizzles in
+shader code instead of using the driver's texture-unit state (see the device
+tree README, *PowerVR texture swizzle*). The stock 1.9 GLES/EGL blobs stay
+untouched.
+
 ## Notes
 
 * The blob list (`proprietary-files.txt`) is owned by the **device tree**, not
