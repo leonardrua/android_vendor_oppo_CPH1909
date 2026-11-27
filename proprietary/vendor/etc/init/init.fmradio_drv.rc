@@ -1,6 +1,6 @@
 
 # load fmradio_drv
 on property:service.wcn.driver.ready=yes
-  insmod /vendor/lib/modules/fmradio_drv.ko
+# built-in in kernel; stock .ko is redundant
   setprop fmradio_drv.ko 1
 

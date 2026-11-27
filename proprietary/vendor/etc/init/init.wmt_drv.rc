@@ -1,2 +1,2 @@
 on boot
-    insmod /vendor/lib/modules/wmt_drv.ko
+# built-in in kernel; stock .ko is redundant

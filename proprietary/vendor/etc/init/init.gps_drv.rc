@@ -1,5 +1,5 @@
 
 # load gps_drv
 on property:service.wcn.driver.ready=yes
-  insmod /vendor/lib/modules/gps_drv.ko
+# built-in in kernel; stock .ko is redundant
   setprop gps_drv.ko 1
